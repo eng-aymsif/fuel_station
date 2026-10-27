@@ -1,0 +1,65 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>Returns, Credit Notes & Financial Adjustments:</strong> Due to the volatile physical nature of petroleum and contamination hazards once fuel enters a customer's vehicle tank, the system provides strict accounting workflows for operational corrections, Credit Notes, and cash variance settlements without breaching ledger sequence integrity in <strong>ERPNext</strong>.</p>
+</blockquote>
+
+<h2 id="returns-principles">Fuel Sales Return Principles<a class="h-anchor" href="#returns-principles" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>Fuel returns and corrections are governed by strict internal controls:</p>
+<ul>
+  <li><strong>No Hard Deletions:</strong> Posted transactions cannot be deleted. All adjustments must be executed via contra entries and certified credit notes.</li>
+  <li><strong>Decoupling Financial Refunds from Stock Ledger:</strong> When billing mistakes are refunded without physical fuel return, financial credit notes are decoupled from stock entries to avoid inventory falsification.</li>
+</ul>
+
+<h2 id="workflow-credit-note">Sales Return & Credit Note Workflow<a class="h-anchor" href="#workflow-credit-note" aria-hidden="true" tabindex="-1">#</a></h2>
+<ol class="steps">
+  <li>Identify the erroneous <strong>عملية تعبئة وقود (Fuel Dispense Event)</strong> and initiate reversal with mandatory documentation in <strong>سبب الإلغاء (Cancellation Reason)</strong>.</li>
+  <li>Generate a standard ERPNext Credit Note by clicking <span class="badge badge-primary">Create Credit Note</span> on the associated <strong>فاتورة المبيعات (Sales Invoice)</strong>.</li>
+  <li>Process the refund based on the original payment channel:
+    <ul>
+      <li><strong>Cash Transactions:</strong> Record the paid refund in <strong>المبالغ المرتجعة (Refunds)</strong> inside the attendant's <strong>صندوق النقد (Fuel Cash Box)</strong> to reconcile cash custody accurately.</li>
+      <li><strong>Bank POS Card Transactions:</strong> Execute POS terminal reversal/void before end-of-day bank settlement.</li>
+      <li><strong>Corporate Credit Fleet:</strong> Post the credit note to the client ledger, restoring available credit balance in <strong>عقد عميل الوقود (Fuel Customer Contract)</strong>.</li>
+    </ul>
+  </li>
+  <li>All actions and user identities are permanently logged in <strong>سجل تدقيق محطة الوقود (Fuel Audit Log)</strong>.</li>
+</ol>
+
+<h2 id="wrong-fuel-handling">Misfueling & Contaminated Fuel Recovery<a class="h-anchor" href="#wrong-fuel-handling" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>If an attendant dispenses the wrong fuel grade into a vehicle (e.g., Petrol 91 into a Diesel engine):</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Operational Step</th><th>Station DocType</th><th>ERPNext Ledger Impact</th></tr></thead>
+<tbody>
+<tr>
+  <td>1. Immediately stop engine and siphon contaminated fuel into a dedicated slop drum.</td>
+  <td><strong>عملية معايرة المضخة (Fuel Calibration Event)</strong> / <strong>حركة المخزون (Stock Entry)</strong></td>
+  <td>Transfer fuel via Material Transfer to waste holding warehouse (never return to main tank).</td>
+</tr>
+<tr>
+  <td>2. Cancel billing for wrong fuel.</td>
+  <td><strong>فاتورة المبيعات (Sales Invoice Return)</strong></td>
+  <td>Issue full Credit Note canceling customer charges.</td>
+</tr>
+<tr>
+  <td>3. Dispense correct fuel free of charge as compensation.</td>
+  <td><strong>عملية تعبئة وقود (Fuel Dispense Event)</strong></td>
+  <td>Record dispense charged to station operational error expense account.</td>
+</tr>
+<tr>
+  <td>4. Write off contaminated mixture.</td>
+  <td><strong>تسوية مخزون الخزان (Fuel Tank Reconciliation)</strong></td>
+  <td>Recognize stock shrinkage under Default Calibration/Waste Expense Account.</td>
+</tr>
+</tbody>
+</table></div>
+
+<h2 id="cash-variance-settlement">Attendant Cash Shortage & Overage Settlements<a class="h-anchor" href="#cash-variance-settlement" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>When discrepancies occur between counted cash and expected cash in <strong>صندوق النقد (Fuel Cash Box)</strong> or <strong>خزينة المحطة (Fuel Station Safe)</strong>:</p>
+<ul>
+  <li><strong>Within Tolerance Threshold:</strong> Discrepancies within limits defined in <strong>إعدادات تشغيل محطة الوقود (Fuel Operations Settings)</strong> post automatically to <strong>حساب الفروقات الافتراضي (Default Variance Account)</strong> without blocking shift closure.</li>
+  <li><strong>Over Tolerance Discrepancy:</strong> Triggers <strong>استثناء تسوية الوقود (Fuel Reconciliation Exception)</strong> requiring management decision:
+    <ol>
+      <li><strong>Attendant Payroll Deduction:</strong> Generate an ERPNext Employee Advance / Deduction entry against attendant salary.</li>
+      <li><strong>Corporate Expense Write-Off:</strong> Approve loss write-off with Operations Manager authorization.</li>
+    </ol>
+  </li>
+  <li><strong>Cash Overage Policy:</strong> Any surplus cash is credited to Company Miscellaneous Operating Income; operators are prohibited from keeping surplus cash.</li>
+</ul>

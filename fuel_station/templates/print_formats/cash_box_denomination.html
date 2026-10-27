@@ -1,0 +1,160 @@
+{%- from "fuel_station/templates/print_formats/base.html" import print_styles, is_arabic, dir -%}
+{{ print_styles() }}
+
+<div class="fuel-print-container fuel-print-standard" dir="{{ dir() }}">
+	<div class="fuel-print-header">
+		<table class="fuel-header-table">
+			<tr>
+				<td>
+					<div class="fuel-brand-name">⛽ {{ doc.station or "Fuel Station" }}</div>
+					<div class="fuel-brand-sub">{{ _("Cash Box Physical Count & Daily Till Reconciliation") if is_arabic() else "Cash Box Physical Count & Till Reconciliation" }}</div>
+				</td>
+				<td class="fuel-doc-title-box">
+					<div class="fuel-doc-title">{{ _("CASH BOX AUDIT SHEET") if is_arabic() else "CASH BOX AUDIT SHEET" }}</div>
+					<div><b>{{ doc.cash_box_code or doc.name }}</b></div>
+					<div style="margin-top: 4px;">
+						{% if doc.status == "Closed" or doc.docstatus == 1 %}
+						<span class="fuel-badge badge-success">{{ _("Reconciled & Closed") if is_arabic() else "Closed" }}</span>
+						{% elif doc.status == "Open" %}
+						<span class="fuel-badge badge-warning">{{ _("Open Till") if is_arabic() else "Open Till" }}</span>
+						{% else %}
+						<span class="fuel-badge badge-info">{{ doc.status or "Active" }}</span>
+						{% endif %}
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- Meta Grid -->
+	<div class="fuel-meta-grid">
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Assigned Cashier / Attendant") if is_arabic() else "Assigned Attendant" }}</div>
+			<div class="fuel-meta-val"><b>{{ doc.assigned_employee or doc.assigned_user or "-" }}</b></div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Box Type") if is_arabic() else "Box Type" }}</div>
+			<div class="fuel-meta-val">{{ doc.box_type or "Attendant Cash Box" }}</div>
+		</div>
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Business Date & Shift") if is_arabic() else "Date & Shift" }}</div>
+			<div class="fuel-meta-val">{{ doc.business_date }} {% if doc.shift %}({{ doc.shift }}){% endif %}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Counted Date & Time") if is_arabic() else "Counted At" }}</div>
+			<div class="fuel-meta-val">{{ doc.counted_at or "-" }}</div>
+		</div>
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Station Location") if is_arabic() else "Station" }}</div>
+			<div class="fuel-meta-val">{{ doc.station }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Audited By") if is_arabic() else "Audited By" }}</div>
+			<div class="fuel-meta-val">{{ doc.counted_by or doc.approved_by or "-" }}</div>
+		</div>
+	</div>
+
+	<!-- Till Flow Breakdown -->
+	<div style="font-weight: 800; font-size: 14px; margin-bottom: 8px; color: #1e293b;">
+		💵 {{ _("Cash Box Balance Formula & Financial Movement") if is_arabic() else "Financial Movement" }}
+	</div>
+	<table class="fuel-data-table">
+		<thead>
+			<tr>
+				<th>{{ _("Flow Item") if is_arabic() else "Flow Item" }}</th>
+				<th class="text-center">{{ _("Opening Float (+)") if is_arabic() else "Opening Float" }}</th>
+				<th class="text-center">{{ _("Cash Sales (+)") if is_arabic() else "Cash Sales" }}</th>
+				<th class="text-center">{{ _("Transfers In (+)") if is_arabic() else "Transfers In" }}</th>
+				<th class="text-center">{{ _("Expenses / Out (-)") if is_arabic() else "Expenses / Out" }}</th>
+				<th class="text-center" style="background: #eef2f6;">{{ _("Expected Cash") if is_arabic() else "Expected Cash" }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><b>{{ _("Till Movement") if is_arabic() else "Till Movement" }}</b></td>
+				<td class="text-center">{{ fuel_money(doc.opening_float) }}</td>
+				<td class="text-center">{{ fuel_money(doc.cash_sales) }}</td>
+				<td class="text-center">{{ fuel_money(doc.cash_transfers_in) }}</td>
+				<td class="text-center" style="color: #dc2626;">-{{ fuel_money((doc.approved_expenses or 0.0) + (doc.cash_transfers_out or 0.0) + (doc.refunds or 0.0)) }}</td>
+				<td class="text-center" style="font-size: 14px; font-weight: 800; background: #eef2f6;">
+					{{ fuel_money(doc.expected_cash) }}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- Physical Denominations Table -->
+	<div style="font-weight: 800; font-size: 14px; margin-top: 15px; margin-bottom: 8px; color: #1e293b;">
+		🪙 {{ _("Physical Banknotes & Coins Denomination Count") if is_arabic() else "Physical Denomination Count" }}
+	</div>
+	<table class="fuel-data-table">
+		<thead>
+			<tr>
+				<th style="width: 10%;">#</th>
+				<th style="width: 35%;">{{ _("Denomination Value (Banknote / Coin)") if is_arabic() else "Denomination Value" }}</th>
+				<th class="text-center" style="width: 25%;">{{ _("Physical Count (Quantity)") if is_arabic() else "Quantity" }}</th>
+				<th class="text-center" style="width: 30%;">{{ _("Subtotal Amount") if is_arabic() else "Subtotal" }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% if doc.denominations %}
+				{% for row in doc.denominations %}
+				<tr>
+					<td>{{ loop.index }}</td>
+					<td><b>{{ "{:,.2f}".format(row.banknote_or_coin) }}</b></td>
+					<td class="text-center">{{ row.quantity }}</td>
+					<td class="text-center"><b>{{ fuel_money(row.subtotal) }}</b></td>
+				</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td colspan="4" class="text-center" style="color: #6b7280;">{{ _("No detailed denomination rows recorded. Total counted cash applied directly.") if is_arabic() else "Total counted cash applied directly." }}</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
+
+	<!-- Reconciliation Result Banner -->
+	<div style="display: table; width: 100%; margin-top: 15px;">
+		<div style="display: table-cell; width: 50%; vertical-align: top;">
+			<div style="padding: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
+				<div style="font-weight: 700; margin-bottom: 4px;">{{ _("Audit Verification Status:") if is_arabic() else "Audit Status:" }}</div>
+				{% if doc.variance == 0 %}
+				<div style="color: #16a34a; font-weight: 700;">✅ {{ _("Perfect Match - Zero Discrepancy") if is_arabic() else "Perfect Match - Zero Discrepancy" }}</div>
+				{% elif (doc.variance or 0) > 0 %}
+				<div style="color: #2563eb; font-weight: 700;">ℹ️ {{ _("Cash Surplus (Over):") if is_arabic() else "Cash Surplus:" }} +{{ fuel_money(doc.variance) }}</div>
+				{% else %}
+				<div style="color: #dc2626; font-weight: 700;">⚠️ {{ _("Cash Deficit (Shortage):") if is_arabic() else "Cash Deficit:" }} {{ fuel_money(doc.variance) }}</div>
+				{% endif %}
+			</div>
+		</div>
+		<div style="display: table-cell; width: 50%; vertical-align: top;">
+			<table class="fuel-totals-table" style="width: 100%;">
+				<tr>
+					<td>{{ _("System Expected Cash") if is_arabic() else "Expected Cash" }}</td>
+					<td class="text-left"><b>{{ fuel_money(doc.expected_cash) }}</b></td>
+				</tr>
+				<tr>
+					<td>{{ _("Actual Counted Cash") if is_arabic() else "Counted Cash" }}</td>
+					<td class="text-left"><b>{{ fuel_money(doc.counted_cash) }}</b></td>
+				</tr>
+				<tr class="fuel-grand-total">
+					<td>{{ _("Net Variance") if is_arabic() else "Net Variance" }}</td>
+					<td class="text-left" style="color: {{ '#16a34a' if (doc.variance or 0) == 0 else '#dc2626' }};">
+						{{ fuel_money(doc.variance) }}
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<!-- Signatures -->
+	<div class="fuel-sign-row">
+		<div class="fuel-sign-cell">
+			{{ _("Cashier / Attendant Signature") if is_arabic() else "Attendant Signature" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("Shift Supervisor Verification") if is_arabic() else "Supervisor Verification" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("Safe Custodian Acceptance") if is_arabic() else "Safe Custodian" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+	</div>
+</div>

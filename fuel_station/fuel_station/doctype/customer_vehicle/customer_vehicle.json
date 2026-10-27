@@ -1,0 +1,254 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "customer",
+  "plate_number",
+  "vehicle_code",
+  "vehicle_type",
+  "active",
+  "column_break_1",
+  "fuel_type",
+  "odometer_required",
+  "section_break_other",
+  "owner_type",
+  "department",
+  "vehicle_number",
+  "plate_type",
+  "make",
+  "model",
+  "color",
+  "fuel_tank_capacity",
+  "odometer_reading",
+  "average_consumption"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Vehicle Information"
+  },
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "options": "Customer",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "plate_number",
+   "label": "Plate Number",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "vehicle_code",
+   "label": "Vehicle Code",
+   "fieldtype": "Data",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "vehicle_type",
+   "label": "Vehicle Type",
+   "fieldtype": "Data",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "active",
+   "label": "Active",
+   "fieldtype": "Check",
+   "default": "1",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "fuel_type",
+   "label": "Fuel Type / Item",
+   "fieldtype": "Link",
+   "options": "Item",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "odometer_required",
+   "label": "Odometer Required",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "owner_type",
+   "label": "Owner Type",
+   "fieldtype": "Select",
+   "options": "Customer\nCompany\nEmployee\nDepartment",
+   "default": "Customer"
+  },
+  {
+   "fieldname": "department",
+   "label": "Department",
+   "fieldtype": "Link",
+   "options": "Department"
+  },
+  {
+   "fieldname": "vehicle_number",
+   "label": "Vehicle Number",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "plate_type",
+   "label": "Plate Type",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "make",
+   "label": "Make",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "model",
+   "label": "Model",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "color",
+   "label": "Color",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "fuel_tank_capacity",
+   "label": "Fuel Tank Capacity (Liters)",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "odometer_reading",
+   "label": "Current Odometer Reading",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "average_consumption",
+   "label": "Average Consumption (L/100km)",
+   "fieldtype": "Float",
+   "default": "0"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "issingle": 0,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Customer Vehicle",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "System Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Station Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Shift Supervisor",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Cashier",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1
+  },
+  {
+   "role": "Inventory Officer",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Attendant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "print": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "field:plate_number",
+ "naming_rule": "By fieldname"
+}

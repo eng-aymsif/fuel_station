@@ -1,0 +1,82 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>أوامر الصرف والاستهلاك الداخلي والبطاقات:</strong> يضمن النظام عدم توليد فواتير مبيعات وهمية عند تزويد أسطول الشركة أو المعدات أو المولدات بالوقود؛ بل يتم تحويلها آلياً إلى حركات صرف مخزني قياسية <strong>Stock Entry (Material Issue)</strong> محملة على مراكز التكلفة وحسابات المصروفات المعتمدة.</p>
+</blockquote>
+
+<h2 id="internal-issue-concept">مفهوم الصرف الداخلي والبطاقات الذكية<a class="h-anchor" href="#internal-issue-concept" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>تنقسم عمليات الصرف غير النقدي الداخلي والمدفوع مسبقاً إلى ثلاثة مستندات تشغيلية رئيسية:</p>
+<ol class="steps">
+  <li>إصدار وتصديق تفويضات الصرف للأقسام والمعدات عبر <strong>أمر صرف الوقود (Fuel Issue Order)</strong>.</li>
+  <li>إنشاء رموز التفويض المؤقتة والتحقق الرقمي عبر <strong>تفويض تعبئة الوقود (Fuel Authorization)</strong>.</li>
+  <li>إدارة الكروت الذكية والحصص اللترية المسبقة عبر <strong>بطاقة / كوبون وقود (Fuel Card)</strong>.</li>
+</ol>
+
+<h2 id="issue-order-doctype">1. أمر صرف الوقود (Fuel Issue Order)<a class="h-anchor" href="#issue-order-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>أمر صرف الوقود (Fuel Issue Order)</strong> هو التفويض الرسمي الصادر من إدارة الحركة أو المشروعات بالموافقة على تزويد سيارة أو معدة تابعة للشركة بالوقود:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link</td><td>محطة الوقود المعتمدة لتنفيذ عملية الصرف.</td></tr>
+<tr><td><strong>الشركة</strong></td><td><strong>Company</strong></td><td><code>company</code></td><td>Link</td><td>الشركة التابع لها مركز التكلفة والوقود.</td></tr>
+<tr><td><strong>نوع المعالجة</strong></td><td><strong>Treatment Type</strong></td><td><code>treatment_type</code></td><td>Select</td><td><code>Internal Consumption</code> (استهلاك داخلي للشركة)، أو <code>Customer Fleet</code> (أسطول عميل).</td></tr>
+<tr><td><strong>الموظف الطالب</strong></td><td><strong>Requester</strong></td><td><code>requester</code></td><td>Link</td><td>الموظف أو المشرف الذي طلب إصدار إذن الصرف.</td></tr>
+<tr><td><strong>القسم الطالب</strong></td><td><strong>Requesting Department</strong></td><td><code>requesting_department</code></td><td>Link</td><td>القسم الإداري (مثال: إدارة الخدمات اللوجستية، إدارة الصيانة).</td></tr>
+<tr><td><strong>حالة الاعتماد</strong></td><td><strong>Approval Status</strong></td><td><code>approval_status</code></td><td>Select</td><td><code>Draft</code> (مسودة), <code>Approved</code> (معتمد للصرف), <code>Rejected</code>, <code>Expired</code>.</td></tr>
+<tr><td><strong>الموظف / السائق المستلم</strong></td><td><strong>Employee / Driver</strong></td><td><code>employee</code></td><td>Link</td><td>السائق المستلم للوقود ميدانياً.</td></tr>
+<tr><td><strong>المركبة</strong></td><td><strong>Vehicle</strong></td><td><code>vehicle</code></td><td>Link</td><td>سيارة أو معدة الشركة المستفيدة من الوقود.</td></tr>
+<tr><td><strong>رقم اللوحة</strong></td><td><strong>Plate Number</strong></td><td><code>plate_number</code></td><td>Data</td><td>رقم لوحة المركبة المعتمد.</td></tr>
+<tr><td><strong>صنف الوقود</strong></td><td><strong>Fuel Item</strong></td><td><code>item</code></td><td>Link (إلزامي)</td><td>نوع الوقود المصرح بصرفه (بنزين 91، ديزل).</td></tr>
+<tr><td><strong>الحد الأقصى للكمية (لتر)</strong></td><td><strong>Quantity Limit (Liters)</strong></td><td><code>quantity_limit</code></td><td>Float (إلزامي)</td><td>الكمية المسموح بصرفها كحد أقصى (مثال: 120 لتر).</td></tr>
+<tr><td><strong>الحد الأقصى للمبلغ</strong></td><td><strong>Amount Limit</strong></td><td><code>amount_limit</code></td><td>Currency</td><td>سقف القيمة المالية المسموح بها للصرف.</td></tr>
+<tr><td><strong>أقصى عدد مرات استخدام</strong></td><td><strong>Max Allowed Uses</strong></td><td><code>max_uses</code></td><td>Int</td><td>هل يُستخدم الأمر لمرة واحدة فقط أم يتجزأ على عدة تعبئات.</td></tr>
+<tr><td><strong>صالح من</strong></td><td><strong>Valid From</strong></td><td><code>valid_from</code></td><td>Date</td><td>تاريخ بدء سريان أمر الصرف.</td></tr>
+<tr><td><strong>صالح حتى</strong></td><td><strong>Valid Until</strong></td><td><code>valid_until</code></td><td>Date</td><td>تاريخ انتهاء صلاحية الأمر (يسقط آلياً بعده).</td></tr>
+<tr><td><strong>الكمية المستخدمة</strong></td><td><strong>Used Quantity</strong></td><td><code>used_quantity</code></td><td>Float</td><td>مجموع اللترات المصروفة فعلياً حتى اللحظة.</td></tr>
+<tr><td><strong>الكمية المتبقية</strong></td><td><strong>Remaining Quantity</strong></td><td><code>remaining_quantity</code></td><td>Float</td><td>محسوبة آلياً: (الحد الأقصى للكمية - الكمية المستخدمة).</td></tr>
+<tr><td><strong>حساب المصروف</strong></td><td><strong>Expense Account</strong></td><td><code>expense_account</code></td><td>Link</td><td>حساب مصروف وقود السيارات والمعدات في شجرة الحسابات العامة.</td></tr>
+<tr><td><strong>مركز التكلفة</strong></td><td><strong>Cost Center</strong></td><td><code>cost_center</code></td><td>Link</td><td>مركز التكلفة المحمل بنفقة الوقود المستهلك.</td></tr>
+<tr><td><strong>المشروع</strong></td><td><strong>Project</strong></td><td><code>project</code></td><td>Link</td><td>المشروع المحمل بتكلفة الوقود في المقاولات والتشغيل.</td></tr>
+<tr><td><strong>رمز QR للتفويض</strong></td><td><strong>QR Code Token</strong></td><td><code>qr_code</code></td><td>Data</td><td>رمز QR مشفر يتم مسحه بكاميرا هاتف عامل المضخة للتحقق الفوري.</td></tr>
+<tr><td><strong>حركة المخزون القياسية</strong></td><td><strong>Stock Entry</strong></td><td><code>stock_entry</code></td><td>Link</td><td>سند الصرف المخزني القياسي في ERPNext (Material Issue).</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="fuel-authorization-doctype">2. تفويض تعبئة الوقود (Fuel Authorization)<a class="h-anchor" href="#fuel-authorization-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>تفويض تعبئة الوقود (Fuel Authorization)</strong> هو رمز تحقق أمني مؤقت (Token/OTP) يربط بين تصريح الصرف ومضخة الوقود لمنع تكرار أو تزوير أوامر الصرف:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>نوع التفويض</strong></td><td><strong>Authorization Type</strong></td><td><code>authorization_type</code></td><td>Select (إلزامي)</td><td><code>Issue Order</code> (أمر صرف داخلي), <code>Fleet Contract</code> (عقد أسطول), <code>Emergency</code> (صرف طوارئ).</td></tr>
+<tr><td><strong>المركبة</strong></td><td><strong>Vehicle</strong></td><td><code>vehicle</code></td><td>Link</td><td>المركبة المفوض لها التعبئة.</td></tr>
+<tr><td><strong>المضخة</strong></td><td><strong>Pump</strong></td><td><code>pump</code></td><td>Link</td><td>المضخة المحددة المسموح بالتزود منها.</td></tr>
+<tr><td><strong>صنف الوقود</strong></td><td><strong>Fuel Item</strong></td><td><code>item</code></td><td>Link</td><td>نوع الوقود المسموح.</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Active</code> (صالح وجاهز للتعبئة), <code>Used</code> (تم استخدامه), <code>Expired</code> (منتهي الصلاحية).</td></tr>
+<tr><td><strong>صالح من</strong></td><td><strong>Valid From</strong></td><td><code>valid_from</code></td><td>Datetime</td><td>وقت تفعيل الرمز الرقمي.</td></tr>
+<tr><td><strong>صالح حتى</strong></td><td><strong>Valid Until</strong></td><td><code>valid_until</code></td><td>Datetime</td><td>وقت انتهاء الصلاحية (مثلاً: صالح لمدة ساعتين فقط).</td></tr>
+<tr><td><strong>رمز التحقق المؤقت</strong></td><td><strong>QR Token</strong></td><td><code>qr_code</code></td><td>Data</td><td>الرمز المشفر الفريد للتحقق.</td></tr>
+<tr><td><strong>الكمية المستخدمة</strong></td><td><strong>Used Quantity</strong></td><td><code>used_quantity</code></td><td>Float</td><td>كمية الوقود التي تم ضخها فعلياً عبر هذا التفويض.</td></tr>
+<tr><td><strong>الكمية المتبقية</strong></td><td><strong>Remaining Quantity</strong></td><td><code>remaining_quantity</code></td><td>Float</td><td>الرصيد المتبقي في التفويض.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="fuel-card-doctype">3. بطاقة / كوبون وقود (Fuel Card)<a class="h-anchor" href="#fuel-card-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>بطاقة / كوبون وقود (Fuel Card)</strong> يتيح تشغيل بطاقات الوقود الذكية الممغنطة (RFID) أو الكوبونات الرقمية مسبقة الدفع:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>رقم البطاقة أو الكوبون</strong></td><td><strong>Card / Coupon Number</strong></td><td><code>card_number</code></td><td>Data (إلزامي)</td><td>الرقم التعريفي المطبوع أو المشفر على شريحة البطاقة.</td></tr>
+<tr><td><strong>نوع البطاقة</strong></td><td><strong>Card Type</strong></td><td><code>card_type</code></td><td>Select</td><td><code>Prepaid Amount</code> (رصيد مالي مسبق الدفع)، أو <code>Liters Quota</code> (حصة لترية محددة).</td></tr>
+<tr><td><strong>العميل أو الجهة المالكة</strong></td><td><strong>Customer</strong></td><td><code>customer</code></td><td>Link</td><td>الجهة المستفيدة المالكة للبطاقة.</td></tr>
+<tr><td><strong>المركبة المقترنة</strong></td><td><strong>Vehicle</strong></td><td><code>vehicle</code></td><td>Link</td><td>تقييد اختياري لربط البطاقة بمركبة واحدة فقط.</td></tr>
+<tr><td><strong>السائق المخصص</strong></td><td><strong>Driver</strong></td><td><code>driver</code></td><td>Link</td><td>السائق المخصص لحمل البطاقة.</td></tr>
+<tr><td><strong>صنف الوقود المسموح</strong></td><td><strong>Allowed Fuel Item</strong></td><td><code>allowed_item</code></td><td>Link</td><td>حصر البطاقة بصنف وقود محدد (مثال: ديزل فقط).</td></tr>
+<tr><td><strong>الحد اليومي</strong></td><td><strong>Daily Limit</strong></td><td><code>daily_limit</code></td><td>Float</td><td>الحد الأقصى للصرف في اليوم الواحد.</td></tr>
+<tr><td><strong>الحد الشهري</strong></td><td><strong>Monthly Limit</strong></td><td><code>monthly_limit</code></td><td>Float</td><td>الحد الأقصى المسموح بسحبه شهرياً.</td></tr>
+<tr><td><strong>الكمية المتبقية (لتر)</strong></td><td><strong>Remaining Quantity</strong></td><td><code>remaining_quantity</code></td><td>Float</td><td>رصيد اللترات المتاح للاستهلاك في البطاقة.</td></tr>
+<tr><td><strong>المبلغ المتبقي</strong></td><td><strong>Remaining Amount</strong></td><td><code>remaining_amount</code></td><td>Currency</td><td>الرصيد النقدي المتاح في المحفظة.</td></tr>
+<tr><td><strong>صالح حتى</strong></td><td><strong>Valid Until</strong></td><td><code>valid_until</code></td><td>Date</td><td>تاريخ انتهاء صلاحية البطاقة.</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Active</code> (نشطة)، <code>Blocked</code> (محظورة)، <code>Expired</code> (منتهية).</td></tr>
+</tbody>
+</table></div>

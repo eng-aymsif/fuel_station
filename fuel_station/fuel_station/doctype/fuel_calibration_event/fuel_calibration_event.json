@@ -1,0 +1,309 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "station",
+  "pump",
+  "item",
+  "status",
+  "column_break_1",
+  "previous_reading",
+  "current_reading",
+  "quantity",
+  "reason",
+  "section_break_2",
+  "waste_account",
+  "stock_treatment",
+  "column_break_2",
+  "stock_entry",
+  "approved_by",
+  "section_break_other",
+  "naming_series",
+  "shift",
+  "business_date",
+  "tank",
+  "warehouse",
+  "performed_by_entity",
+  "calibration_result",
+  "certificate_attachment",
+  "next_calibration_date",
+  "cost_center"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Calibration Details"
+  },
+  {
+   "fieldname": "station",
+   "label": "Station",
+   "fieldtype": "Link",
+   "options": "Fuel Station",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "pump",
+   "label": "Pump",
+   "fieldtype": "Link",
+   "options": "Fuel Pump",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "item",
+   "label": "Fuel Item",
+   "fieldtype": "Link",
+   "options": "Item",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "Draft\nApproved\nPosted\nCancelled",
+   "default": "Draft",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "previous_reading",
+   "label": "Previous Reading",
+   "fieldtype": "Float",
+   "reqd": 1
+  },
+  {
+   "fieldname": "current_reading",
+   "label": "Current Reading",
+   "fieldtype": "Float",
+   "reqd": 1
+  },
+  {
+   "fieldname": "quantity",
+   "label": "Quantity (Liters)",
+   "fieldtype": "Float",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "reason",
+   "label": "Reason",
+   "fieldtype": "Small Text",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Stock & Accounting Treatment"
+  },
+  {
+   "fieldname": "waste_account",
+   "label": "Waste / Calibration Expense Account",
+   "fieldtype": "Link",
+   "options": "Account"
+  },
+  {
+   "fieldname": "stock_treatment",
+   "label": "Stock Treatment",
+   "fieldtype": "Select",
+   "options": "Return to Tank\nWaste Expense\nNo Stock Impact",
+   "default": "Return to Tank",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "stock_entry",
+   "label": "Stock Entry",
+   "fieldtype": "Link",
+   "options": "Stock Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "approved_by",
+   "label": "Approved By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "FCE-.YYYY.-.#####",
+   "default": "FCE-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "shift",
+   "label": "Shift",
+   "fieldtype": "Link",
+   "options": "Fuel Shift"
+  },
+  {
+   "fieldname": "business_date",
+   "label": "Business Date",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "tank",
+   "label": "Fuel Tank",
+   "fieldtype": "Link",
+   "options": "Fuel Tank"
+  },
+  {
+   "fieldname": "warehouse",
+   "label": "Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "performed_by_entity",
+   "label": "Performed By Entity",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "calibration_result",
+   "label": "Calibration Result",
+   "fieldtype": "Select",
+   "options": "Passed\nAdjusted\nFailed",
+   "default": "Passed"
+  },
+  {
+   "fieldname": "certificate_attachment",
+   "label": "Certificate Attachment",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "next_calibration_date",
+   "label": "Next Calibration Date",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "cost_center",
+   "label": "Cost Center",
+   "fieldtype": "Link",
+   "options": "Cost Center"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "issingle": 0,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Fuel Calibration Event",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "System Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Station Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Shift Supervisor",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Cashier",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1
+  },
+  {
+   "role": "Inventory Officer",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Attendant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "print": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field"
+}

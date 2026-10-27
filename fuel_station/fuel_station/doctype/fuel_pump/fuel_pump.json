@@ -1,0 +1,245 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "station",
+  "pump_number",
+  "tank",
+  "item",
+  "column_break_1",
+  "meter_source",
+  "current_meter_reading",
+  "requires_shift",
+  "active",
+  "section_break_other",
+  "fuel_grade",
+  "warehouse",
+  "uom",
+  "meter_type",
+  "last_calibration_date",
+  "next_calibration_date",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Pump Information"
+  },
+  {
+   "fieldname": "station",
+   "label": "Station",
+   "fieldtype": "Link",
+   "options": "Fuel Station",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "pump_number",
+   "label": "Pump Number",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "tank",
+   "label": "Fuel Tank",
+   "fieldtype": "Link",
+   "options": "Fuel Tank",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "item",
+   "label": "Fuel Item",
+   "fieldtype": "Link",
+   "options": "Item",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "meter_source",
+   "label": "Meter Source",
+   "fieldtype": "Select",
+   "options": "MANUAL\nFORECOURT_CONTROLLER\nHYBRID",
+   "default": "MANUAL"
+  },
+  {
+   "fieldname": "current_meter_reading",
+   "label": "Current Meter Reading",
+   "fieldtype": "Float",
+   "default": "0",
+   "read_only": 1
+  },
+  {
+   "fieldname": "requires_shift",
+   "label": "Requires Shift",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "active",
+   "label": "Active",
+   "fieldtype": "Check",
+   "default": "1",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "fuel_grade",
+   "label": "Fuel Grade",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "warehouse",
+   "label": "Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "uom",
+   "label": "UOM",
+   "fieldtype": "Link",
+   "options": "UOM",
+   "default": "Liter"
+  },
+  {
+   "fieldname": "meter_type",
+   "label": "Meter Type",
+   "fieldtype": "Select",
+   "options": "Digital\nMechanical",
+   "default": "Digital"
+  },
+  {
+   "fieldname": "last_calibration_date",
+   "label": "Last Calibration Date",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "next_calibration_date",
+   "label": "Next Calibration Date",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "notes",
+   "label": "Notes",
+   "fieldtype": "Small Text"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "issingle": 0,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Fuel Pump",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "System Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Station Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Shift Supervisor",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Cashier",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1
+  },
+  {
+   "role": "Inventory Officer",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Attendant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "print": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "format:{station}-{pump_number}",
+ "naming_rule": "Expression"
+}

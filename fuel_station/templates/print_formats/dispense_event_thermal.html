@@ -1,0 +1,120 @@
+{%- from "fuel_station/templates/print_formats/base.html" import print_styles, is_arabic, dir -%}
+{{ print_styles() }}
+
+<div class="fuel-print-container fuel-print-thermal" dir="{{ dir() }}">
+	<div class="fuel-thermal-head">
+		<div style="font-size: 14px; font-weight: 700;">⛽ {{ doc.station or "Fuel Station" }}</div>
+		<div class="fuel-thermal-title">{{ _("PUMP DISPENSE TICKET") if is_arabic() else "PUMP DISPENSE TICKET" }}</div>
+		<div class="fuel-thermal-sub">{{ _("Nozzle Transaction Record") if is_arabic() else "Nozzle Transaction Record" }}</div>
+	</div>
+
+	<div class="fuel-thermal-row">
+		<span><b>{{ _("Event Ref") if is_arabic() else "Ref" }}:</b></span>
+		<span>{{ doc.name }}</span>
+	</div>
+	<div class="fuel-thermal-row">
+		<span><b>{{ _("Date & Time") if is_arabic() else "Date & Time" }}:</b></span>
+		<span>{{ doc.business_date }} {{ doc.creation.strftime("%H:%M") if doc.creation else "" }}</span>
+	</div>
+	<div class="fuel-thermal-row">
+		<span><b>{{ _("Pump / Nozzle") if is_arabic() else "Pump" }}:</b></span>
+		<span><b>{{ doc.pump }}</b></span>
+	</div>
+	{% if doc.employee %}
+	<div class="fuel-thermal-row">
+		<span><b>{{ _("Attendant") if is_arabic() else "Attendant" }}:</b></span>
+		<span>{{ doc.employee }}</span>
+	</div>
+	{% endif %}
+
+	<div class="fuel-thermal-divider"></div>
+
+	<!-- Vehicle & Customer -->
+	{% if doc.customer %}
+	<div class="fuel-thermal-row">
+		<span>{{ _("Customer") if is_arabic() else "Customer" }}:</span>
+		<span><b>{{ doc.customer }}</b></span>
+	</div>
+	{% endif %}
+	{% if doc.vehicle_plate_number or doc.vehicle %}
+	<div class="fuel-thermal-row">
+		<span>{{ _("Plate No") if is_arabic() else "Plate No" }}:</span>
+		<span><b>{{ doc.vehicle_plate_number or doc.vehicle }}</b></span>
+	</div>
+	{% endif %}
+	{% if doc.driver_name or doc.driver %}
+	<div class="fuel-thermal-row">
+		<span>{{ _("Driver") if is_arabic() else "Driver" }}:</span>
+		<span>{{ doc.driver_name or doc.driver }}</span>
+	</div>
+	{% endif %}
+	{% if doc.odometer_reading %}
+	<div class="fuel-thermal-row">
+		<span>{{ _("Odometer") if is_arabic() else "Odometer" }}:</span>
+		<span>{{ doc.odometer_reading }} KM</span>
+	</div>
+	{% endif %}
+
+	<div class="fuel-thermal-divider"></div>
+
+	<!-- Meter Readings -->
+	<div class="fuel-thermal-row">
+		<span>{{ _("Start Meter") if is_arabic() else "Start Meter" }}:</span>
+		<span>{{ "{:,.2f}".format(doc.reading_before or 0.0) }}</span>
+	</div>
+	<div class="fuel-thermal-row">
+		<span>{{ _("End Meter") if is_arabic() else "End Meter" }}:</span>
+		<span>{{ "{:,.2f}".format(doc.reading_after or 0.0) }}</span>
+	</div>
+
+	<div class="fuel-thermal-divider"></div>
+
+	<!-- Fuel Details -->
+	<div class="fuel-thermal-row" style="font-size: 13px;">
+		<span><b>{{ doc.item }}</b></span>
+		<span><b>{{ "{:,.2f}".format(doc.quantity) }} {{ doc.uom or "L" }}</b></span>
+	</div>
+	<div class="fuel-thermal-row">
+		<span>{{ _("Unit Rate") if is_arabic() else "Unit Rate" }}:</span>
+		<span>{{ fuel_money(doc.rate) }}</span>
+	</div>
+	{% if doc.discount_amount %}
+	<div class="fuel-thermal-row" style="color: #b91c1c;">
+		<span>{{ _("Discount") if is_arabic() else "Discount" }}:</span>
+		<span>-{{ fuel_money(doc.discount_amount) }}</span>
+	</div>
+	{% endif %}
+
+	<div class="fuel-thermal-divider-double"></div>
+
+	<div class="fuel-thermal-row fuel-thermal-total">
+		<span>{{ _("TOTAL DUE") if is_arabic() else "TOTAL DUE" }}:</span>
+		<span>{{ fuel_money(doc.grand_total or doc.amount) }}</span>
+	</div>
+
+	<div class="fuel-thermal-row" style="margin-top: 4px;">
+		<span>{{ _("Payment Method") if is_arabic() else "Payment Method" }}:</span>
+		<span><b>{{ doc.payment_method }}</b></span>
+	</div>
+	{% if doc.fuel_card or doc.card_last_four %}
+	<div class="fuel-thermal-row">
+		<span>{{ _("Card Ref") if is_arabic() else "Card Ref" }}:</span>
+		<span>**** {{ doc.card_last_four or doc.fuel_card }}</span>
+	</div>
+	{% endif %}
+	{% if doc.issue_order %}
+	<div class="fuel-thermal-row">
+		<span>{{ _("Issue Order") if is_arabic() else "Issue Order" }}:</span>
+		<span>{{ doc.issue_order }}</span>
+	</div>
+	{% endif %}
+
+	<div class="fuel-thermal-qr">
+		{{ fuel_qr_code(doc.name) }}
+	</div>
+
+	<div class="fuel-thermal-footer">
+		<div>{{ _("Signature") if is_arabic() else "Signature" }}: __________________</div>
+		<div style="margin-top: 6px;">{{ _("Verified Pump Transaction") if is_arabic() else "Verified Pump Transaction" }}</div>
+	</div>
+</div>

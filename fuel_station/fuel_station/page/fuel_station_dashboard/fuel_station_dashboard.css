@@ -1,0 +1,296 @@
+.fuel-dash-wrapper {
+	padding: 20px 24px;
+	font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+	background: #f8fafc;
+	min-height: calc(100vh - 120px);
+	color: #1e293b;
+}
+
+/* Header & Controls */
+.fuel-dash-topbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 16px;
+	margin-bottom: 24px;
+	background: #ffffff;
+	padding: 16px 20px;
+	border-radius: 12px;
+	border: 1px solid #e2e8f0;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.fuel-dash-title {
+	font-size: 20px;
+	font-weight: 800;
+	color: #0f172a;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.fuel-dash-controls {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.fuel-dash-select {
+	padding: 8px 14px;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	font-size: 13px;
+	font-weight: 600;
+	background-color: #ffffff;
+	color: #334155;
+	outline: none;
+	cursor: pointer;
+}
+
+.fuel-dash-shift-tag {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 14px;
+	border-radius: 9999px;
+	font-size: 12px;
+	font-weight: 700;
+}
+.tag-open { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.tag-closed { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+
+/* KPIs Grid */
+.fuel-kpi-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+	gap: 16px;
+	margin-bottom: 24px;
+}
+
+.fuel-kpi-card {
+	background: #ffffff;
+	border-radius: 12px;
+	padding: 18px 20px;
+	border: 1px solid #e2e8f0;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	position: relative;
+	overflow: hidden;
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.fuel-kpi-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.fuel-kpi-card::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 4px;
+	background: #ea580c;
+}
+.kpi-blue::before { background: #2563eb; }
+.kpi-green::before { background: #16a34a; }
+.kpi-purple::before { background: #9333ea; }
+.kpi-orange::before { background: #ea580c; }
+
+.fuel-kpi-title {
+	font-size: 12px;
+	font-weight: 600;
+	color: #64748b;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	margin-bottom: 8px;
+}
+
+.fuel-kpi-val {
+	font-size: 24px;
+	font-weight: 800;
+	color: #0f172a;
+	line-height: 1.1;
+}
+
+.fuel-kpi-sub {
+	font-size: 11px;
+	color: #94a3b8;
+	margin-top: 6px;
+}
+
+/* Sections */
+.fuel-section-header {
+	font-size: 16px;
+	font-weight: 700;
+	color: #1e293b;
+	margin-bottom: 14px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.fuel-dash-row {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 20px;
+	margin-bottom: 24px;
+}
+
+@media (max-width: 992px) {
+	.fuel-dash-row {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Tanks Grid */
+.fuel-tanks-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	gap: 16px;
+	margin-bottom: 24px;
+}
+
+.fuel-tank-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.fuel-tank-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 12px;
+}
+
+.fuel-tank-name {
+	font-size: 14px;
+	font-weight: 700;
+	color: #0f172a;
+}
+
+.fuel-tank-grade {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 9999px;
+	font-size: 11px;
+	font-weight: 700;
+	background: #fed7aa;
+	color: #c2410c;
+}
+
+.fuel-tank-gauge-bg {
+	width: 100%;
+	height: 18px;
+	background: #f1f5f9;
+	border-radius: 9999px;
+	overflow: hidden;
+	margin-bottom: 10px;
+	border: 1px solid #e2e8f0;
+}
+
+.fuel-tank-gauge-fill {
+	height: 100%;
+	background: linear-gradient(90deg, #ea580c, #f97316);
+	border-radius: 9999px;
+	transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fuel-tank-stats {
+	display: flex;
+	justify-content: space-between;
+	font-size: 12px;
+	color: #475569;
+}
+
+/* Pumps Grid */
+.fuel-pumps-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: 16px;
+	margin-bottom: 24px;
+}
+
+.fuel-pump-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	position: relative;
+}
+
+.fuel-pump-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.fuel-pump-name {
+	font-size: 14px;
+	font-weight: 800;
+	color: #0f172a;
+}
+
+.fuel-meter-display {
+	background: #0f172a;
+	color: #38bdf8;
+	font-family: monospace, monospace;
+	font-size: 18px;
+	font-weight: 700;
+	padding: 8px 12px;
+	border-radius: 8px;
+	text-align: center;
+	letter-spacing: 2px;
+	margin-bottom: 10px;
+	border: 1px solid #1e293b;
+}
+
+.fuel-pump-attendant {
+	font-size: 12px;
+	color: #64748b;
+	display: flex;
+	justify-content: space-between;
+	padding-top: 6px;
+	border-top: 1px solid #f1f5f9;
+}
+
+/* Recent Table */
+.fuel-table-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.fuel-dash-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 12px;
+}
+
+.fuel-dash-table th {
+	background: #f8fafc;
+	padding: 10px 14px;
+	font-weight: 700;
+	color: #475569;
+	border-bottom: 1px solid #e2e8f0;
+	text-align: right;
+}
+
+.fuel-dash-table td {
+	padding: 10px 14px;
+	border-bottom: 1px solid #f1f5f9;
+	vertical-align: middle;
+}
+
+.fuel-dash-table tr:hover {
+	background: #f8fafc;
+}

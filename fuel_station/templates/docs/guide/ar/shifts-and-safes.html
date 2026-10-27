@@ -1,0 +1,177 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>الانضباط المالي والرقابي الصارم:</strong> يفصل النظام بشكل مطلق بين عهدة عامل المضخة الميدانية <strong>صندوق النقد (Fuel Cash Box)</strong> وخزينة المحطة المركزية <strong>خزينة المحطة (Fuel Station Safe)</strong>، مما يقضي على اختلاط الأموال ويحدد مسؤولية أي عجز أو زيادة نقدية بدقة متناهية.</p>
+</blockquote>
+
+<h2 id="shifts-concept">مفهوم إدارة الورديات والصناديق في محطات الوقود<a class="h-anchor" href="#shifts-concept" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>تعمل محطات الوقود عادة على مدار الساعة بنظام الورديات المتتابعة. كل وردية تمثل دورة محاسبية وتشغيلية مقفلة ومستقلة، تمر بمراحل محددة تشمل:</p>
+<ol class="steps">
+  <li>تحديد الفترات القياسية في <strong>نوع الوردية (Fuel Shift Type)</strong>.</li>
+  <li>فتح دورة العمل عبر <strong>وردية الوقود (Fuel Shift)</strong>.</li>
+  <li>ربط كل عامل بمضخته عبر <strong>تكليف عامل بمضخة (Fuel Pump Assignment)</strong>.</li>
+  <li>تسليم عهدة الفكة وتوثيق التحصيل في <strong>صندوق النقد (Fuel Cash Box)</strong>.</li>
+  <li>توثيق تسليم المضخات عند تبديل العمال عبر <strong>تسليم واستلام المضخة (Pump Handover)</strong>.</li>
+  <li>جرد النقدية ورقة ورقة في جدول <strong>عد فئات النقد (Fuel Denomination Count)</strong>.</li>
+  <li>توريد النقدية إلى <strong>خزينة المحطة (Fuel Station Safe)</strong> عبر <strong>تحويل نقدي للخزينة (Cash Transfer)</strong>.</li>
+  <li>تسوية العهد النقدية الرئيسية للمحطة عبر <strong>عهدة النقد (Fuel Cash Custody)</strong>.</li>
+</ol>
+
+<h2 id="shift-type-doctype">1. نوع الوردية (Fuel Shift Type)<a class="h-anchor" href="#shift-type-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند معيار لتعريف الورديات المتكررة بالمحطة (صباحية، مسائية، ليلية):</p>
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>اسم الوردية</strong></td><td><strong>Shift Name</strong></td><td><code>shift_name</code></td><td>Data (إلزامي)</td><td>اسم الوردية (مثال: الوردية الصباحية 07:00 - 15:00).</td></tr>
+<tr><td><strong>وقت البدء</strong></td><td><strong>Start Time</strong></td><td><code>start_time</code></td><td>Time</td><td>التوقيت القياسي المجدول لبداية الوردية.</td></tr>
+<tr><td><strong>وقت الانتهاء</strong></td><td><strong>End Time</strong></td><td><code>end_time</code></td><td>Time</td><td>التوقيت القياسي المجدول لانتهاء الوردية.</td></tr>
+<tr><td><strong>نشط</strong></td><td><strong>Active</strong></td><td><code>active</code></td><td>Check</td><td>إتاحة نوع الوردية للاختيار في العمليات اليومية.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="fuel-shift-doctype">2. وردية الوقود (Fuel Shift)<a class="h-anchor" href="#fuel-shift-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>وردية الوقود (Fuel Shift)</strong> هو الوعاء التشغيلي الرئيسي الذي يضم كافة تكليفات العمال، وصناديق النقد، وقراءات العدادات لفترة العمل:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف والشرح التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link (إلزامي)</td><td>المحطة التابع لها هذا التشغيل.</td></tr>
+<tr><td><strong>تاريخ العمل</strong></td><td><strong>Business Date</strong></td><td><code>business_date</code></td><td>Date (إلزامي)</td><td>التاريخ المالي والتشغيلي المحسوب للوردية.</td></tr>
+<tr><td><strong>نوع الوردية</strong></td><td><strong>Shift Type</strong></td><td><code>shift_type</code></td><td>Link (إلزامي)</td><td>نوع الوردية المرجعي المحدد لفترة العمل.</td></tr>
+<tr><td><strong>المشرف</strong></td><td><strong>Supervisor</strong></td><td><code>supervisor</code></td><td>Link (إلزامي)</td><td>مشرف الوردية المسؤول عن فتح وإغلاق ومطابقة أعمال الوردية.</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code> (مسودة)، <code>Open</code> (نشطة مفتوحة)، <code>Closed</code> (مغلقة ومطابقة)، <code>Reopened</code> (معاد فتحها).</td></tr>
+<tr><td><strong>حالة الفتح</strong></td><td><strong>Opening Status</strong></td><td><code>opening_status</code></td><td>Select</td><td>حالة التحقق من القراءات الافتتاحية والعهد النقدية.</td></tr>
+<tr><td><strong>حالة الإغلاق</strong></td><td><strong>Closing Status</strong></td><td><code>closing_status</code></td><td>Select</td><td>حالة اكتمال تسليم الصناديق ومطابقة العدادات.</td></tr>
+<tr><td><strong>العهدة النقدية الافتتاحية</strong></td><td><strong>Opening Cash Float</strong></td><td><code>opening_cash_float</code></td><td>Currency</td><td>إجمالي مبالغ الفكة النقدية المصروفة لصناديق العمال عند فتح الوردية.</td></tr>
+<tr><td><strong>تاريخ ووقت الفتح</strong></td><td><strong>Opened At</strong></td><td><code>opened_at</code></td><td>Datetime</td><td>التوقيت الفعلي الدقيق لبدء الوردية واستقبال العمليات.</td></tr>
+<tr><td><strong>تاريخ ووقت الإغلاق</strong></td><td><strong>Closed At</strong></td><td><code>closed_at</code></td><td>Datetime</td><td>توقيت إغلاق الوردية واعتماد التسويات.</td></tr>
+<tr><td><strong>السماح بفتح استثنائي</strong></td><td><strong>Allow Exceptional Open</strong></td><td><code>allow_exceptional_open</code></td><td>Check</td><td>تجاوز شرط إغلاق الوردية السابقة في الحالات الطارئة بموافقة الإدارة.</td></tr>
+<tr><td><strong>سبب الفتح الاستثنائي</strong></td><td><strong>Exceptional Open Reason</strong></td><td><code>exceptional_open_reason</code></td><td>Small Text</td><td>المبرر التشغيلي الإلزامي للفتح الاستثنائي.</td></tr>
+<tr><td><strong>سبب إعادة الفتح</strong></td><td><strong>Reopen Reason</strong></td><td><code>reopen_reason</code></td><td>Small Text</td><td>مبرر إلغاء إغلاق الوردية وإعادتها للتدقيق.</td></tr>
+<tr><td><strong>معتمد من</strong></td><td><strong>Approved By</strong></td><td><code>approved_by</code></td><td>Link</td><td>المدير أو المشرف المعتمد لإجراءات الوردية.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="pump-assignment-doctype">3. تكليف عامل بمضخة (Fuel Pump Assignment)<a class="h-anchor" href="#pump-assignment-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>تكليف عامل بمضخة (Fuel Pump Assignment)</strong> يربط بين العامل والمضخة وصندوق النقد خلال ساعات الوردية لضمان عدم ضياع المسؤولية:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link</td><td>محطة الوقود التابع لها التكليف.</td></tr>
+<tr><td><strong>الوردية</strong></td><td><strong>Shift</strong></td><td><code>shift</code></td><td>Link</td><td>الوردية المفتوحة حالياً.</td></tr>
+<tr><td><strong>المضخة</strong></td><td><strong>Pump</strong></td><td><code>pump</code></td><td>Link (إلزامي)</td><td>المضخة المحددة الموكلة للعامل.</td></tr>
+<tr><td><strong>الموظف / العامل</strong></td><td><strong>Employee</strong></td><td><code>employee</code></td><td>Link (إلزامي)</td><td>عامل المحطة الميداني المسؤول عن تشغيل المضخة.</td></tr>
+<tr><td><strong>المستخدم</strong></td><td><strong>User</strong></td><td><code>user</code></td><td>Link</td><td>حساب المستخدم الخاص بالعامل في النظام.</td></tr>
+<tr><td><strong>صندوق النقد</strong></td><td><strong>Cash Box</strong></td><td><code>cash_box</code></td><td>Link</td><td>الصندوق الميداني الذي تُجمع فيه إيرادات هذا التكليف.</td></tr>
+<tr><td><strong>قراءة العداد الافتتاحية</strong></td><td><strong>Opening Meter Reading</strong></td><td><code>opening_meter_reading</code></td><td>Float</td><td>قراءة عداد المضخة عند تسلم العامل للعهدة.</td></tr>
+<tr><td><strong>قراءة العداد الختامية</strong></td><td><strong>Closing Meter Reading</strong></td><td><code>closing_meter_reading</code></td><td>Float</td><td>قراءة عداد المضخة عند انتهاء تكليف العامل.</td></tr>
+<tr><td><strong>وقت البدء</strong></td><td><strong>Start Time</strong></td><td><code>start_time</code></td><td>Datetime</td><td>بداية التكليف الفعلي.</td></tr>
+<tr><td><strong>وقت الانتهاء</strong></td><td><strong>End Time</strong></td><td><code>end_time</code></td><td>Datetime</td><td>نهاية التكليف.</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Active</code> (نشط جاري العمل)، <code>Completed</code> (مكتمل ومسلم).</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="pump-handover-doctype">4. تسليم واستلام المضخة (Pump Handover)<a class="h-anchor" href="#pump-handover-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>يستخدم مستند <strong>تسليم واستلام المضخة (Pump Handover)</strong> عند استراحة العامل أو تبديل الوردية بين عاملين على نفس المضخة أثناء تشغيل المحطة:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>الموظف المسلّم</strong></td><td><strong>Outgoing Employee</strong></td><td><code>outgoing_employee</code></td><td>Link (إلزامي)</td><td>العامل الذي يغادر المضخة ويسلم عهدتها.</td></tr>
+<tr><td><strong>الموظف المستلم</strong></td><td><strong>Incoming Employee</strong></td><td><code>incoming_employee</code></td><td>Link (إلزامي)</td><td>العامل الجديد المستلم للمضخة ومتابعة الضخ.</td></tr>
+<tr><td><strong>قراءة العداد عند التسليم</strong></td><td><strong>Meter Reading At Handover</strong></td><td><code>meter_reading_at_handover</code></td><td>Float (إلزامي)</td><td>قراءة العداد اللحظية المشتركة الموثقة بحضور الطرفين.</td></tr>
+<tr><td><strong>النقد المسلّم باليد</strong></td><td><strong>Cash Count At Handover</strong></td><td><code>cash_count_at_handover</code></td><td>Currency</td><td>مبلغ النقد المسلم يداً بيد بين العاملين إن وجد.</td></tr>
+<tr><td><strong>وقت التسليم</strong></td><td><strong>Handover Time</strong></td><td><code>handover_time</code></td><td>Datetime</td><td>توقيت إجراء التبديل.</td></tr>
+<tr><td><strong>تأكيد المسلّم</strong></td><td><strong>Outgoing Confirmation</strong></td><td><code>outgoing_signature_or_confirmation</code></td><td>Check</td><td>إقرار العامل المغادر بصحة القراءة والنقد.</td></tr>
+<tr><td><strong>تأكيد المستلم</strong></td><td><strong>Incoming Confirmation</strong></td><td><code>incoming_signature_or_confirmation</code></td><td>Check</td><td>إقرار العامل المستلم بسلامة المضخة ومطابقة العداد.</td></tr>
+<tr><td><strong>اعتماد المشرف</strong></td><td><strong>Supervisor Approval</strong></td><td><code>supervisor_approval</code></td><td>Link</td><td>توقيع واعتماد مشرف الوردية على عملية التسليم.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="fuel-cash-box-doctype">5. صندوق النقد (Fuel Cash Box)<a class="h-anchor" href="#fuel-cash-box-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>صندوق النقد (Fuel Cash Box)</strong> هو المحور المالي لكل عامل في الوردية. يجمع كافة التدفقات النقدية ويحسب الفارق المحاسبي بدقة متناهية وفق المعادلة القياسية:</p>
+
+<div class="callout tip">
+  <p><strong>معادلة احتساب النقد المتوقع وفارق الصندوق:</strong></p>
+  <code>النقد المتوقع = العهدة النقدية الافتتاحية (Opening Float) + المبيعات النقدية المسجلة (Cash Sales) + المقبوضات المعتمدة (Approved Cash Receipts) + تحويلات نقدية واردة (Cash Transfers In) - المصروفات النقدية المعتمدة (Approved Expenses) - المبالغ المرتجعة (Refunds) - تحويلات نقدية خارجة للخزينة (Cash Transfers Out)</code><br><br>
+  <code>الفرق (عجز / زيادة) (Variance) = النقد المعدود فعلياً (Counted Cash) - النقد المتوقع بالنظام (Expected Cash)</code>
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>رمز الصندوق</strong></td><td><strong>Cash Box Code</strong></td><td><code>cash_box_code</code></td><td>Data</td><td>كود مميز للصندوق الميداني (مثال: CB-01).</td></tr>
+<tr><td><strong>نوع الصندوق</strong></td><td><strong>Box Type</strong></td><td><code>box_type</code></td><td>Select</td><td><code>Attendant Box</code> (صندوق عامل)، <code>Cashier POS Box</code> (صندوق كاشير)، <code>Station Reserve</code>.</td></tr>
+<tr><td><strong>الموظف المعين</strong></td><td><strong>Assigned Employee</strong></td><td><code>assigned_employee</code></td><td>Link (إلزامي)</td><td>عامل المضخة المسؤول عن هذا الصندوق.</td></tr>
+<tr><td><strong>العهدة النقدية الافتتاحية</strong></td><td><strong>Opening Float</strong></td><td><code>opening_float</code></td><td>Currency</td><td>مبلغ الفكة النقدية المسلم للعامل عند بدء العمل.</td></tr>
+<tr><td><strong>المبيعات النقدية المسجلة</strong></td><td><strong>Cash Sales</strong></td><td><code>cash_sales</code></td><td>Currency</td><td>إجمالي الإيراد النقدي المستنتج أو المحصل من تعبئات الوقود.</td></tr>
+<tr><td><strong>تحويلات نقدية خارجة للخزينة</strong></td><td><strong>Cash Transfers Out</strong></td><td><code>cash_transfers_out</code></td><td>Currency</td><td>مجموع المبالغ المحولة فعلياً إلى خزينة المحطة.</td></tr>
+<tr><td><strong>المصروفات النقدية المعتمدة</strong></td><td><strong>Approved Expenses</strong></td><td><code>approved_expenses</code></td><td>Currency</td><td>مصروفات نثرية عاجلة معتمدة بمستند رسمي أثناء الوردية.</td></tr>
+<tr><td><strong>النقد المتوقع بالنظام</strong></td><td><strong>Expected Cash</strong></td><td><code>expected_cash</code></td><td>Currency</td><td>المبلغ المحسوب آلياً الذي يفترض وجوده في الصندوق.</td></tr>
+<tr><td><strong>النقد المعدود فعلياً</strong></td><td><strong>Counted Cash</strong></td><td><code>counted_cash</code></td><td>Currency</td><td>المبلغ الناتج عن تفقيط جدول الفئات النقدية.</td></tr>
+<tr><td><strong>الفرق (عجز / زيادة)</strong></td><td><strong>Variance</strong></td><td><code>variance</code></td><td>Currency</td><td>الفارق بين النقد الفعلي والمتوقع (سالب = عجز، موجب = زيادة).</td></tr>
+<tr><td><strong>تم العد بواسطة</strong></td><td><strong>Counted By</strong></td><td><code>counted_by</code></td><td>Link</td><td>المستخدم أو المشرف الذي تولى عد النقدية.</td></tr>
+<tr><td><strong>وقت وتاريخ العد</strong></td><td><strong>Counted At</strong></td><td><code>counted_at</code></td><td>Datetime</td><td>توقيت إجراء الجرد المالي.</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Open</code> (مفتوح للتحصيل)، <code>Closed</code> (مغلق ومطابق)، <code>Reopened</code>.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="denomination-count-doctype">6. عد فئات النقد (Fuel Denomination Count)<a class="h-anchor" href="#denomination-count-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>جدول تفصيلي مدمج في <strong>صندوق النقد (Fuel Cash Box)</strong> و <strong>خزينة المحطة (Fuel Station Safe)</strong> لتفقيط العملات بدقة ومنع الأخطاء الحسابية اليدوية:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>العملة</strong></td><td><strong>Currency</strong></td><td><code>currency</code></td><td>Link</td><td>عملة العد (مثال: SAR).</td></tr>
+<tr><td><strong>فئة العملة الورقية أو المعدنية</strong></td><td><strong>Banknote or Coin Value</strong></td><td><code>banknote_or_coin</code></td><td>Currency</td><td>القيمة الاسمية للفئة (500، 200، 100، 50، 20، 10، 5، 2، 1، 0.50).</td></tr>
+<tr><td><strong>الكمية (عدد الأوراق أو القطع)</strong></td><td><strong>Quantity</strong></td><td><code>quantity</code></td><td>Int</td><td>عدد الأوراق أو القطع المعدنية المعدودة فعلياً من هذه الفئة.</td></tr>
+<tr><td><strong>المجموع الفرعي للفئة</strong></td><td><strong>Subtotal</strong></td><td><code>subtotal</code></td><td>Currency</td><td>محسوب آلياً: (قيمة الفئة × عدد الأوراق).</td></tr>
+<tr><td><strong>تم العد بواسطة</strong></td><td><strong>Counted By</strong></td><td><code>counted_by</code></td><td>Link</td><td>اسم الموظف أو الكاشير القائم بالعد.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="station-safe-doctype">7. خزينة المحطة (Fuel Station Safe)<a class="h-anchor" href="#station-safe-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>خزينة المحطة (Fuel Station Safe)</strong> يمثل الخزينة الفولاذية المركزية بالمحطة التي تُجمع فيها إيرادات الصناديق قبل إيداعها في الحساب البنكي للشركة:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف والشرح التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>رمز الخزينة</strong></td><td><strong>Safe Code</strong></td><td><code>safe_code</code></td><td>Data</td><td>كود الخزينة بالمحطة (مثال: SAFE-01).</td></tr>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link (إلزامي)</td><td>المحطة التابع لها الخزينة.</td></tr>
+<tr><td><strong>الموظف المسؤول</strong></td><td><strong>Responsible Employee</strong></td><td><code>responsible_employee</code></td><td>Link</td><td>أمين الخزينة أو مدير المحطة المستلم لمفاتيح الخزينة.</td></tr>
+<tr><td><strong>الرصيد الافتتاحي</strong></td><td><strong>Opening Balance</strong></td><td><code>opening_balance</code></td><td>Currency</td><td>الرصيد النقدي المرحل من الوردية السابقة داخل الخزينة.</td></tr>
+<tr><td><strong>النقد المستلم من الصناديق</strong></td><td><strong>Cash Received From Boxes</strong></td><td><code>cash_received_from_boxes</code></td><td>Currency</td><td>مجموع المبالغ الموردة عبر مستندات التحويل المعتمدة.</td></tr>
+<tr><td><strong>النقد المودع بالبنك</strong></td><td><strong>Cash Deposited To Bank</strong></td><td><code>cash_deposited_to_bank</code></td><td>Currency</td><td>المبالغ المسلمة لسيارة نقل الأموال أو المودعة في الصراف البنكي.</td></tr>
+<tr><td><strong>رصيد الخزينة المتوقع</strong></td><td><strong>Expected Safe Balance</strong></td><td><code>expected_safe_balance</code></td><td>Currency</td><td>(الرصيد الافتتاحي + المستلم من الصناديق - المودع بالبنك).</td></tr>
+<tr><td><strong>رصيد الخزينة المعدود</strong></td><td><strong>Counted Safe Balance</strong></td><td><code>counted_safe_balance</code></td><td>Currency</td><td>الرصيد الفعلي بعد جرد وتفقيط فئات الخزينة.</td></tr>
+<tr><td><strong>الفرق (عجز / زيادة)</strong></td><td><strong>Variance</strong></td><td><code>variance</code></td><td>Currency</td><td>فارق الخزينة المحسوب آلياً.</td></tr>
+<tr><td><strong>سند قيد الإيداع البنكي</strong></td><td><strong>Bank Deposit Payment Entry</strong></td><td><code>bank_deposit_payment_entry</code></td><td>Link</td><td>سند الدفع أو الإيداع البنكي القياسي في ERPNext.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="cash-transfer-doctype">8. تحويل نقدي للخزينة (Cash Transfer)<a class="h-anchor" href="#cash-transfer-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>تحويل نقدي للخزينة (Cash Transfer)</strong> يوثق حركة انتقال الأموال من صندوق العامل إلى خزينة المحطة:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link</td><td>محطة الوقود التي يتم فيها التحويل.</td></tr>
+<tr><td><strong>من صندوق النقد</strong></td><td><strong>From Cash Box</strong></td><td><code>from_cash_box</code></td><td>Link (إلزامي)</td><td>صندوق العامل الميداني المصدر للنقد.</td></tr>
+<tr><td><strong>إلى خزينة المحطة</strong></td><td><strong>To Station Safe</strong></td><td><code>to_safe</code></td><td>Link (إلزامي)</td><td>الخزينة المركزية المستلمة للمبلغ.</td></tr>
+<tr><td><strong>المبلغ</strong></td><td><strong>Amount</strong></td><td><code>amount</code></td><td>Currency (إلزامي)</td><td>المبلغ النقدي المحول.</td></tr>
+<tr><td><strong>الموظف المسلّم</strong></td><td><strong>From Employee</strong></td><td><code>from_employee</code></td><td>Link</td><td>العامل الذي قام بتسليم النقد.</td></tr>
+<tr><td><strong>الموظف المستلم</strong></td><td><strong>To Employee</strong></td><td><code>to_employee</code></td><td>Link</td><td>أمين الخزينة أو المشرف الذي استلم النقد وعده.</td></tr>
+<tr><td><strong>تأكيد استلام أمين الخزينة</strong></td><td><strong>Receiver Confirmed</strong></td><td><code>receiver_confirmed</code></td><td>Check</td><td>إقرار أمين الخزينة إلكترونياً بسلامة واستلام المبلغ بالكامل.</td></tr>
+<tr><td><strong>تاريخ ووقت تأكيد الاستلام</strong></td><td><strong>Receiver Confirmed At</strong></td><td><code>receiver_confirmed_at</code></td><td>Datetime</td><td>توقيت المصادقة على التحويل.</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code> (مسودة تحويل), <code>Transferred</code> (تم التسليم), <code>Confirmed</code> (معتمد من الخزينة).</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="cash-custody-doctype">9. عهدة النقد (Fuel Cash Custody)<a class="h-anchor" href="#cash-custody-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>عهدة النقد (Fuel Cash Custody)</strong> مخصص لإدارة عهد الفكة المستديمة أو المؤقتة الممنوحة للمشرفين والعاملين:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>الموظف / العامل</strong></td><td><strong>Employee</strong></td><td><code>employee</code></td><td>Link (إلزامي)</td><td>الموظف الحائز للعهدة النقدية.</td></tr>
+<tr><td><strong>المبلغ الافتتاحي للعهدة</strong></td><td><strong>Opening Amount</strong></td><td><code>opening_amount</code></td><td>Currency (إلزامي)</td><td>قيمة الفكة أو العهدة المسلمة للموظف.</td></tr>
+<tr><td><strong>المبيعات النقدية المسجلة</strong></td><td><strong>Cash Sales</strong></td><td><code>cash_sales</code></td><td>Currency</td><td>المبيعات النقدية المضافة على العهدة.</td></tr>
+<tr><td><strong>المبلغ المتوقع</strong></td><td><strong>Expected Amount</strong></td><td><code>expected_amount</code></td><td>Currency</td><td>إجمالي الرصيد الواجب تواجده لدى الموظف.</td></tr>
+<tr><td><strong>المبلغ الفعلي</strong></td><td><strong>Actual Amount</strong></td><td><code>actual_amount</code></td><td>Currency</td><td>المبلغ المعدود عند استرداد أو تسوية العهدة.</td></tr>
+<tr><td><strong>مبلغ الفرق</strong></td><td><strong>Variance Amount</strong></td><td><code>variance_amount</code></td><td>Currency</td><td>الفارق المالي المحتسب عند تسوية العهدة.</td></tr>
+<tr><td><strong>طريقة الدفع</strong></td><td><strong>Mode of Payment</strong></td><td><code>mode_of_payment</code></td><td>Link</td><td>طريقة الدفع المرتبطة بحساب النقدية في ERPNext.</td></tr>
+<tr><td><strong>سند الدفع القياسي</strong></td><td><strong>Payment Entry</strong></td><td><code>payment_entry</code></td><td>Link</td><td>سند صرف أو استرداد العهدة في الحسابات العامة.</td></tr>
+</tbody>
+</table></div>

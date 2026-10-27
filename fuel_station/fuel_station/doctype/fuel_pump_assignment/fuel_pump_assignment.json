@@ -1,0 +1,325 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "station",
+  "business_date",
+  "shift",
+  "pump",
+  "status",
+  "column_break_1",
+  "employee",
+  "user",
+  "cash_box",
+  "section_break_2",
+  "opening_reading",
+  "closing_reading",
+  "column_break_2",
+  "opening_meter_reading",
+  "closing_meter_reading",
+  "section_break_3",
+  "start_time",
+  "end_time",
+  "column_break_3",
+  "assignment_start",
+  "assignment_end",
+  "section_break_4",
+  "correction_approved",
+  "column_break_4",
+  "correction_reason",
+  "section_break_other",
+  "naming_series",
+  "opening_cash_float",
+  "approved_by",
+  "active"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Assignment Information"
+  },
+  {
+   "fieldname": "station",
+   "label": "Station",
+   "fieldtype": "Link",
+   "options": "Fuel Station",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "business_date",
+   "label": "Business Date",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "shift",
+   "label": "Shift",
+   "fieldtype": "Link",
+   "options": "Fuel Shift",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "pump",
+   "label": "Pump",
+   "fieldtype": "Link",
+   "options": "Fuel Pump",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "Planned\nActive\nHanded Over\nClosed\nCancelled",
+   "default": "Active",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "employee",
+   "label": "Employee",
+   "fieldtype": "Link",
+   "options": "Employee",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "user",
+   "label": "User",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "cash_box",
+   "label": "Cash Box",
+   "fieldtype": "Link",
+   "options": "Fuel Cash Box"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Meter Readings"
+  },
+  {
+   "fieldname": "opening_reading",
+   "label": "Opening Reading",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "closing_reading",
+   "label": "Closing Reading",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "opening_meter_reading",
+   "label": "Opening Meter Reading",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "closing_meter_reading",
+   "label": "Closing Meter Reading",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break",
+   "label": "Working Hours"
+  },
+  {
+   "fieldname": "start_time",
+   "label": "Start Time",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "end_time",
+   "label": "End Time",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "assignment_start",
+   "label": "Assignment Start",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "assignment_end",
+   "label": "Assignment End",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break",
+   "label": "Correction & Approval"
+  },
+  {
+   "fieldname": "correction_approved",
+   "label": "Correction Approved",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "correction_reason",
+   "label": "Correction Reason",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "FPA-.YYYY.-.#####",
+   "default": "FPA-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "opening_cash_float",
+   "label": "Opening Cash Float",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "approved_by",
+   "label": "Approved By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "active",
+   "label": "Active",
+   "fieldtype": "Check",
+   "default": "1"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "issingle": 0,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Fuel Pump Assignment",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "System Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Station Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Shift Supervisor",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Cashier",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1
+  },
+  {
+   "role": "Inventory Officer",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Attendant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "print": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field"
+}

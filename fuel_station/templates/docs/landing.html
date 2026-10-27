@@ -1,0 +1,104 @@
+{%- extends "fuel_station/templates/docs/base.html" -%}
+{%- from "fuel_station/templates/docs/macros.html" import tt, icon -%}
+
+{%- block body_class -%}landing{%- endblock -%}
+
+{%- block body -%}
+<div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
+<div class="landing-drawer">{% include "fuel_station/templates/docs/sidebar.html" %}</div>
+
+<main id="main" class="landing-main">
+	<section class="hero">
+		<div class="hero-grid" aria-hidden="true"></div>
+		<div class="hero-inner">
+			<div class="hero-copy">
+				<span class="hero-badge reveal">{{ icon("sparkles", 15) }} {{ tt(ui.hero_badge) }}</span>
+				<h1 class="hero-title reveal">
+					<span class="line">{{ tt(ui.hero_title_1) }}</span>
+					<span class="line grad-text">{{ tt(ui.hero_title_2) }}</span>
+				</h1>
+				<p class="hero-sub reveal">{{ tt(ui.hero_sub) }}</p>
+				<div class="hero-cta reveal">
+					<a class="btn btn-primary" href="{{ site.base }}/{{ docs_nav[0].slug }}">{{ tt(ui.start_reading) }} {{ icon("arrow", 17) }}</a>
+					<button class="btn btn-ghost" type="button" data-open-search>{{ icon("search", 16) }} {{ tt(ui.search_short) }} <kbd class="kbd">Ctrl K</kbd></button>
+				</div>
+			</div>
+
+			<div class="hero-visual" aria-hidden="true">
+				<div class="orbit orbit-1"></div>
+				<div class="orbit orbit-2"></div>
+				<div class="mock mock-booking">
+					<div class="mock-head"><span class="dot" style="--c:#ea580c"></span>{{ tt(ui.mock_dispense) }}<small>FDE-2026-00001</small></div>
+					<div class="mock-row"><span>{{ tt(ui.mock_pump) }}</span><b>PUMP-01 (GAS-91)</b></div>
+					<div class="mock-row"><span>{{ tt(ui.mock_status) }}</span><em class="chip chip-ok">{{ tt(ui.mock_invoiced) }}</em></div>
+					<div class="mock-row"><span>{{ tt(ui.mock_qty) }}</span><b>45.00 Liter</b></div>
+					<div class="mock-bar"><i></i></div>
+				</div>
+				<div class="mock mock-invoice">
+					<div class="mock-head"><span class="dot" style="--c:#059669"></span>{{ tt(ui.mock_invoice) }}</div>
+					<div class="mock-big">98.10 <small>SAR</small></div>
+					<em class="chip chip-paid">{{ tt(ui.mock_paid) }}</em>
+				</div>
+				<div class="mock mock-gl">
+					<div class="mock-head"><span class="dot" style="--c:#2563eb"></span>{{ tt(ui.mock_tank) }}</div>
+					<div class="bars"><i style="--h:85%"></i><i style="--h:75%"></i><i style="--h:65%"></i><i style="--h:90%"></i><i style="--h:70%"></i><i style="--h:80%"></i></div>
+				</div>
+				<div class="mock mock-pill">{{ icon("sparkles", 15) }} {{ tt(ui.mock_pill) }}</div>
+			</div>
+		</div>
+
+		<ul class="stats">
+			<li class="stat reveal" style="--c:#ea580c"><b data-count="{{ totals.guides }}">{{ totals.guides }}</b><span>{{ tt(ui.stat_guides) }}</span></li>
+			<li class="stat reveal" style="--c:#0891b2"><b data-count="{{ totals.sections }}">{{ totals.sections }}</b><span>{{ tt(ui.stat_sections) }}</span></li>
+			<li class="stat reveal" style="--c:#059669"><b data-count="{{ totals.tables }}">{{ totals.tables }}</b><span>{{ tt(ui.stat_tables) }}</span></li>
+			<li class="stat reveal" style="--c:#2563eb"><b data-count="2">2</b><span>{{ tt(ui.stat_langs) }}</span></li>
+		</ul>
+	</section>
+
+	<section class="guides" aria-labelledby="guides-title">
+		<div class="section-head reveal">
+			<h2 id="guides-title">{{ tt(ui.explore) }}</h2>
+			<p>{{ tt(ui.explore_sub) }}</p>
+		</div>
+		<div class="cards">
+			{%- for item in docs_nav %}
+			{%- set st = doc_stats[item.slug] %}
+			<a class="card reveal" href="{{ site.base }}/{{ item.slug }}" style="--c: {{ item.color }}; --c2: {{ item.color2 }}; --d: {{ loop.index0 }}">
+				<span class="card-glow" aria-hidden="true"></span>
+				<span class="card-top">
+					<span class="card-icon">{{ icon(item.icon, 24) }}</span>
+					<span class="card-num">{{ "%02d" | format(loop.index) }}</span>
+				</span>
+				<span class="card-title">{{ tt(item.title) }}</span>
+				<span class="card-desc">{{ tt(item.description) }}</span>
+				<span class="card-foot">
+					<span>{{ icon("list", 14) }} {{ st.sections }} {{ tt(ui.sections) }}</span>
+					<span>{{ icon("clock", 14) }} {{ st.minutes }} {{ tt(ui.min_read) }}</span>
+					<span class="card-go">{{ tt(ui.read_guide) }} {{ icon("arrow", 15) }}</span>
+				</span>
+			</a>
+			{%- endfor %}
+		</div>
+	</section>
+
+	<section class="flow" aria-labelledby="flow-title">
+		<div class="section-head reveal">
+			<h2 id="flow-title">{{ tt(ui.path_title) }}</h2>
+			<p>{{ tt(ui.path_sub) }}</p>
+		</div>
+		<ol class="flow-steps">
+			{%- for ic, color, key in site.flow %}
+			<li class="flow-step reveal" style="--c: {{ color }}; --d: {{ loop.index0 }}">
+				<span class="flow-icon">{{ icon(ic, 24) }}</span>
+				<b>{{ tt(ui[key]) }}</b>
+				<small>{{ tt(ui[key ~ "_sub"]) }}</small>
+			</li>
+			{%- if not loop.last %}<li class="flow-link" aria-hidden="true"><span></span></li>{% endif %}
+			{%- endfor %}
+		</ol>
+	</section>
+
+	<footer class="site-foot">{{ tt(ui.footer) }}</footer>
+</main>
+{%- endblock -%}
+

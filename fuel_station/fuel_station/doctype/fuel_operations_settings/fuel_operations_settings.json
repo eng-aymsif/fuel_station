@@ -1,0 +1,824 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "invoice_creator_mode",
+  "invoice_submitter_mode",
+  "column_break_1",
+  "invoice_timing",
+  "transaction_capture_timing",
+  "stock_posting_timing",
+  "section_break_2",
+  "group_by_station",
+  "group_by_pump",
+  "group_by_shift",
+  "group_by_attendant",
+  "column_break_2",
+  "group_by_item",
+  "group_by_rate",
+  "group_by_payment_method",
+  "group_by_customer",
+  "group_by_cost_center",
+  "section_break_3",
+  "allow_multiple_attendants_per_pump",
+  "allow_reopen_closed_shift",
+  "column_break_3",
+  "allow_reopen_closed_cash_box",
+  "block_close_with_unclassified_events",
+  "create_invoice_drafts_on_close",
+  "section_break_4",
+  "tax_rounding_precision",
+  "column_break_4",
+  "migration_cutover_date",
+  "section_break_other",
+  "meter_source",
+  "require_opening_reading",
+  "require_closing_reading",
+  "allow_meter_correction",
+  "meter_correction_requires_approval",
+  "allowed_variance_liters",
+  "allowed_variance_percent",
+  "meter_variance_tolerance_quantity",
+  "enable_fuel_issue_orders",
+  "internal_issue_requires_order",
+  "enable_qr_authorization",
+  "require_vehicle",
+  "require_employee",
+  "require_department",
+  "require_cost_center",
+  "allow_emergency_issue",
+  "emergency_issue_approval_hours",
+  "allow_partial_issue",
+  "allow_over_issue_with_approval",
+  "allow_cash",
+  "allow_card",
+  "allow_credit",
+  "allow_prepaid",
+  "credit_requires_authorization",
+  "card_requires_reference",
+  "cash_custody_mode",
+  "attendant_can_submit",
+  "attendant_max_invoice_amount",
+  "attendant_max_invoice_quantity",
+  "cash_inference_mode",
+  "unclassified_quantity_policy",
+  "negative_cash_quantity_policy",
+  "selling_price_tax_mode",
+  "default_sales_tax_template",
+  "default_purchase_tax_template",
+  "default_tax_category",
+  "prices_include_tax",
+  "tax_rounding_method",
+  "allowed_rounding_difference",
+  "discount_application_order",
+  "allow_line_discount",
+  "allow_invoice_discount",
+  "allow_manual_discount",
+  "allow_attendant_discount",
+  "attendant_discount_requires_reason",
+  "manual_discount_requires_approval",
+  "attendant_discount_limit",
+  "supervisor_discount_limit",
+  "discount_account",
+  "discount_cost_center",
+  "credit_note_requires_approval",
+  "e_invoice_required",
+  "e_invoice_submission_mode",
+  "advance_is_tax_event",
+  "shift_mode_enabled",
+  "shift_opening_requires_supervisor",
+  "shift_closing_requires_supervisor",
+  "handover_requires_meter_reading",
+  "handover_requires_cash_count",
+  "cash_box_required",
+  "safe_required",
+  "opening_float_required",
+  "cash_count_by_denominations",
+  "cash_transfer_requires_receiver_confirmation",
+  "cash_variance_tolerance_amount",
+  "cash_variance_tolerance_percentage",
+  "variance_requires_approval",
+  "variance_requires_supervisor_approval",
+  "variance_requires_manager_approval",
+  "supervisor_variance_limit_amount",
+  "allow_reopen_closed_safe",
+  "close_shift_only",
+  "submit_invoices_on_close",
+  "post_stock_on_invoice_submit",
+  "create_payment_entries_on_close",
+  "block_close_with_open_issue_orders",
+  "offline_mode_enabled",
+  "integration_log_retention_days",
+  "scope_rules"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "General Operating Modes"
+  },
+  {
+   "fieldname": "invoice_creator_mode",
+   "label": "Invoice Creator Mode",
+   "fieldtype": "Select",
+   "options": "ATTENDANT\nSUPERVISOR\nCASHIER\nACCOUNTANT\nAUTOMATIC\nHYBRID",
+   "default": "ACCOUNTANT"
+  },
+  {
+   "fieldname": "invoice_submitter_mode",
+   "label": "Invoice Submitter Mode",
+   "fieldtype": "Select",
+   "options": "ATTENDANT\nSUPERVISOR\nCASHIER\nACCOUNTANT\nMANAGER\nAUTOMATIC_IF_NO_VARIANCE",
+   "default": "ACCOUNTANT"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "invoice_timing",
+   "label": "Invoice Timing",
+   "fieldtype": "Select",
+   "options": "BEFORE_DISPENSE\nAFTER_DISPENSE\nPER_TRANSACTION\nPER_PUMP_SHIFT\nPER_ATTENDANT_SHIFT\nPER_PUMP_DAY\nPER_STATION_DAY\nMANUAL_BATCH\nAUTOMATIC_ON_CLOSING",
+   "default": "PER_PUMP_SHIFT"
+  },
+  {
+   "fieldname": "transaction_capture_timing",
+   "label": "Transaction Capture Timing",
+   "fieldtype": "Select",
+   "options": "BEFORE_DISPENSE\nDURING_DISPENSE\nAFTER_DISPENSE\nMETER_CLOSING_ONLY\nAPI_EVENT",
+   "default": "DURING_DISPENSE"
+  },
+  {
+   "fieldname": "stock_posting_timing",
+   "label": "Stock Posting Timing",
+   "fieldtype": "Select",
+   "options": "ON_DISPENSE\nON_INVOICE_SUBMIT\nON_SHIFT_CLOSE\nON_DAY_CLOSE\nMANUAL_APPROVAL",
+   "default": "ON_INVOICE_SUBMIT"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Invoice Grouping Configuration"
+  },
+  {
+   "fieldname": "group_by_station",
+   "label": "Group By Station",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "group_by_pump",
+   "label": "Group By Pump",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "group_by_shift",
+   "label": "Group By Shift",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "group_by_attendant",
+   "label": "Group By Attendant",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "group_by_item",
+   "label": "Group By Item",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "group_by_rate",
+   "label": "Group By Rate",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "group_by_payment_method",
+   "label": "Group By Payment Method",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "group_by_customer",
+   "label": "Group By Customer",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "group_by_cost_center",
+   "label": "Group By Cost Center",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break",
+   "label": "Attendant & Pump Controls"
+  },
+  {
+   "fieldname": "allow_multiple_attendants_per_pump",
+   "label": "Allow Multiple Attendants Per Pump",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "allow_reopen_closed_shift",
+   "label": "Allow Reopen Closed Shift",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "allow_reopen_closed_cash_box",
+   "label": "Allow Reopen Closed Cash Box",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "block_close_with_unclassified_events",
+   "label": "Block Close With Unclassified Events",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "create_invoice_drafts_on_close",
+   "label": "Create Invoice Drafts On Close",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break",
+   "label": "Tax & Precision Settings"
+  },
+  {
+   "fieldname": "tax_rounding_precision",
+   "label": "Tax Rounding Precision",
+   "fieldtype": "Int",
+   "default": "2"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "migration_cutover_date",
+   "label": "Migration Cutover Date",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "meter_source",
+   "label": "Meter Source",
+   "fieldtype": "Select",
+   "options": "MANUAL\nFORECOURT_CONTROLLER\nHYBRID",
+   "default": "MANUAL"
+  },
+  {
+   "fieldname": "require_opening_reading",
+   "label": "Require Opening Reading",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "require_closing_reading",
+   "label": "Require Closing Reading",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "allow_meter_correction",
+   "label": "Allow Meter Correction",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "meter_correction_requires_approval",
+   "label": "Meter Correction Requires Approval",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "allowed_variance_liters",
+   "label": "Allowed Variance Liters",
+   "fieldtype": "Float",
+   "default": "5.0"
+  },
+  {
+   "fieldname": "allowed_variance_percent",
+   "label": "Allowed Variance Percent",
+   "fieldtype": "Float",
+   "default": "0.5"
+  },
+  {
+   "fieldname": "meter_variance_tolerance_quantity",
+   "label": "Meter Variance Tolerance Quantity",
+   "fieldtype": "Float",
+   "default": "5.0"
+  },
+  {
+   "fieldname": "enable_fuel_issue_orders",
+   "label": "Enable Fuel Issue Orders",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "internal_issue_requires_order",
+   "label": "Internal Issue Requires Order",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "enable_qr_authorization",
+   "label": "Enable QR Authorization",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "require_vehicle",
+   "label": "Require Vehicle",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "require_employee",
+   "label": "Require Employee",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "require_department",
+   "label": "Require Department",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "require_cost_center",
+   "label": "Require Cost Center",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "allow_emergency_issue",
+   "label": "Allow Emergency Issue",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "emergency_issue_approval_hours",
+   "label": "Emergency Issue Approval Hours",
+   "fieldtype": "Int",
+   "default": "24"
+  },
+  {
+   "fieldname": "allow_partial_issue",
+   "label": "Allow Partial Issue",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "allow_over_issue_with_approval",
+   "label": "Allow Over Issue With Approval",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "allow_cash",
+   "label": "Allow Cash",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "allow_card",
+   "label": "Allow Card",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "allow_credit",
+   "label": "Allow Credit",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "allow_prepaid",
+   "label": "Allow Prepaid",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "credit_requires_authorization",
+   "label": "Credit Requires Authorization",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "card_requires_reference",
+   "label": "Card Requires Reference",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "cash_custody_mode",
+   "label": "Cash Custody Mode",
+   "fieldtype": "Select",
+   "options": "ATTENDANT_CASH_BOX\nCENTRAL_CASHIER\nHYBRID",
+   "default": "ATTENDANT_CASH_BOX"
+  },
+  {
+   "fieldname": "attendant_can_submit",
+   "label": "Attendant Can Submit",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "attendant_max_invoice_amount",
+   "label": "Attendant Max Invoice Amount",
+   "fieldtype": "Currency",
+   "default": "5000"
+  },
+  {
+   "fieldname": "attendant_max_invoice_quantity",
+   "label": "Attendant Max Invoice Quantity",
+   "fieldtype": "Float",
+   "default": "1000"
+  },
+  {
+   "fieldname": "cash_inference_mode",
+   "label": "Cash Inference Mode",
+   "fieldtype": "Select",
+   "options": "METER_RESIDUAL\nEVENT_BASED\nHYBRID",
+   "default": "METER_RESIDUAL"
+  },
+  {
+   "fieldname": "unclassified_quantity_policy",
+   "label": "Unclassified Quantity Policy",
+   "fieldtype": "Select",
+   "options": "CREATE_CASH_DRAFT\nHOLD_FOR_REVIEW\nCREATE_EXCEPTION\nALLOW_WITH_REASON",
+   "default": "CREATE_CASH_DRAFT"
+  },
+  {
+   "fieldname": "negative_cash_quantity_policy",
+   "label": "Negative Cash Quantity Policy",
+   "fieldtype": "Select",
+   "options": "HOLD_FOR_REVIEW\nCREATE_EXCEPTION\nBLOCK_CLOSING",
+   "default": "HOLD_FOR_REVIEW"
+  },
+  {
+   "fieldname": "selling_price_tax_mode",
+   "label": "Selling Price Tax Mode",
+   "fieldtype": "Select",
+   "options": "TAX_EXCLUSIVE\nTAX_INCLUSIVE",
+   "default": "TAX_EXCLUSIVE"
+  },
+  {
+   "fieldname": "default_sales_tax_template",
+   "label": "Default Sales Tax Template",
+   "fieldtype": "Link",
+   "options": "Sales Taxes and Charges Template"
+  },
+  {
+   "fieldname": "default_purchase_tax_template",
+   "label": "Default Purchase Tax Template",
+   "fieldtype": "Link",
+   "options": "Purchase Taxes and Charges Template"
+  },
+  {
+   "fieldname": "default_tax_category",
+   "label": "Default Tax Category",
+   "fieldtype": "Link",
+   "options": "Tax Category"
+  },
+  {
+   "fieldname": "prices_include_tax",
+   "label": "Prices Include Tax",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "tax_rounding_method",
+   "label": "Tax Rounding Method",
+   "fieldtype": "Select",
+   "options": "LINE_LEVEL\nINVOICE_LEVEL",
+   "default": "INVOICE_LEVEL"
+  },
+  {
+   "fieldname": "allowed_rounding_difference",
+   "label": "Allowed Rounding Difference",
+   "fieldtype": "Float",
+   "default": "0.05"
+  },
+  {
+   "fieldname": "discount_application_order",
+   "label": "Discount Application Order",
+   "fieldtype": "Select",
+   "options": "BEFORE_TAX\nAFTER_TAX",
+   "default": "BEFORE_TAX"
+  },
+  {
+   "fieldname": "allow_line_discount",
+   "label": "Allow Line Discount",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "allow_invoice_discount",
+   "label": "Allow Invoice Discount",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "allow_manual_discount",
+   "label": "Allow Manual Discount",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "allow_attendant_discount",
+   "label": "Allow Attendant Discount",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "attendant_discount_requires_reason",
+   "label": "Attendant Discount Requires Reason",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "manual_discount_requires_approval",
+   "label": "Manual Discount Requires Approval",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "attendant_discount_limit",
+   "label": "Attendant Discount Limit (%)",
+   "fieldtype": "Float",
+   "default": "2.0"
+  },
+  {
+   "fieldname": "supervisor_discount_limit",
+   "label": "Supervisor Discount Limit (%)",
+   "fieldtype": "Float",
+   "default": "10.0"
+  },
+  {
+   "fieldname": "discount_account",
+   "label": "Discount Account",
+   "fieldtype": "Link",
+   "options": "Account"
+  },
+  {
+   "fieldname": "discount_cost_center",
+   "label": "Discount Cost Center",
+   "fieldtype": "Link",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "credit_note_requires_approval",
+   "label": "Credit Note Requires Approval",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "e_invoice_required",
+   "label": "E-Invoice Required",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "e_invoice_submission_mode",
+   "label": "E-Invoice Submission Mode",
+   "fieldtype": "Select",
+   "options": "MANUAL\nON_SUBMIT\nBATCH",
+   "default": "ON_SUBMIT"
+  },
+  {
+   "fieldname": "advance_is_tax_event",
+   "label": "Advance Payment Is Tax Event",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "shift_mode_enabled",
+   "label": "Shift Mode Enabled",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "shift_opening_requires_supervisor",
+   "label": "Shift Opening Requires Supervisor",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "shift_closing_requires_supervisor",
+   "label": "Shift Closing Requires Supervisor",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "handover_requires_meter_reading",
+   "label": "Handover Requires Meter Reading",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "handover_requires_cash_count",
+   "label": "Handover Requires Cash Count",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "cash_box_required",
+   "label": "Cash Box Required",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "safe_required",
+   "label": "Safe Required",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "opening_float_required",
+   "label": "Opening Float Required",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "cash_count_by_denominations",
+   "label": "Cash Count By Denominations",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "cash_transfer_requires_receiver_confirmation",
+   "label": "Cash Transfer Requires Receiver Confirmation",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "cash_variance_tolerance_amount",
+   "label": "Cash Variance Tolerance Amount",
+   "fieldtype": "Currency",
+   "default": "10.0"
+  },
+  {
+   "fieldname": "cash_variance_tolerance_percentage",
+   "label": "Cash Variance Tolerance Percentage",
+   "fieldtype": "Float",
+   "default": "1.0"
+  },
+  {
+   "fieldname": "variance_requires_approval",
+   "label": "Variance Requires Approval",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "variance_requires_supervisor_approval",
+   "label": "Variance Requires Supervisor Approval",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "variance_requires_manager_approval",
+   "label": "Variance Requires Manager Approval",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "supervisor_variance_limit_amount",
+   "label": "Supervisor Variance Limit Amount",
+   "fieldtype": "Currency",
+   "default": "100.0"
+  },
+  {
+   "fieldname": "allow_reopen_closed_safe",
+   "label": "Allow Reopen Closed Safe",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "close_shift_only",
+   "label": "Close Shift Only",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "submit_invoices_on_close",
+   "label": "Submit Invoices On Close",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "post_stock_on_invoice_submit",
+   "label": "Post Stock On Invoice Submit",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "create_payment_entries_on_close",
+   "label": "Create Payment Entries On Close",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "block_close_with_open_issue_orders",
+   "label": "Block Close With Open Issue Orders",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "offline_mode_enabled",
+   "label": "Offline Mode Enabled",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "integration_log_retention_days",
+   "label": "Integration Log Retention Days",
+   "fieldtype": "Int",
+   "default": "90"
+  },
+  {
+   "fieldname": "scope_rules",
+   "label": "Scope Rules",
+   "fieldtype": "Table",
+   "options": "Fuel Operations Scope Rule"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Fuel Operations Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1
+  },
+  {
+   "role": "System Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1
+  },
+  {
+   "role": "Fuel Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1
+  },
+  {
+   "role": "Station Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1
+  },
+  {
+   "role": "Shift Supervisor",
+   "read": 1,
+   "write": 0,
+   "create": 0
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 0,
+   "create": 0
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

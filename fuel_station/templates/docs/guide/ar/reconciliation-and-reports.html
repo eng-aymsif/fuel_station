@@ -1,0 +1,71 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>التسوية والمطابقة والتقارير:</strong> تمثل مرحلة التسوية والمطابقة صمام الأمان المالي والرقابي للمحطة. يطابق النظام قراءات العدادات مع مبيعات النقد والبطاقات والعملاء الآجلين وأوامر الصرف، ويعالج الفروقات الاستثنائية بمسارات اعتماد متدرجة الصلاحيات.</p>
+</blockquote>
+
+<h2 id="reconciliation-overview">دورة التسوية والمطابقة وإدارة الاستثناءات<a class="h-anchor" href="#reconciliation-overview" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>ترتكز عملية إقفال الوردية والرقابة على مستندين رئيسيين بالإضافة إلى حزمة التقارير الرقابية:</p>
+<ol class="steps">
+  <li>مطابقة فرق العداد مع مجمل التعبئات في <strong>تسوية المضخة (Fuel Pump Reconciliation)</strong>.</li>
+  <li>إحالة وتصعيد أي فروقات متجاوزة لحدود التسامح المالي إلى <strong>استثناء تسوية الوقود (Fuel Reconciliation Exception)</strong>.</li>
+  <li>استخراج التقارير والتحليلات اليومية لدعم اتخاذ القرار وتدقيق الحسابات.</li>
+</ol>
+
+<h2 id="pump-reconciliation-doctype">1. تسوية المضخة (Fuel Pump Reconciliation)<a class="h-anchor" href="#pump-reconciliation-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>تسوية المضخة (Fuel Pump Reconciliation)</strong> يحلل حركة كل مضخة بنهاية الوردية ويستنتج كمية النقدية بدقة متناهية:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link (إلزامي)</td><td>محطة الوقود.</td></tr>
+<tr><td><strong>تاريخ العمل</strong></td><td><strong>Business Date</strong></td><td><code>business_date</code></td><td>Date (إلزامي)</td><td>تاريخ يوم التشغيل الخاضع للتسوية.</td></tr>
+<tr><td><strong>الوردية</strong></td><td><strong>Shift</strong></td><td><code>shift</code></td><td>Link</td><td>الوردية المسواة.</td></tr>
+<tr><td><strong>المضخة</strong></td><td><strong>Pump</strong></td><td><code>pump</code></td><td>Link (إلزامي)</td><td>المضخة الخاضعة للمطابقة.</td></tr>
+<tr><td><strong>صنف الوقود</strong></td><td><strong>Fuel Item</strong></td><td><code>item</code></td><td>Link</td><td>نوع الوقود.</td></tr>
+<tr><td><strong>قراءة البداية</strong></td><td><strong>Opening Reading</strong></td><td><code>opening_reading</code></td><td>Float (إلزامي)</td><td>قراءة عداد المضخة الافتتاحية المعتمدة.</td></tr>
+<tr><td><strong>قراءة النهاية</strong></td><td><strong>Closing Reading</strong></td><td><code>closing_reading</code></td><td>Float (إلزامي)</td><td>قراءة عداد المضخة الختامية المسجلة.</td></tr>
+<tr><td><strong>كمية العداد (فرق القراءة)</strong></td><td><strong>Meter Quantity</strong></td><td><code>meter_quantity</code></td><td>Float</td><td>محسوبة آلياً: (قراءة النهاية - قراءة البداية).</td></tr>
+<tr><td><strong>سعر اللتر</strong></td><td><strong>Unit Rate</strong></td><td><code>rate</code></td><td>Currency</td><td>سعر البيع المعتمد للتر.</td></tr>
+<tr><td><strong>كمية مبيعات البطاقات (لتر)</strong></td><td><strong>Card Quantity</strong></td><td><code>card_quantity</code></td><td>Float</td><td>مجموع لترات التعبئة المسددة عبر أجهزة مدى والبطاقات.</td></tr>
+<tr><td><strong>كمية المبيعات الآجلة (لتر)</strong></td><td><strong>Credit Quantity</strong></td><td><code>credit_quantity</code></td><td>Float</td><td>مجموع لترات التعبئة المسحوبة لشركات الأساطيل الآجلة.</td></tr>
+<tr><td><strong>كمية الصرف الداخلي (لتر)</strong></td><td><strong>Internal Quantity</strong></td><td><code>internal_quantity</code></td><td>Float</td><td>لترات الوقود المصروفة بسيارات وأقسام ومعدات الشركة.</td></tr>
+<tr><td><strong>كمية المعايرة (لتر)</strong></td><td><strong>Calibration Quantity</strong></td><td><code>calibration_quantity</code></td><td>Float</td><td>اللترات المستبعدة نتيجة اختبارات مكاييل المعايرة.</td></tr>
+<tr><td><strong>كمية الهدر المعتمد (لتر)</strong></td><td><strong>Waste Quantity</strong></td><td><code>waste_quantity</code></td><td>Float</td><td>اللترات التالفة المعتمدة كفواقد تشغيلية.</td></tr>
+<tr><td><strong>الكمية المصنفة الإجمالية</strong></td><td><strong>Classified Quantity</strong></td><td><code>classified_quantity</code></td><td>Float</td><td>مجموع الكميات غير النقدية الموثقة (بطاقات + آجل + داخلي + معايرة).</td></tr>
+<tr><td><strong>الكمية النقدية المتوقعة</strong></td><td><strong>Expected Cash Quantity</strong></td><td><code>cash_quantity</code></td><td>Float</td><td>كمية النقد المستنتجة = (كمية العداد - الكمية المصنفة الإجمالية).</td></tr>
+<tr><td><strong>فرق الكمية (لتر)</strong></td><td><strong>Variance Quantity</strong></td><td><code>variance_quantity</code></td><td>Float</td><td>الفارق بين كمية العداد ومجموع حركات التعبئة الفعلية المسجلة.</td></tr>
+<tr><td><strong>مبلغ الفرق</strong></td><td><strong>Variance Amount</strong></td><td><code>variance_amount</code></td><td>Currency</td><td>القيمة المالية لفارق اللترات (فرق الكمية × سعر اللتر).</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code> (مسودة تسوية), <code>Matched</code> (مطابقة تامة دون فروقات), <code>Variance Pending</code> (يوجد فارق بانتظار الاعتماد), <code>Approved</code>.</td></tr>
+<tr><td><strong>معتمد من</strong></td><td><strong>Approved By</strong></td><td><code>approved_by</code></td><td>Link</td><td>المشرف أو المحاسب المعتمد لنتائج التسوية.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="reconciliation-exception-doctype">2. استثناء تسوية الوقود (Fuel Reconciliation Exception)<a class="h-anchor" href="#reconciliation-exception-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>استثناء تسوية الوقود (Fuel Reconciliation Exception)</strong> يُنشأ آلياً عند تجاوز فروقات العداد أو عجز النقدية لحدود التسامح المسموح بها في الإعدادات، ويخضع لسلسلة تصعيد ورقابة صارمة:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>نوع الاستثناء</strong></td><td><strong>Exception Type</strong></td><td><code>exception_type</code></td><td>Select (إلزامي)</td><td><code>Meter Variance Exceeded</code> (تجاوز فرق العداد), <code>Cash Shortage Exceeded</code> (تجاوز عجز النقدية), <code>Unexplained Tank Dip Variance</code> (فارق جرد خزان غير مبرر).</td></tr>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link (إلزامي)</td><td>المحطة التي ظهر فيها الاستثناء.</td></tr>
+<tr><td><strong>المضخة</strong></td><td><strong>Pump</strong></td><td><code>pump</code></td><td>Link</td><td>المضخة محل النزاع إن كان استثناء عداد.</td></tr>
+<tr><td><strong>مستوى الأهمية</strong></td><td><strong>Severity</strong></td><td><code>severity</code></td><td>Select</td><td><code>Low</code> (منخفض ضمن صلاحية المشرف), <code>Medium</code> (متوسط يتطلب مدير المحطة), <code>Critical</code> (حرج يتطلب مدير العمليات).</td></tr>
+<tr><td><strong>الكمية أو المبلغ المتوقع</strong></td><td><strong>Expected Quantity / Amount</strong></td><td><code>expected_quantity</code></td><td>Float</td><td>الرقم المتوقع نظاماً.</td></tr>
+<tr><td><strong>الكمية أو المبلغ الفعلي</strong></td><td><strong>Actual Quantity / Amount</strong></td><td><code>actual_quantity</code></td><td>Float</td><td>الرقم الفعلي المحقق ميدانياً.</td></tr>
+<tr><td><strong>الفارق</strong></td><td><strong>Difference</strong></td><td><code>difference</code></td><td>Float</td><td>قيمة الانحراف أو العجز المالي/اللترى.</td></tr>
+<tr><td><strong>مُسند إلى</strong></td><td><strong>Assigned To</strong></td><td><code>assigned_to</code></td><td>Link</td><td>المحقق أو المشرف المكلف ببحث أسباب الفارق.</td></tr>
+<tr><td><strong>ملاحظات المعالجة والتحقيق</strong></td><td><strong>Resolution Notes</strong></td><td><code>resolution_notes</code></td><td>Small Text</td><td>تقرير نتيجة التحقيق وأسباب الخلل الميداني.</td></tr>
+<tr><td><strong>مستند المعالجة</strong></td><td><strong>Resolution Document</strong></td><td><code>resolution_document</code></td><td>Data</td><td>رقم قيد اليومية (Journal Entry) أو سند الخصم من العامل.</td></tr>
+<tr><td><strong>معتمد من</strong></td><td><strong>Approved By</strong></td><td><code>approved_by</code></td><td>Link</td><td>المدير المعتمد لإغلاق ومعالجة ملف الاستثناء.</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Open</code> (مفتوح قيد التحقيق), <code>Under Investigation</code>, <code>Resolved</code> (تمت المعالجة والإقفال), <code>Escalated</code>.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="operational-reports">التقارير الرقابية والتشغيلية المدمجة<a class="h-anchor" href="#operational-reports" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>يوفر النظام حزمة تقارير تحليلية لحظية يمكن الوصول إليها مباشرة من شريط البحث أو من موديول محطة الوقود:</p>
+<ul>
+  <li><strong>سجل مبيعات الوقود اليومي (Daily Fuel Sales Register)</strong>: كشف تفصيلي بحركات البيع مصنفة حسب المحطة، نوع الوقود، طريقة السداد، والضريبة.</li>
+  <li><strong>تقرير مطابقة عدادات المضخات (Pump Meter Reconciliation Report)</strong>: مقارنة بيانية بين فروقات قراءات العدادات والمبيعات المنفذة لكشف أي تسريب لحظي.</li>
+  <li><strong>تقرير عهد وفروقات صناديق النقد (Cash Box Variances Report)</strong>: متابعة أداء عمال المضخات وتحديد أي عجز نقدي في عهدة كل عامل فورياً.</li>
+  <li><strong>تقرير أرصدة وحركات خزانات الوقود (Tank Stock Movement & Dip Balance)</strong>: تتبع الرصيد الدفتري والرصيد المقاس بالمسطرة لجميع الخزانات.</li>
+  <li><strong>تقرير استهلاك ومسحوبات الأساطيل (Fleet Customer Consumption Report)</strong>: كشف تفصيلي بمسحوبات سيارات وسائقي كل شركة ومتابعة سقف الائتمان المتبقي.</li>
+</ul>

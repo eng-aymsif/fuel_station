@@ -1,0 +1,273 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "station",
+  "business_date",
+  "shift",
+  "pump",
+  "reading_type",
+  "column_break_1",
+  "previous_reading",
+  "reading_value",
+  "meter_quantity",
+  "status",
+  "section_break_2",
+  "reading_time",
+  "source",
+  "employee",
+  "photo",
+  "column_break_2",
+  "approved_by",
+  "correction_reason",
+  "section_break_other",
+  "naming_series",
+  "is_meter_reset"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Reading Details"
+  },
+  {
+   "fieldname": "station",
+   "label": "Station",
+   "fieldtype": "Link",
+   "options": "Fuel Station",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "business_date",
+   "label": "Business Date",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "shift",
+   "label": "Shift",
+   "fieldtype": "Link",
+   "options": "Fuel Shift",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "pump",
+   "label": "Pump",
+   "fieldtype": "Link",
+   "options": "Fuel Pump",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "reading_type",
+   "label": "Reading Type",
+   "fieldtype": "Select",
+   "options": "Opening\nIntermediate\nHandover\nClosing\nCorrection\nCalibration",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "previous_reading",
+   "label": "Previous Reading",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "reading_value",
+   "label": "Reading Value",
+   "fieldtype": "Float",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "meter_quantity",
+   "label": "Meter Quantity",
+   "fieldtype": "Float",
+   "default": "0",
+   "read_only": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "Draft\nRecorded\nApproved\nRejected\nCancelled",
+   "default": "Recorded",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Reading Source & Approval"
+  },
+  {
+   "fieldname": "reading_time",
+   "label": "Reading Time",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "source",
+   "label": "Source",
+   "fieldtype": "Select",
+   "options": "MANUAL\nFORECOURT_CONTROLLER\nAPI",
+   "default": "MANUAL"
+  },
+  {
+   "fieldname": "employee",
+   "label": "Employee",
+   "fieldtype": "Link",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "photo",
+   "label": "Photo",
+   "fieldtype": "Attach Image"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "approved_by",
+   "label": "Approved By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "correction_reason",
+   "label": "Correction Reason",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "FMR-.YYYY.-.#####",
+   "default": "FMR-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "is_meter_reset",
+   "label": "Is Meter Reset",
+   "fieldtype": "Check",
+   "default": "0"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "issingle": 0,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Fuel Meter Reading",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "System Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Station Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Shift Supervisor",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Cashier",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1
+  },
+  {
+   "role": "Inventory Officer",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Attendant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "print": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field"
+}

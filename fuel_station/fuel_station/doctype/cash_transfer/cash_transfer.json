@@ -1,0 +1,282 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "station",
+  "business_date",
+  "shift",
+  "from_cash_box",
+  "to_safe",
+  "status",
+  "column_break_1",
+  "amount",
+  "receiver_confirmed",
+  "section_break_other",
+  "naming_series",
+  "from_user",
+  "from_employee",
+  "to_employee",
+  "currency",
+  "transfer_time",
+  "reason",
+  "handed_over_by",
+  "received_by",
+  "receiver_confirmed_at",
+  "witness_or_supervisor",
+  "payment_entry"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Transfer Information"
+  },
+  {
+   "fieldname": "station",
+   "label": "Station",
+   "fieldtype": "Link",
+   "options": "Fuel Station",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "business_date",
+   "label": "Business Date",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "shift",
+   "label": "Shift",
+   "fieldtype": "Link",
+   "options": "Fuel Shift"
+  },
+  {
+   "fieldname": "from_cash_box",
+   "label": "From Cash Box",
+   "fieldtype": "Link",
+   "options": "Fuel Cash Box",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "to_safe",
+   "label": "To Station Safe",
+   "fieldtype": "Link",
+   "options": "Fuel Station Safe",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "Draft\nPending Receiver Confirmation\nConfirmed\nApproved\nCancelled",
+   "default": "Draft",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amount",
+   "label": "Amount",
+   "fieldtype": "Currency",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "receiver_confirmed",
+   "label": "Receiver Confirmed",
+   "fieldtype": "Check",
+   "default": "0",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "CTR-.YYYY.-.#####",
+   "default": "CTR-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "from_user",
+   "label": "From User",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "from_employee",
+   "label": "From Employee",
+   "fieldtype": "Link",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "to_employee",
+   "label": "To Employee",
+   "fieldtype": "Link",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "currency",
+   "label": "Currency",
+   "fieldtype": "Link",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "transfer_time",
+   "label": "Transfer Time",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "reason",
+   "label": "Reason",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "handed_over_by",
+   "label": "Handed Over By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "received_by",
+   "label": "Received By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "receiver_confirmed_at",
+   "label": "Receiver Confirmed At",
+   "fieldtype": "Datetime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "witness_or_supervisor",
+   "label": "Witness or Supervisor",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "payment_entry",
+   "label": "Payment Entry Reference",
+   "fieldtype": "Link",
+   "options": "Payment Entry"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "issingle": 0,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Cash Transfer",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "System Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Station Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Shift Supervisor",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Cashier",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1
+  },
+  {
+   "role": "Inventory Officer",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Attendant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "print": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field"
+}

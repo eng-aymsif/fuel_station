@@ -1,0 +1,111 @@
+{%- from "fuel_station/templates/print_formats/base.html" import print_styles, is_arabic, dir -%}
+{{ print_styles() }}
+
+<div class="fuel-print-container fuel-print-thermal" dir="{{ dir() }}">
+	<div class="fuel-thermal-head">
+		<div style="font-size: 14px; font-weight: 700;">⛽ {{ doc.company }}</div>
+		<div class="fuel-thermal-title">{{ _("POS TAX INVOICE") if is_arabic() else "POS TAX INVOICE" }}</div>
+		<div class="fuel-thermal-sub">{{ _("Simplified Tax Invoice") if is_arabic() else "Simplified Tax Invoice" }}</div>
+		{% if doc.tax_id %}
+		<div class="fuel-thermal-sub"><b>{{ _("TRN") if is_arabic() else "TRN" }}:</b> {{ doc.tax_id }}</div>
+		{% endif %}
+	</div>
+
+	<div class="fuel-thermal-row">
+		<span><b>{{ _("Invoice #") if is_arabic() else "Invoice #" }}:</b></span>
+		<span>{{ doc.name }}</span>
+	</div>
+	<div class="fuel-thermal-row">
+		<span><b>{{ _("Date & Time") if is_arabic() else "Date & Time" }}:</b></span>
+		<span>{{ doc.posting_date }} {{ doc.posting_time or "" }}</span>
+	</div>
+	{% if doc.fuel_station %}
+	<div class="fuel-thermal-row">
+		<span><b>{{ _("Station") if is_arabic() else "Station" }}:</b></span>
+		<span>{{ doc.fuel_station }}</span>
+	</div>
+	{% endif %}
+	{% if doc.fuel_pump %}
+	<div class="fuel-thermal-row">
+		<span><b>{{ _("Pump") if is_arabic() else "Pump" }}:</b></span>
+		<span>{{ doc.fuel_pump }}</span>
+	</div>
+	{% endif %}
+	{% if doc.customer and doc.customer != "Cash Customer" %}
+	<div class="fuel-thermal-row">
+		<span><b>{{ _("Customer") if is_arabic() else "Customer" }}:</b></span>
+		<span>{{ doc.customer_name or doc.customer }}</span>
+	</div>
+	{% endif %}
+
+	<div class="fuel-thermal-divider"></div>
+
+	<table class="fuel-thermal-table">
+		<thead>
+			<tr>
+				<th>{{ _("Item") if is_arabic() else "Item" }}</th>
+				<th class="text-center">{{ _("Qty") if is_arabic() else "Qty" }}</th>
+				<th class="text-center">{{ _("Rate") if is_arabic() else "Rate" }}</th>
+				<th class="text-left">{{ _("Total") if is_arabic() else "Total" }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for item in doc.items %}
+			<tr>
+				<td>
+					<b>{{ item.item_name or item.item_code }}</b>
+					{% if item.meter_quantity %}
+					<div style="font-size: 9px; color: #555;">{{ _("Meter") if is_arabic() else "Meter" }}: {{ item.meter_quantity }}</div>
+					{% endif %}
+				</td>
+				<td class="text-center">{{ "{:,.2f}".format(item.qty) }}</td>
+				<td class="text-center">{{ "{:,.2f}".format(item.rate) }}</td>
+				<td class="text-left"><b>{{ "{:,.2f}".format(item.amount) }}</b></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<div class="fuel-thermal-divider"></div>
+
+	<div class="fuel-thermal-row">
+		<span>{{ _("Subtotal") if is_arabic() else "Subtotal" }}:</span>
+		<span><b>{{ fuel_money(doc.net_total, doc.currency) }}</b></span>
+	</div>
+	{% if doc.discount_amount %}
+	<div class="fuel-thermal-row" style="color: #b91c1c;">
+		<span>{{ _("Discount") if is_arabic() else "Discount" }}:</span>
+		<span>-{{ fuel_money(doc.discount_amount, doc.currency) }}</span>
+	</div>
+	{% endif %}
+	<div class="fuel-thermal-row">
+		<span>{{ _("VAT / Tax") if is_arabic() else "VAT / Tax" }}:</span>
+		<span><b>{{ fuel_money(doc.total_taxes_and_charges or 0.0, doc.currency) }}</b></span>
+	</div>
+
+	<div class="fuel-thermal-divider-double"></div>
+
+	<div class="fuel-thermal-row fuel-thermal-total">
+		<span>{{ _("GRAND TOTAL") if is_arabic() else "GRAND TOTAL" }}:</span>
+		<span>{{ fuel_money(doc.grand_total, doc.currency) }}</span>
+	</div>
+
+	{% if doc.payments %}
+	<div class="fuel-thermal-divider"></div>
+	{% for p in doc.payments %}
+	<div class="fuel-thermal-row" style="font-size: 10px;">
+		<span>{{ p.mode_of_payment }}:</span>
+		<span>{{ fuel_money(p.amount, doc.currency) }}</span>
+	</div>
+	{% endfor %}
+	{% endif %}
+
+	<div class="fuel-thermal-qr">
+		{{ fuel_zatca_qr(doc) }}
+	</div>
+
+	<div class="fuel-thermal-footer">
+		<div>{{ _("Thank you for your visit!") if is_arabic() else "Thank you for your visit!" }}</div>
+		<div style="margin-top: 2px;">{{ _("Safe travels - Fuel Station System") if is_arabic() else "Safe travels - Fuel Station System" }}</div>
+	</div>
+</div>

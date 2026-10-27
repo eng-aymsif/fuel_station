@@ -1,0 +1,148 @@
+{%- from "fuel_station/templates/print_formats/base.html" import print_styles, is_arabic, dir -%}
+{{ print_styles() }}
+
+<div class="fuel-print-container fuel-print-standard" dir="{{ dir() }}">
+	<div class="fuel-print-header">
+		<table class="fuel-header-table">
+			<tr>
+				<td>
+					<div class="fuel-brand-name">⛽ {{ doc.company or "Fuel Station Network" }}</div>
+					<div class="fuel-brand-sub">{{ _("Commercial Fleet Fuel Supply & Credit Facility Agreement") if is_arabic() else "Commercial Fleet Fuel Supply Agreement" }}</div>
+				</td>
+				<td class="fuel-doc-title-box">
+					<div class="fuel-doc-title">{{ _("FLEET CONTRACT") if is_arabic() else "FLEET CONTRACT" }}</div>
+					<div><b>{{ doc.contract_number or doc.name }}</b></div>
+					<div style="margin-top: 4px;">
+						{% if doc.status == "Active" %}
+						<span class="fuel-badge badge-success">{{ _("Active Agreement") if is_arabic() else "Active" }}</span>
+						{% elif doc.status == "Expired" %}
+						<span class="fuel-badge badge-danger">{{ _("Expired") if is_arabic() else "Expired" }}</span>
+						{% else %}
+						<span class="fuel-badge badge-info">{{ doc.status or "Draft" }}</span>
+						{% endif %}
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- Parties & Overview -->
+	<div class="fuel-meta-grid">
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Corporate Client / Party B") if is_arabic() else "Corporate Client" }}</div>
+			<div class="fuel-meta-val"><b>{{ doc.customer }}</b></div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Assigned Cost Center") if is_arabic() else "Cost Center" }}</div>
+			<div class="fuel-meta-val">{{ doc.cost_center or "-" }}</div>
+		</div>
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Contract Term (Start - End)") if is_arabic() else "Term" }}</div>
+			<div class="fuel-meta-val"><b>{{ doc.start_date or "-" }} ➔ {{ doc.end_date or _("Evergreen") if is_arabic() else "Evergreen" }}</b></div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Billing Frequency") if is_arabic() else "Billing Frequency" }}</div>
+			<div class="fuel-meta-val">{{ doc.invoice_frequency or "Monthly Consolidated" }}</div>
+		</div>
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Payment Terms") if is_arabic() else "Payment Terms" }}</div>
+			<div class="fuel-meta-val">{{ doc.payment_terms or "Net 30 Days" }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Applicable Price List") if is_arabic() else "Price List" }}</div>
+			<div class="fuel-meta-val">{{ doc.price_list or "Standard Retail" }}</div>
+		</div>
+	</div>
+
+	<!-- Credit Facilities & Limits -->
+	<div style="font-weight: 800; font-size: 14px; margin-bottom: 8px; color: #1e293b;">
+		💳 {{ _("Credit Facilities & Operational Volume Ceilings") if is_arabic() else "Credit Facilities & Volume Limits" }}
+	</div>
+	<table class="fuel-data-table">
+		<thead>
+			<tr>
+				<th>{{ _("Facility Parameter") if is_arabic() else "Parameter" }}</th>
+				<th class="text-center">{{ _("Approved Limit / Policy") if is_arabic() else "Limit / Policy" }}</th>
+				<th>{{ _("Facility Parameter") if is_arabic() else "Parameter" }}</th>
+				<th class="text-center">{{ _("Approved Limit / Policy") if is_arabic() else "Limit / Policy" }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><b>{{ _("Total Credit Limit") if is_arabic() else "Total Credit Limit" }}</b></td>
+				<td class="text-center" style="font-size: 14px; font-weight: 800; color: #ea580c;">
+					{{ fuel_money(doc.credit_limit) }}
+				</td>
+				<td><b>{{ _("Credit Policy") if is_arabic() else "Credit Policy" }}</b></td>
+				<td class="text-center">{{ doc.credit_control_policy or "Strict Hard Stop" }}</td>
+			</tr>
+			<tr>
+				<td><b>{{ _("Daily Fueling Cap (Liters)") if is_arabic() else "Daily Cap (L)" }}</b></td>
+				<td class="text-center"><b>{{ "{:,.2f}".format(doc.daily_limit or 0.0) }} L</b></td>
+				<td><b>{{ _("Monthly Fueling Cap (Liters)") if is_arabic() else "Monthly Cap (L)" }}</b></td>
+				<td class="text-center"><b>{{ "{:,.2f}".format(doc.monthly_limit or 0.0) }} L</b></td>
+			</tr>
+			<tr>
+				<td><b>{{ _("Contract Discount") if is_arabic() else "Contract Discount" }}</b></td>
+				<td class="text-center">
+					{% if doc.discount_percentage %}
+					<b>{{ doc.discount_percentage }}%</b>
+					{% elif doc.discount_amount %}
+					<b>{{ fuel_money(doc.discount_amount) }}</b>
+					{% else %}
+					0.00
+					{% endif %}
+				</td>
+				<td><b>{{ _("Security Controls") if is_arabic() else "Security Controls" }}</b></td>
+				<td class="text-center">
+					{% if doc.requires_issue_order %}
+					<span class="fuel-badge badge-warning">{{ _("Requires Issue Order") if is_arabic() else "Issue Order Required" }}</span>
+					{% else %}
+					<span class="fuel-badge badge-info">{{ _("RFID / Plate Verification") if is_arabic() else "Plate Verification" }}</span>
+					{% endif %}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- Authorized Fleet Entities -->
+	<div style="font-weight: 800; font-size: 14px; margin-top: 15px; margin-bottom: 8px; color: #1e293b;">
+		🚗 {{ _("Authorized Fleet Coverage & Scopes") if is_arabic() else "Authorized Fleet Coverage" }}
+	</div>
+	<table class="fuel-data-table">
+		<tbody>
+			<tr>
+				<td style="width: 25%;"><b>{{ _("Permitted Fuel Products:") if is_arabic() else "Permitted Products:" }}</b></td>
+				<td>{{ doc.allowed_items or _("All Standard Gasoline & Diesel Fuels") if is_arabic() else "All Standard Fuels" }}</td>
+			</tr>
+			<tr>
+				<td><b>{{ _("Authorized Stations:") if is_arabic() else "Authorized Stations:" }}</b></td>
+				<td>{{ doc.allowed_stations or _("All Network Stations Nationwide") if is_arabic() else "All Network Stations" }}</td>
+			</tr>
+			<tr>
+				<td><b>{{ _("Authorized Vehicle Roster:") if is_arabic() else "Authorized Vehicles:" }}</b></td>
+				<td>{{ doc.allowed_vehicles or _("Open Fleet - Subject to Purchase Orders") if is_arabic() else "Open Fleet" }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- Contractual Articles -->
+	<div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-top: 15px; font-size: 11px; line-height: 1.6; color: #475569;">
+		<b>{{ _("General Terms & Operational Provisions:") if is_arabic() else "General Terms:" }}</b>
+		<ol style="margin: 4px 0 0 16px; padding: 0;">
+			<li>{{ _("The Station undertakes to supply fuel products meeting national petroleum quality specifications.") if is_arabic() else "Station supplies fuel meeting quality specs." }}</li>
+			<li>{{ _("Invoices are rendered periodically and shall be settled strictly within the agreed payment credit term.") if is_arabic() else "Invoices must be settled within credit term." }}</li>
+			<li>{{ _("Automatic fueling lockout will be enforced immediately if outstanding balance exceeds the credit limit.") if is_arabic() else "Lockout applies if credit limit exceeded." }}</li>
+		</ol>
+	</div>
+
+	<!-- Formal Signatures & Corporate Seals -->
+	<div class="fuel-sign-row">
+		<div class="fuel-sign-cell">
+			{{ _("For: First Party (Fuel Station Network)") if is_arabic() else "First Party (Station Network)" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("For: Second Party (Corporate Client)") if is_arabic() else "Second Party (Client)" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("Legal & Commercial Registrar") if is_arabic() else "Commercial Registrar" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+	</div>
+</div>

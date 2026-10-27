@@ -1,0 +1,387 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "safe_code",
+  "safe_type",
+  "station",
+  "business_date",
+  "shift",
+  "status",
+  "column_break_1",
+  "responsible_employee",
+  "opening_balance",
+  "cash_received_from_boxes",
+  "cash_deposited_to_bank",
+  "section_break_2",
+  "expected_safe_balance",
+  "counted_safe_balance",
+  "variance",
+  "column_break_2",
+  "first_closed_at",
+  "reopened_at",
+  "reopen_reason",
+  "approved_by",
+  "section_break_3",
+  "denominations",
+  "section_break_other",
+  "naming_series",
+  "location",
+  "cash_account",
+  "opening_balance_reference",
+  "approved_receipts",
+  "bank_deposit_payment_entry",
+  "cash_transferred_to_other_safe",
+  "approved_expenses",
+  "refunds",
+  "variance_policy_status",
+  "count_attachment",
+  "last_counted_at",
+  "requested_by",
+  "documents_affected",
+  "correction_plan"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Safe Information"
+  },
+  {
+   "fieldname": "safe_code",
+   "label": "Safe Code",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "safe_type",
+   "label": "Safe Type",
+   "fieldtype": "Select",
+   "options": "Station Safe\nBank Deposit Safe\nخزينة المحطة\nخزينة الإيداع البنكي",
+   "default": "Station Safe"
+  },
+  {
+   "fieldname": "station",
+   "label": "Station",
+   "fieldtype": "Link",
+   "options": "Fuel Station",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "business_date",
+   "label": "Business Date",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "shift",
+   "label": "Shift",
+   "fieldtype": "Link",
+   "options": "Fuel Shift",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "Open\nReceiving\nPending Count\nCounted\nPending Approval\nDeposited\nClosed\nReopened With Approval",
+   "default": "Open",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "responsible_employee",
+   "label": "Responsible Employee",
+   "fieldtype": "Link",
+   "options": "Employee",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "opening_balance",
+   "label": "Opening Balance",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "cash_received_from_boxes",
+   "label": "Cash Received From Boxes",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "cash_deposited_to_bank",
+   "label": "Cash Deposited To Bank",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Balances & Count"
+  },
+  {
+   "fieldname": "expected_safe_balance",
+   "label": "Expected Safe Balance",
+   "fieldtype": "Currency",
+   "default": "0",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "counted_safe_balance",
+   "label": "Counted Safe Balance",
+   "fieldtype": "Currency",
+   "default": "0",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "variance",
+   "label": "Variance",
+   "fieldtype": "Currency",
+   "default": "0",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "first_closed_at",
+   "label": "First Closed At",
+   "fieldtype": "Datetime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reopened_at",
+   "label": "Reopened At",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "reopen_reason",
+   "label": "Reopen Reason",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "approved_by",
+   "label": "Approved By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break",
+   "label": "Denomination Counting"
+  },
+  {
+   "fieldname": "denominations",
+   "label": "Denomination Counts",
+   "fieldtype": "Table",
+   "options": "Fuel Denomination Count"
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "FSS-.YYYY.-.#####",
+   "default": "FSS-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "location",
+   "label": "Location",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "cash_account",
+   "label": "Cash Account",
+   "fieldtype": "Link",
+   "options": "Account"
+  },
+  {
+   "fieldname": "opening_balance_reference",
+   "label": "Opening Balance Reference",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "approved_receipts",
+   "label": "Approved Receipts",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "bank_deposit_payment_entry",
+   "label": "Bank Deposit Payment Entry",
+   "fieldtype": "Link",
+   "options": "Payment Entry"
+  },
+  {
+   "fieldname": "cash_transferred_to_other_safe",
+   "label": "Cash Transferred To Other Safe",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "approved_expenses",
+   "label": "Approved Expenses",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "refunds",
+   "label": "Refunds",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "variance_policy_status",
+   "label": "Variance Policy Status",
+   "fieldtype": "Select",
+   "options": "\nWithin Tolerance\nNeeds Investigation\nApproved Shortage\nApproved Overage\nPosted To Variance Account"
+  },
+  {
+   "fieldname": "count_attachment",
+   "label": "Count / Deposit Attachment",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "last_counted_at",
+   "label": "Last Counted At",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "requested_by",
+   "label": "Requested By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "documents_affected",
+   "label": "Documents Affected",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "correction_plan",
+   "label": "Correction Plan",
+   "fieldtype": "Small Text"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "issingle": 0,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Fuel Station Safe",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "System Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Station Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Shift Supervisor",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Cashier",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1
+  },
+  {
+   "role": "Inventory Officer",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Attendant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "print": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field"
+}

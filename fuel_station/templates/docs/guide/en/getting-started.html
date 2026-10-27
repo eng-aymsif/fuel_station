@@ -1,0 +1,105 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>Comprehensive Operational User Manual:</strong> Designed for all fuel station staff (Pump Attendants, Shift Supervisors, Cashiers, Accountants, Inventory Officers, and Operations Managers). Built with absolute accounting and stock integrity on <strong>ERPNext</strong> with zero parallel ledgers.</p>
+</blockquote>
+
+<h2 id="what-is-fuel-station">What is Fuel Station Management System?<a class="h-anchor" href="#what-is-fuel-station" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>The <strong>Fuel Station</strong> application is an enterprise solution for petroleum stations and fuel retailers (Gasoline 91, Gasoline 95, Diesel, Gas, Kerosene). It directly connects physical mechanical and electronic pump meter counters to underground storage tanks, converting every dispensed drop into real-time accounting journal entries and stock movements in <strong>ERPNext</strong>.</p>
+
+<div class="callout success">
+  <p><strong>The Core Principle (Zero Parallel Ledgers):</strong> No separate hidden ledgers or auxiliary books exist outside the company's Chart of Accounts and Warehouses tree. Every single dispense event generates direct effects on the <span class="ui">General Ledger</span> and <span class="ui">Stock Ledger</span> in accordance with GAAP, IFRS, and ZATCA Phase 2 E-Invoicing standards.</p>
+</div>
+
+<h2 id="field-naming-convention">DocType and Field Nomenclature Standards<a class="h-anchor" href="#field-naming-convention" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>To provide maximum clarity across multilingual operational teams:</p>
+<ul>
+  <li>All DocType names are formatted in <strong>bold</strong> with both Arabic and English names: e.g. <strong>وردية الوقود (Fuel Shift)</strong>.</li>
+  <li>All field labels are consistently displayed with both Arabic and English labels: e.g. <strong>العهدة النقدية الافتتاحية (Opening Cash Float)</strong>.</li>
+</ul>
+
+<h2 id="master-doctypes-directory">Master DocTypes Directory (34 Core Modules)<a class="h-anchor" href="#master-doctypes-directory" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>The system comprises <strong>34 dedicated DocTypes</strong> covering operational, financial, and regulatory requirements:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th class="col-num">#</th><th style="min-width: 200px;">DocType Name (العربية / English)</th><th style="min-width: 160px;">Module</th><th style="min-width: 160px;">Primary Role</th><th class="col-desc">ERPNext Integration</th></tr></thead>
+<tbody>
+<tr><td class="col-num">1</td><td><strong>محطة الوقود (Fuel Station)</strong></td><td>Master Data</td><td>Fuel Operations Manager</td><td>Cost Center & Clearing Accounts</td></tr>
+<tr><td class="col-num">2</td><td><strong>خزان الوقود (Fuel Tank)</strong></td><td>Stock</td><td>Inventory Officer</td><td>Warehouse & Fuel Item</td></tr>
+<tr><td class="col-num">3</td><td><strong>مضخة الوقود (Fuel Pump)</strong></td><td>Equipment & Pumps</td><td>Shift Supervisor</td><td>Asset & Connected Meters</td></tr>
+<tr><td class="col-num">4</td><td><strong>نوع الوردية (Fuel Shift Type)</strong></td><td>Operations</td><td>Station Manager</td><td>Standard shift working hours</td></tr>
+<tr><td class="col-num">5</td><td><strong>وردية الوقود (Fuel Shift)</strong></td><td>Operations</td><td>Shift Supervisor</td><td>Daily shift container & settlements</td></tr>
+<tr><td class="col-num">6</td><td><strong>تكليف عامل بمضخة (Fuel Pump Assignment)</strong></td><td>Shifts</td><td>Shift Supervisor</td><td>Attendant pump & cash box assignment</td></tr>
+<tr><td class="col-num">7</td><td><strong>تسليم واستلام المضخة (Pump Handover)</strong></td><td>Shifts</td><td>Fuel Attendant</td><td>Mid-shift meter & cash shift swap</td></tr>
+<tr><td class="col-num">8</td><td><strong>صندوق النقد (Fuel Cash Box)</strong></td><td>Cash Management</td><td>Fuel Attendant / Cashier</td><td>Field cash custody & collections</td></tr>
+<tr><td class="col-num">9</td><td><strong>عد فئات النقد (Fuel Denomination Count)</strong></td><td>Cash Management</td><td>Supervisor / Cashier</td><td>Banknote & coin denomination table</td></tr>
+<tr><td class="col-num">10</td><td><strong>خزينة المحطة (Fuel Station Safe)</strong></td><td>Cash Management</td><td>Safe Custodian</td><td>Primary station cash account</td></tr>
+<tr><td class="col-num">11</td><td><strong>تحويل نقدي للخزينة (Cash Transfer)</strong></td><td>Cash Management</td><td>Supervisor / Custodian</td><td>Internal transfer entry (Box to Safe)</td></tr>
+<tr><td class="col-num">12</td><td><strong>عهدة النقد (Fuel Cash Custody)</strong></td><td>Cash Management</td><td>Accountant</td><td>Opening float disbursement & tracking</td></tr>
+<tr><td class="col-num">13</td><td><strong>قراءة عداد المضخة (Fuel Meter Reading)</strong></td><td>Meters & Measurements</td><td>Attendant / Supervisor</td><td>Opening/closing pump counter readings</td></tr>
+<tr><td class="col-num">14</td><td><strong>عملية تعبئة وقود (Fuel Dispense Event)</strong></td><td>Dispense Operations</td><td>Fuel Attendant</td><td>Sales Invoice & Stock Ledger entry</td></tr>
+<tr><td class="col-num">15</td><td><strong>تسوية المضخة (Fuel Pump Reconciliation)</strong></td><td>Reconciliation</td><td>Shift Supervisor / Accountant</td><td>Meter delta vs dispenses reconciliation</td></tr>
+<tr><td class="col-num">16</td><td><strong>استثناء تسوية الوقود (Fuel Reconciliation Exception)</strong></td><td>Reconciliation</td><td>Station / Operations Manager</td><td>Over-tolerance dispute & approvals</td></tr>
+<tr><td class="col-num">17</td><td><strong>دفعة فواتير المضخة (Fuel Pump Invoice Batch)</strong></td><td>Invoicing</td><td>Accountant / Auto-Engine</td><td>Consolidated Sales Invoice Batch</td></tr>
+<tr><td class="col-num">18</td><td><strong>حدث دفعة فواتير المضخة (Fuel Pump Invoice Batch Event)</strong></td><td>Invoicing</td><td>Auto-Engine</td><td>Child table linking events to batch</td></tr>
+<tr><td class="col-num">19</td><td><strong>مركبة العميل (Customer Vehicle)</strong></td><td>Fleet & Corporate</td><td>Fleet Manager</td><td>Plate number, fuel type & liter caps</td></tr>
+<tr><td class="col-num">20</td><td><strong>سائق العميل (Customer Driver)</strong></td><td>Fleet & Corporate</td><td>Fleet Manager</td><td>National ID, mobile, authorized cars, PIN</td></tr>
+<tr><td class="col-num">21</td><td><strong>عقد عميل الوقود (Fuel Customer Contract)</strong></td><td>Fleet & Corporate</td><td>Sales Manager / Accountant</td><td>Credit limit, payment terms, fuel scope</td></tr>
+<tr><td class="col-num">22</td><td><strong>بطاقة / كوبون وقود (Fuel Card)</strong></td><td>Cards & Wallets</td><td>Cashier / Accountant</td><td>Prepaid balance or quota RFID cards</td></tr>
+<tr><td class="col-num">23</td><td><strong>إعدادات مزود البطاقات (Fuel Card Provider Settings)</strong></td><td>POS & Electronic</td><td>Accountant</td><td>Card POS clearing & bank MDR fees</td></tr>
+<tr><td class="col-num">24</td><td><strong>تسوية البطاقات البنكية (Card Settlement)</strong></td><td>POS & Electronic</td><td>Accountant</td><td>Bank statement vs POS reconciliation</td></tr>
+<tr><td class="col-num">25</td><td><strong>أمر صرف الوقود (Fuel Issue Order)</strong></td><td>Internal Consumption</td><td>Transport / Maintenance Mgr</td><td>ERPNext Stock Entry (Material Issue)</td></tr>
+<tr><td class="col-num">26</td><td><strong>تفويض تعبئة الوقود (Fuel Authorization)</strong></td><td>Security & Dispatch</td><td>Auto-Engine / Supervisor</td><td>Dynamic QR or OTP token for dispensing</td></tr>
+<tr><td class="col-num">27</td><td><strong>توريد وقود (Fuel Delivery)</strong></td><td>Procurement</td><td>Inventory Officer</td><td>ERPNext Purchase Receipt for tank</td></tr>
+<tr><td class="col-num">28</td><td><strong>عملية معايرة المضخة (Fuel Calibration Event)</strong></td><td>Calibration & Quality</td><td>Calibration Tech / Supervisor</td><td>Deducting test volume from meter sales</td></tr>
+<tr><td class="col-num">29</td><td><strong>تسوية مخزون الخزان (Fuel Tank Reconciliation)</strong></td><td>Stock Management</td><td>Inventory Officer / Accountant</td><td>ERPNext Stock Reconciliation Entry</td></tr>
+<tr><td class="col-num">30</td><td><strong>سياسة ضرائب الوقود (Fuel Tax Policy)</strong></td><td>Taxation & Finance</td><td>Financial Accountant</td><td>VAT templates & inclusive price schemes</td></tr>
+<tr><td class="col-num">31</td><td><strong>إعدادات تشغيل محطة الوقود (Fuel Operations Settings)</strong></td><td>System Configuration</td><td>Operations / System Manager</td><td>Global toggles, timings, and tolerances</td></tr>
+<tr><td class="col-num">32</td><td><strong>قاعدة نطاق الصلاحيات التشغيلية (Fuel Operations Scope Rule)</strong></td><td>Security & Permissions</td><td>System Manager</td><td>Station-level role scoping rules</td></tr>
+<tr><td class="col-num">33</td><td><strong>سجل تدقيق محطة الوقود (Fuel Audit Log)</strong></td><td>Audit & Security</td><td>Internal Auditor</td><td>Sensitive actions, reopenings, edits</td></tr>
+<tr><td class="col-num">34</td><td><strong>سجل تكامل محطة الوقود (Fuel Integration Log)</strong></td><td>IoT & Integration</td><td>IT / Systems Admin</td><td>Hardware, ATG, POS, and API payloads</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="erp-interlinking">ERP Interlinking & Direct Action Buttons<a class="h-anchor" href="#erp-interlinking" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>Each station document features one-click action buttons and dashboard connections to interact with ERPNext records seamlessly:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>DocType Name (العربية / English)</th><th>Create Buttons</th><th>View Buttons</th><th>ERPNext Ledger Impact</th></tr></thead>
+<tbody>
+<tr>
+  <td><strong>توريد وقود (Fuel Delivery)</strong></td>
+  <td><span class="badge badge-primary">Purchase Receipt</span><br><span class="badge badge-secondary">Purchase Invoice</span></td>
+  <td><span class="badge badge-light">Stock Ledger</span><br><span class="badge badge-light">Purchase Order</span></td>
+  <td>Instantly receives stock into tank warehouse and generates AP liability.</td>
+</tr>
+<tr>
+  <td><strong>عملية تعبئة وقود (Fuel Dispense Event)</strong></td>
+  <td><span class="badge badge-primary">Sales Invoice</span></td>
+  <td><span class="badge badge-light">Sales Invoice</span><br><span class="badge badge-light">Accounting Ledger</span><br><span class="badge badge-light">Stock Ledger</span></td>
+  <td>Generates immediate or grouped sales invoice and deducts fuel stock.</td>
+</tr>
+<tr>
+  <td><strong>أمر صرف الوقود (Fuel Issue Order)</strong></td>
+  <td><span class="badge badge-primary">Stock Entry (Material Issue)</span></td>
+  <td><span class="badge badge-light">Stock Entries</span><br><span class="badge badge-light">Dispense Events</span></td>
+  <td>Issues fuel directly to company cost centers without phantom sales invoices.</td>
+</tr>
+<tr>
+  <td><strong>عقد عميل الوقود (Fuel Customer Contract)</strong></td>
+  <td><span class="badge badge-primary">Payment Entry (Receipt)</span></td>
+  <td><span class="badge badge-warning">Credit Health Check</span><br><span class="badge badge-light">Dispense Events</span></td>
+  <td>Calculates true credit exposure and releases credit limits on payment.</td>
+</tr>
+<tr>
+  <td><strong>صندوق النقد (Fuel Cash Box)</strong></td>
+  <td><span class="badge badge-primary">Transfer to Safe</span></td>
+  <td><span class="badge badge-light">Cash Transfers</span><br><span class="badge badge-light">Denominations Breakdown</span></td>
+  <td>Transfers counted cash to station safe with mutual verification.</td>
+</tr>
+<tr>
+  <td><strong>تسوية المضخة (Fuel Pump Reconciliation)</strong></td>
+  <td><span class="badge badge-primary">Journal Entry (Adjustment)</span></td>
+  <td><span class="badge badge-light">Sales Invoices</span><br><span class="badge badge-light">Meter Readings</span></td>
+  <td>Posts approved cash shortage/overage journals to company accounts.</td>
+</tr>
+</tbody>
+</table></div>

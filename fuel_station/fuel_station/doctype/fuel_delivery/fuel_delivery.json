@@ -1,0 +1,357 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "station",
+  "tank",
+  "supplier",
+  "status",
+  "column_break_1",
+  "purchase_receipt",
+  "section_break_other",
+  "naming_series",
+  "company",
+  "purchase_order",
+  "delivery_date",
+  "truck_number",
+  "supplier_document_no",
+  "compartment_number",
+  "warehouse",
+  "item",
+  "uom",
+  "rate",
+  "document_quantity",
+  "received_quantity",
+  "variance_quantity",
+  "allowed_tolerance_quantity",
+  "tank_reading_before",
+  "tank_reading_after",
+  "temperature",
+  "density",
+  "sample_result",
+  "received_by",
+  "approved_by",
+  "supplier_attachment",
+  "exception_reference",
+  "source_key"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Delivery Information"
+  },
+  {
+   "fieldname": "station",
+   "label": "Station",
+   "fieldtype": "Link",
+   "options": "Fuel Station",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "tank",
+   "label": "Fuel Tank",
+   "fieldtype": "Link",
+   "options": "Fuel Tank",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "supplier",
+   "label": "Supplier",
+   "fieldtype": "Link",
+   "options": "Supplier",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "Draft\nInspected\nException\nApproved\nReceived\nCancelled",
+   "default": "Draft",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "purchase_receipt",
+   "label": "Purchase Receipt",
+   "fieldtype": "Link",
+   "options": "Purchase Receipt",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "FDL-.YYYY.-.#####",
+   "default": "FDL-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "company",
+   "label": "Company",
+   "fieldtype": "Link",
+   "options": "Company"
+  },
+  {
+   "fieldname": "purchase_order",
+   "label": "Purchase Order",
+   "fieldtype": "Link",
+   "options": "Purchase Order"
+  },
+  {
+   "fieldname": "delivery_date",
+   "label": "Delivery Date",
+   "fieldtype": "Date",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "truck_number",
+   "label": "Truck Number",
+   "fieldtype": "Data",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "supplier_document_no",
+   "label": "Supplier Document Number",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "compartment_number",
+   "label": "Compartment Number",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "warehouse",
+   "label": "Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "item",
+   "label": "Fuel Item",
+   "fieldtype": "Link",
+   "options": "Item",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "uom",
+   "label": "UOM",
+   "fieldtype": "Link",
+   "options": "UOM",
+   "default": "Liter"
+  },
+  {
+   "fieldname": "rate",
+   "label": "Valuation / Purchase Rate",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "document_quantity",
+   "label": "Document Quantity (Liters)",
+   "fieldtype": "Float",
+   "reqd": 1
+  },
+  {
+   "fieldname": "received_quantity",
+   "label": "Actual Received Quantity (Liters)",
+   "fieldtype": "Float",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "variance_quantity",
+   "label": "Delivery Variance Quantity",
+   "fieldtype": "Float",
+   "default": "0",
+   "read_only": 1
+  },
+  {
+   "fieldname": "allowed_tolerance_quantity",
+   "label": "Allowed Tolerance Quantity",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "tank_reading_before",
+   "label": "Tank Reading Before",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "tank_reading_after",
+   "label": "Tank Reading After",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "temperature",
+   "label": "Temperature (°C)",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "density",
+   "label": "Density",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "sample_result",
+   "label": "Sample Quality Result",
+   "fieldtype": "Select",
+   "options": "Passed\nConditional\nFailed",
+   "default": "Passed"
+  },
+  {
+   "fieldname": "received_by",
+   "label": "Received By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "approved_by",
+   "label": "Approved By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "supplier_attachment",
+   "label": "Supplier Document Attachment",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "exception_reference",
+   "label": "Reconciliation Exception",
+   "fieldtype": "Link",
+   "options": "Fuel Reconciliation Exception",
+   "read_only": 1
+  },
+  {
+   "fieldname": "source_key",
+   "label": "Source Key",
+   "fieldtype": "Data",
+   "unique": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "issingle": 0,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Fuel Delivery",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "System Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Station Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Shift Supervisor",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Cashier",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1
+  },
+  {
+   "role": "Inventory Officer",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Attendant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "print": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field"
+}

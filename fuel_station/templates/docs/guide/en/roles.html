@@ -1,0 +1,91 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>Users, Roles & Permissions:</strong> The system enforces enterprise-grade governance and strict Segregation of Duties (SOD). No single operator can initiate, execute, approve, and reconcile fuel transactions without supervisory oversight.</p>
+</blockquote>
+
+<h2 id="station-roles">The Seven Standard Station Roles<a class="h-anchor" href="#station-roles" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>Operations are structured around seven standard station roles:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th class="col-num">#</th><th style="min-width: 220px;">Station Role (العربية / English)</th><th class="col-desc">Authorized Permissions & Duties</th><th class="col-desc">Restrictions & SOD Safeguards</th></tr></thead>
+<tbody>
+<tr>
+  <td class="col-num">1</td>
+  <td><strong>عامل المضخة (Fuel Attendant)</strong></td>
+  <td>Capture meter readings, record dispense events, count cash custody in personal cash box, execute pump handovers.</td>
+  <td>Strictly prohibited from altering historical readings, voiding invoices, opening/closing shifts, or modifying selling rates.</td>
+</tr>
+<tr>
+  <td class="col-num">2</td>
+  <td><strong>مشرف الوردية (Shift Supervisor)</strong></td>
+  <td>Open/close shifts, assign attendants to pumps, receive cash transfers to safe, approve minor variances within tolerance.</td>
+  <td>Prohibited from posting final General Ledger entries or modifying company Chart of Accounts and tax templates.</td>
+</tr>
+<tr>
+  <td class="col-num">3</td>
+  <td><strong>أمين الصندوق / الكاشير (Cashier)</strong></td>
+  <td>Receive cash from attendants, deposit cash into station safe, manage opening floats, reconcile POS electronic slips.</td>
+  <td>Prohibited from modifying dispenser meter counters or generating internal consumption issue orders.</td>
+</tr>
+<tr>
+  <td class="col-num">4</td>
+  <td><strong>محاسب المحطة (Accountant)</strong></td>
+  <td>Review and post sales invoices, create GL journal entries, perform bank card POS settlements, reconcile stock ledgers.</td>
+  <td>Prohibited from executing field dispensing operations or performing physical pump handovers.</td>
+</tr>
+<tr>
+  <td class="col-num">5</td>
+  <td><strong>مسؤول المخزون (Inventory Officer)</strong></td>
+  <td>Receive tanker fuel deliveries, take manual dipstick and ATG measurements, document calibration events, reconcile tank stock.</td>
+  <td>Prohibited from billing retail customers or collecting cash collections.</td>
+</tr>
+<tr>
+  <td class="col-num">6</td>
+  <td><strong>مدير المحطة (Station Manager)</strong></td>
+  <td>Overall branch supervision, approve large discrepancy exceptions, authorize exceptional shift reopenings in emergency.</td>
+  <td>All executive overrides are permanently recorded in system audit logs.</td>
+</tr>
+<tr>
+  <td class="col-num">7</td>
+  <td><strong>مدير العمليات (Fuel Operations Manager)</strong></td>
+  <td>Configure global system parameters, manage company-wide fuel pricing, approve corporate credit limits across all stations.</td>
+  <td>Full administrative and operational authority.</td>
+</tr>
+</tbody>
+</table></div>
+
+<h2 id="audit-log-doctype">Security Audit Trail: سجل تدقيق محطة الوقود (Fuel Audit Log)<a class="h-anchor" href="#audit-log-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>The <strong>سجل تدقيق محطة الوقود (Fuel Audit Log)</strong> is an immutable audit log that automatically records sensitive operational and financial actions:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Audit Description</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link</td><td>Branch where the audited event occurred.</td></tr>
+<tr><td><strong>المستخدم (User)</strong></td><td><code>user</code></td><td>Link</td><td>User account responsible for the action.</td></tr>
+<tr><td><strong>نوع الإجراء (Action Type)</strong></td><td><code>action_type</code></td><td>Select</td><td>Event type (Reopen Closed Shift, Meter Correction, Variance Approval, Cancel Transfer).</td></tr>
+<tr><td><strong>المستند المرجعي (Reference DocType)</strong></td><td><code>reference_doctype</code></td><td>Link</td><td>Document affected (e.g., Fuel Shift, Fuel Cash Box, Fuel Pump Reconciliation).</td></tr>
+<tr><td><strong>اسم المستند (Reference Name)</strong></td><td><code>reference_name</code></td><td>Dynamic Link</td><td>Unique ID of the audited record.</td></tr>
+<tr><td><strong>الوصف والسبب (Reason / Description)</strong></td><td><code>description</code></td><td>Small Text</td><td>Mandatory operational rationale entered by the user.</td></tr>
+<tr><td><strong>القيم السابقة (Previous Value)</strong></td><td><code>previous_value</code></td><td>Code / JSON</td><td>Snapshot of data prior to the modification.</td></tr>
+<tr><td><strong>القيم الجديدة (New Value)</strong></td><td><code>new_value</code></td><td>Code / JSON</td><td>Updated snapshot of modified data.</td></tr>
+<tr><td><strong>تاريخ ووقت الحدث (Timestamp)</strong></td><td><code>timestamp</code></td><td>Datetime</td><td>Exact timestamp when the event was recorded.</td></tr>
+<tr><td><strong>عنوان الشبكة (IP Address)</strong></td><td><code>ip_address</code></td><td>Data</td><td>Client IP address from which the request originated.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="integration-log-doctype">Hardware & API Logs: سجل تكامل محطة الوقود (Fuel Integration Log)<a class="h-anchor" href="#integration-log-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>The <strong>سجل تكامل محطة الوقود (Fuel Integration Log)</strong> tracks communications with external hardware (electronic pump counters, ATG probes, bank POS terminals, and ZATCA):</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Technical Description</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link</td><td>Station where the integration hardware is installed.</td></tr>
+<tr><td><strong>نظام التكامل (Integration System)</strong></td><td><code>integration_system</code></td><td>Select</td><td>External system (Dispenser Controller, ATG Tank Gauge, Bank POS, ZATCA Portal).</td></tr>
+<tr><td><strong>نوع الرسالة (Message Type)</strong></td><td><code>message_type</code></td><td>Data</td><td>Nature of request (Meter Pulse, Dip Reading, Card Payment, Invoice Clearance).</td></tr>
+<tr><td><strong>الحالة (Status)</strong></td><td><code>status</code></td><td>Select</td><td><code>Success</code>, <code>Failed</code>, or <code>Pending Retry</code>.</td></tr>
+<tr><td><strong>حمولة الطلب (Request Payload)</strong></td><td><code>request_payload</code></td><td>Code / JSON</td><td>Raw JSON or protocol payload transmitted.</td></tr>
+<tr><td><strong>حمولة الاستجابة (Response Payload)</strong></td><td><code>response_payload</code></td><td>Code / JSON</td><td>Response payload returned by the external controller.</td></tr>
+<tr><td><strong>رمز الاستجابة (Response Code)</strong></td><td><code>response_code</code></td><td>Data</td><td>HTTP status or hardware response code (e.g. 200, 400, 500).</td></tr>
+<tr><td><strong>رسالة الخطأ (Error Message)</strong></td><td><code>error_message</code></td><td>Small Text</td><td>Detailed error trace to assist technical troubleshooting.</td></tr>
+<tr><td><strong>عدد محاولات الإعادة (Retry Count)</strong></td><td><code>retry_count</code></td><td>Int</td><td>Automatic retry count executed upon network interruption.</td></tr>
+</tbody>
+</table></div>

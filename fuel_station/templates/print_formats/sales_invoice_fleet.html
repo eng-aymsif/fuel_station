@@ -1,0 +1,159 @@
+{%- from "fuel_station/templates/print_formats/base.html" import print_styles, is_arabic, dir -%}
+{{ print_styles() }}
+
+<div class="fuel-print-container fuel-print-standard" dir="{{ dir() }}">
+	<div class="fuel-print-header">
+		<table class="fuel-header-table">
+			<tr>
+				<td>
+					<div class="fuel-brand-name">⛽ {{ doc.company }}</div>
+					<div class="fuel-brand-sub">{{ _("Commercial Fleet & Corporate Fuel Services") if is_arabic() else "Commercial Fleet & Corporate Fuel Services" }}</div>
+					{% if doc.tax_id %}
+					<div class="fuel-brand-sub"><b>{{ _("TRN") if is_arabic() else "TRN" }}:</b> {{ doc.tax_id }}</div>
+					{% endif %}
+				</td>
+				<td class="fuel-doc-title-box">
+					<div class="fuel-doc-title">{{ _("FLEET TAX INVOICE") if is_arabic() else "FLEET TAX INVOICE" }}</div>
+					<div><b>{{ doc.name }}</b></div>
+					<div style="margin-top: 4px;">
+						{% if doc.docstatus == 1 %}
+						<span class="fuel-badge badge-success">{{ _("Approved / Posted") if is_arabic() else "Posted" }}</span>
+						{% elif doc.docstatus == 0 %}
+						<span class="fuel-badge badge-warning">{{ _("Draft") if is_arabic() else "Draft" }}</span>
+						{% else %}
+						<span class="fuel-badge badge-danger">{{ _("Cancelled") if is_arabic() else "Cancelled" }}</span>
+						{% endif %}
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- Fleet Account Info -->
+	<div class="fuel-meta-grid">
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Corporate Client / Account") if is_arabic() else "Corporate Client" }}</div>
+			<div class="fuel-meta-val">{{ doc.customer_name or doc.customer }}</div>
+			{% if doc.tax_id %}
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Client TRN") if is_arabic() else "Client TRN" }}</div>
+			<div class="fuel-meta-val">{{ doc.tax_id }}</div>
+			{% endif %}
+			{% if doc.contact_person %}
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Attention") if is_arabic() else "Attention" }}</div>
+			<div class="fuel-meta-val">{{ doc.contact_person }}</div>
+			{% endif %}
+		</div>
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Invoice Date") if is_arabic() else "Invoice Date" }}</div>
+			<div class="fuel-meta-val">{{ doc.posting_date }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Payment Due Date") if is_arabic() else "Due Date" }}</div>
+			<div class="fuel-meta-val">{{ doc.due_date or doc.posting_date }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Billing Terms") if is_arabic() else "Billing Terms" }}</div>
+			<div class="fuel-meta-val">{{ doc.payment_terms_template or _("Credit Fleet Account") if is_arabic() else "Credit Fleet Account" }}</div>
+		</div>
+		<div class="fuel-meta-col">
+			{% if doc.fuel_station %}
+			<div class="fuel-meta-label">{{ _("Service Station") if is_arabic() else "Service Station" }}</div>
+			<div class="fuel-meta-val">{{ doc.fuel_station }}</div>
+			{% endif %}
+			{% if doc.fuel_shift %}
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Operational Shift") if is_arabic() else "Shift" }}</div>
+			<div class="fuel-meta-val">{{ doc.fuel_shift }}</div>
+			{% endif %}
+			{% if doc.po_no %}
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Client P.O. Ref") if is_arabic() else "Client P.O." }}</div>
+			<div class="fuel-meta-val">{{ doc.po_no }}</div>
+			{% endif %}
+		</div>
+	</div>
+
+	<!-- Fuel Dispense Lines -->
+	<table class="fuel-data-table">
+		<thead>
+			<tr>
+				<th style="width: 5%;">#</th>
+				<th style="width: 30%;">{{ _("Product / Grade") if is_arabic() else "Product" }}</th>
+				<th class="text-center" style="width: 15%;">{{ _("Pump / Dispense Ref") if is_arabic() else "Pump / Ref" }}</th>
+				<th class="text-center" style="width: 15%;">{{ _("Volume (L)") if is_arabic() else "Volume (L)" }}</th>
+				<th class="text-center" style="width: 15%;">{{ _("Unit Rate") if is_arabic() else "Rate" }}</th>
+				<th class="text-center" style="width: 20%;">{{ _("Net Amount") if is_arabic() else "Amount" }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for item in doc.items %}
+			<tr>
+				<td>{{ loop.index }}</td>
+				<td>
+					<b>{{ item.item_name or item.item_code }}</b>
+					{% if item.description and item.description != item.item_name %}
+					<div style="font-size: 11px; color: #6b7280;">{{ item.description }}</div>
+					{% endif %}
+				</td>
+				<td class="text-center">
+					{{ item.fuel_pump or "-" }}
+					{% if item.meter_quantity %}
+					<div style="font-size: 10px; color: #ea580c;">{{ _("Metered") if is_arabic() else "Metered" }}: {{ item.meter_quantity }} L</div>
+					{% endif %}
+				</td>
+				<td class="text-center"><b>{{ "{:,.2f}".format(item.qty) }}</b> {{ item.uom or "L" }}</td>
+				<td class="text-center">{{ fuel_money(item.rate, doc.currency) }}</td>
+				<td class="text-center"><b>{{ fuel_money(item.amount, doc.currency) }}</b></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<!-- Financial Summary & ZATCA QR -->
+	<div style="display: table; width: 100%;">
+		<div style="display: table-cell; width: 50%; vertical-align: top;">
+			<div style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; width: 160px; text-align: center; background: #fff;">
+				{{ fuel_zatca_qr(doc) }}
+				<div style="font-size: 10px; color: #6b7280; margin-top: 6px;">{{ _("Tax Compliance QR Code") if is_arabic() else "Tax Compliance QR Code" }}</div>
+			</div>
+		</div>
+		<div style="display: table-cell; width: 50%; vertical-align: top;">
+			<table class="fuel-totals-table" style="width: 100%;">
+				<tr>
+					<td>{{ _("Net Total (Excl. Tax)") if is_arabic() else "Net Subtotal" }}</td>
+					<td class="text-left"><b>{{ fuel_money(doc.net_total, doc.currency) }}</b></td>
+				</tr>
+				{% if doc.discount_amount %}
+				<tr>
+					<td>{{ _("Contract Discount") if is_arabic() else "Contract Discount" }}</td>
+					<td class="text-left" style="color: #dc2626;">-{{ fuel_money(doc.discount_amount, doc.currency) }}</td>
+				</tr>
+				{% endif %}
+				<tr>
+					<td>{{ _("Total VAT (15%)") if is_arabic() else "Total VAT" }}</td>
+					<td class="text-left"><b>{{ fuel_money(doc.total_taxes_and_charges or 0.0, doc.currency) }}</b></td>
+				</tr>
+				<tr class="fuel-grand-total">
+					<td>{{ _("Grand Total") if is_arabic() else "Grand Total" }}</td>
+					<td class="text-left">{{ fuel_money(doc.grand_total, doc.currency) }}</td>
+				</tr>
+				{% if doc.outstanding_amount is defined and doc.outstanding_amount > 0 %}
+				<tr>
+					<td style="color: #b91c1c; font-weight: 700;">{{ _("Outstanding Balance") if is_arabic() else "Outstanding Balance" }}</td>
+					<td class="text-left" style="color: #b91c1c; font-weight: 700;">{{ fuel_money(doc.outstanding_amount, doc.currency) }}</td>
+				</tr>
+				{% endif %}
+			</table>
+		</div>
+	</div>
+
+	<!-- Dual Signatures & Fleet Stamp -->
+	<div class="fuel-sign-row">
+		<div class="fuel-sign-cell">
+			{{ _("Fleet Supervisor / Station Officer") if is_arabic() else "Station Officer" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("Finance & Accounting Auditor") if is_arabic() else "Accounting Auditor" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("Client Fleet Representative Receipt") if is_arabic() else "Client Representative" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+	</div>
+</div>

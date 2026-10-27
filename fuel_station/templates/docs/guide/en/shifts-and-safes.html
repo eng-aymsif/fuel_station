@@ -1,0 +1,160 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>Strict Financial & Operational Discipline:</strong> The system enforces total segregation between an attendant's personal field cash box <strong>صندوق النقد (Fuel Cash Box)</strong> and the station's central vault <strong>خزينة المحطة (Fuel Station Safe)</strong>, eliminating co-mingling of funds and pinpointing shortages with pinpoint precision.</p>
+</blockquote>
+
+<h2 id="shifts-concept">Shift & Cash Management Architecture<a class="h-anchor" href="#shifts-concept" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>Petroleum stations operate around the clock through successive closed shifts. Each shift represents an autonomous accounting cycle governed by eight integrated DocTypes:</p>
+<ol class="steps">
+  <li>Define standard schedules in <strong>نوع الوردية (Fuel Shift Type)</strong>.</li>
+  <li>Open the operating container in <strong>وردية الوقود (Fuel Shift)</strong>.</li>
+  <li>Assign attendants and pumps in <strong>تكليف عامل بمضخة (Fuel Pump Assignment)</strong>.</li>
+  <li>Track individual worker cash drawers in <strong>صندوق النقد (Fuel Cash Box)</strong>.</li>
+  <li>Document mid-shift attendant handovers via <strong>تسليم واستلام المضخة (Pump Handover)</strong>.</li>
+  <li>Count currency notes and coins in <strong>عد فئات النقد (Fuel Denomination Count)</strong>.</li>
+  <li>Transfer cash collections into <strong>خزينة المحطة (Fuel Station Safe)</strong> via <strong>تحويل نقدي للخزينة (Cash Transfer)</strong>.</li>
+  <li>Manage station petty cash and float pools in <strong>عهدة النقد (Fuel Cash Custody)</strong>.</li>
+</ol>
+
+<h2 id="shift-type-doctype">1. Shift Schedules: نوع الوردية (Fuel Shift Type)<a class="h-anchor" href="#shift-type-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>اسم الوردية (Shift Name)</strong></td><td><code>shift_name</code></td><td>Data (Mandatory)</td><td>Shift schedule name (e.g. Morning Shift 07:00 - 15:00).</td></tr>
+<tr><td><strong>وقت البدء (Start Time)</strong></td><td><code>start_time</code></td><td>Time</td><td>Standard scheduled start time.</td></tr>
+<tr><td><strong>وقت الانتهاء (End Time)</strong></td><td><code>end_time</code></td><td>Time</td><td>Standard scheduled end time.</td></tr>
+<tr><td><strong>نشط (Active)</strong></td><td><code>active</code></td><td>Check</td><td>Enables shift type for operational selection.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="fuel-shift-doctype">2. Operational Shift: وردية الوقود (Fuel Shift)<a class="h-anchor" href="#fuel-shift-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>The <strong>وردية الوقود (Fuel Shift)</strong> coordinates all pump assignments, meter readings, and cash boxes during a work period:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link (Mandatory)</td><td>Fuel station where the shift operates.</td></tr>
+<tr><td><strong>تاريخ العمل (Business Date)</strong></td><td><code>business_date</code></td><td>Date (Mandatory)</td><td>Accounting date for all transactions within this shift.</td></tr>
+<tr><td><strong>نوع الوردية (Shift Type)</strong></td><td><code>shift_type</code></td><td>Link (Mandatory)</td><td>Operating shift schedule reference.</td></tr>
+<tr><td><strong>المشرف (Supervisor)</strong></td><td><code>supervisor</code></td><td>Link (Mandatory)</td><td>Shift supervisor in charge of opening, auditing, and closing.</td></tr>
+<tr><td><strong>الحالة (Status)</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code>, <code>Open</code>, <code>Closed</code>, <code>Reopened</code>.</td></tr>
+<tr><td><strong>حالة الفتح (Opening Status)</strong></td><td><code>opening_status</code></td><td>Select</td><td>Verification status of opening meters and floats.</td></tr>
+<tr><td><strong>حالة الإغلاق (Closing Status)</strong></td><td><code>closing_status</code></td><td>Select</td><td>Closing verification status.</td></tr>
+<tr><td><strong>العهدة النقدية الافتتاحية (Opening Cash Float)</strong></td><td><code>opening_cash_float</code></td><td>Currency</td><td>Total change float distributed to attendants.</td></tr>
+<tr><td><strong>تاريخ ووقت الفتح (Opened At)</strong></td><td><code>opened_at</code></td><td>Datetime</td><td>Exact timestamp when dispensing was unlocked.</td></tr>
+<tr><td><strong>تاريخ ووقت الإغلاق (Closed At)</strong></td><td><code>closed_at</code></td><td>Datetime</td><td>Exact timestamp when the shift was finalized.</td></tr>
+<tr><td><strong>السماح بفتح استثنائي (Allow Exceptional Open)</strong></td><td><code>allow_exceptional_open</code></td><td>Check</td><td>Emergency override allowing shift opening before prior shift closure.</td></tr>
+<tr><td><strong>سبب الفتح الاستثنائي (Exceptional Open Reason)</strong></td><td><code>exceptional_open_reason</code></td><td>Small Text</td><td>Mandatory justification for exceptional opening.</td></tr>
+<tr><td><strong>معتمد من (Approved By)</strong></td><td><code>approved_by</code></td><td>Link</td><td>Manager approving exceptional opening or reopening.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="pump-assignment-doctype">3. Pump Assignment: تكليف عامل بمضخة (Fuel Pump Assignment)<a class="h-anchor" href="#pump-assignment-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link</td><td>Station branch.</td></tr>
+<tr><td><strong>الوردية (Shift)</strong></td><td><code>shift</code></td><td>Link</td><td>Current open shift.</td></tr>
+<tr><td><strong>المضخة (Pump)</strong></td><td><code>pump</code></td><td>Link (Mandatory)</td><td>Assigned fuel dispenser pump.</td></tr>
+<tr><td><strong>الموظف / العامل (Employee)</strong></td><td><code>employee</code></td><td>Link (Mandatory)</td><td>Station attendant responsible for operating the nozzle.</td></tr>
+<tr><td><strong>صندوق النقد (Cash Box)</strong></td><td><code>cash_box</code></td><td>Link</td><td>Attendant's personal cash box assigned for this shift.</td></tr>
+<tr><td><strong>قراءة العداد الافتتاحية (Opening Meter Reading)</strong></td><td><code>opening_meter_reading</code></td><td>Float</td><td>Meter counter reading when attendant begins duties.</td></tr>
+<tr><td><strong>قراءة العداد الختامية (Closing Meter Reading)</strong></td><td><code>closing_meter_reading</code></td><td>Float</td><td>Meter counter reading when attendant finishes duties.</td></tr>
+<tr><td><strong>وقت البدء (Start Time)</strong></td><td><code>start_time</code></td><td>Datetime</td><td>Actual assignment start timestamp.</td></tr>
+<tr><td><strong>وقت الانتهاء (End Time)</strong></td><td><code>end_time</code></td><td>Datetime</td><td>Actual assignment completion timestamp.</td></tr>
+<tr><td><strong>الحالة (Status)</strong></td><td><code>status</code></td><td>Select</td><td><code>Active</code> or <code>Completed</code>.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="pump-handover-doctype">4. Handover: تسليم واستلام المضخة (Pump Handover)<a class="h-anchor" href="#pump-handover-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>الموظف المسلّم (Outgoing Employee)</strong></td><td><code>outgoing_employee</code></td><td>Link (Mandatory)</td><td>Attendant handing over the pump.</td></tr>
+<tr><td><strong>الموظف المستلم (Incoming Employee)</strong></td><td><code>incoming_employee</code></td><td>Link (Mandatory)</td><td>Attendant taking over the pump.</td></tr>
+<tr><td><strong>قراءة العداد عند التسليم (Meter Reading At Handover)</strong></td><td><code>meter_reading_at_handover</code></td><td>Float (Mandatory)</td><td>Jointly verified dispenser meter counter reading.</td></tr>
+<tr><td><strong>النقد المسلّم باليد (Cash Count At Handover)</strong></td><td><code>cash_count_at_handover</code></td><td>Currency</td><td>Physical cash exchanged hand-to-hand if applicable.</td></tr>
+<tr><td><strong>تأكيد المسلّم (Outgoing Confirmation)</strong></td><td><code>outgoing_signature_or_confirmation</code></td><td>Check</td><td>Confirmation from outgoing attendant.</td></tr>
+<tr><td><strong>تأكيد المستلم (Incoming Confirmation)</strong></td><td><code>incoming_signature_or_confirmation</code></td><td>Check</td><td>Confirmation from incoming attendant.</td></tr>
+<tr><td><strong>اعتماد المشرف (Supervisor Approval)</strong></td><td><code>supervisor_approval</code></td><td>Link</td><td>Supervisor endorsement of the transition.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="fuel-cash-box-doctype">5. Cash Drawer: صندوق النقد (Fuel Cash Box)<a class="h-anchor" href="#fuel-cash-box-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>The <strong>صندوق النقد (Fuel Cash Box)</strong> calculates expected cash and audits shortages/overages using the canonical formula:</p>
+
+<div class="callout tip">
+  <p><strong>Cash Variance Formula:</strong></p>
+  <code>Expected Cash = Opening Float + Cash Sales + Approved Receipts + Transfers In - Approved Expenses - Refunds - Transfers Out to Safe</code><br><br>
+  <code>Variance (عجز / زيادة) = Actual Counted Cash - Expected Cash</code>
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>رمز الصندوق (Cash Box Code)</strong></td><td><code>cash_box_code</code></td><td>Data</td><td>Unique cash drawer identifier (e.g. CB-01).</td></tr>
+<tr><td><strong>الموظف المعين (Assigned Employee)</strong></td><td><code>assigned_employee</code></td><td>Link (Mandatory)</td><td>Attendant responsible for this cash drawer.</td></tr>
+<tr><td><strong>العهدة النقدية الافتتاحية (Opening Float)</strong></td><td><code>opening_float</code></td><td>Currency</td><td>Initial change money given to the attendant.</td></tr>
+<tr><td><strong>المبيعات النقدية المسجلة (Cash Sales)</strong></td><td><code>cash_sales</code></td><td>Currency</td><td>Total cash collected from retail fuel dispensing.</td></tr>
+<tr><td><strong>تحويلات نقدية خارجة للخزينة (Cash Transfers Out)</strong></td><td><code>cash_transfers_out</code></td><td>Currency</td><td>Total money transferred to the central station safe.</td></tr>
+<tr><td><strong>المصروفات النقدية المعتمدة (Approved Expenses)</strong></td><td><code>approved_expenses</code></td><td>Currency</td><td>Emergency station expenses authorized during shift.</td></tr>
+<tr><td><strong>النقد المتوقع بالنظام (Expected Cash)</strong></td><td><code>expected_cash</code></td><td>Currency</td><td>System computed cash required to be physically present.</td></tr>
+<tr><td><strong>النقد المعدود فعلياً (Counted Cash)</strong></td><td><code>counted_cash</code></td><td>Currency</td><td>Physical cash total derived from denomination breakdown.</td></tr>
+<tr><td><strong>الفرق (عجز / زيادة) (Variance)</strong></td><td><code>variance</code></td><td>Currency</td><td>Variance (Negative = Shortage, Positive = Overage).</td></tr>
+<tr><td><strong>تم العد بواسطة (Counted By)</strong></td><td><code>counted_by</code></td><td>Link</td><td>Auditor or supervisor who counted the cash drawer.</td></tr>
+<tr><td><strong>الحالة (Status)</strong></td><td><code>status</code></td><td>Select</td><td><code>Open</code>, <code>Closed</code>, <code>Reopened</code>.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="denomination-count-doctype">6. Currency Count: عد فئات النقد (Fuel Denomination Count)<a class="h-anchor" href="#denomination-count-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>العملة (Currency)</strong></td><td><code>currency</code></td><td>Link</td><td>Count currency (e.g. SAR).</td></tr>
+<tr><td><strong>فئة العملة الورقية أو المعدنية (Banknote or Coin Value)</strong></td><td><code>banknote_or_coin</code></td><td>Currency</td><td>Face value (500, 200, 100, 50, 20, 10, 5, 2, 1, 0.50).</td></tr>
+<tr><td><strong>الكمية (عدد الأوراق أو القطع) (Quantity)</strong></td><td><code>quantity</code></td><td>Int</td><td>Physical quantity of notes or coins counted.</td></tr>
+<tr><td><strong>المجموع الفرعي للفئة (Subtotal)</strong></td><td><code>subtotal</code></td><td>Currency</td><td>Auto-calculated: Face Value × Quantity.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="station-safe-doctype">7. Station Vault: خزينة المحطة (Fuel Station Safe)<a class="h-anchor" href="#station-safe-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>رمز الخزينة (Safe Code)</strong></td><td><code>safe_code</code></td><td>Data</td><td>Safe code (e.g. SAFE-01).</td></tr>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link (Mandatory)</td><td>Station location.</td></tr>
+<tr><td><strong>الموظف المسؤول (Responsible Employee)</strong></td><td><code>responsible_employee</code></td><td>Link</td><td>Safe custodian holding keys and vault codes.</td></tr>
+<tr><td><strong>الرصيد الافتتاحي (Opening Balance)</strong></td><td><code>opening_balance</code></td><td>Currency</td><td>Cash rolled over from previous shift in safe.</td></tr>
+<tr><td><strong>النقد المستلم من الصناديق (Cash Received From Boxes)</strong></td><td><code>cash_received_from_boxes</code></td><td>Currency</td><td>Total cash received from attendants via Cash Transfers.</td></tr>
+<tr><td><strong>النقد المودع بالبنك (Cash Deposited To Bank)</strong></td><td><code>cash_deposited_to_bank</code></td><td>Currency</td><td>Cash picked up by CIT armored vehicle or banked.</td></tr>
+<tr><td><strong>رصيد الخزينة المتوقع (Expected Safe Balance)</strong></td><td><code>expected_safe_balance</code></td><td>Currency</td><td>Opening Balance + Received from Boxes - Bank Deposits.</td></tr>
+<tr><td><strong>رصيد الخزينة المعدود (Counted Safe Balance)</strong></td><td><code>counted_safe_balance</code></td><td>Currency</td><td>Actual counted vault balance.</td></tr>
+<tr><td><strong>الفرق (عجز / زيادة) (Variance)</strong></td><td><code>variance</code></td><td>Currency</td><td>Safe shortage or overage.</td></tr>
+<tr><td><strong>سند قيد الإيداع البنكي (Bank Deposit Payment Entry)</strong></td><td><code>bank_deposit_payment_entry</code></td><td>Link</td><td>ERPNext bank deposit payment entry reference.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="cash-transfer-doctype">8. Vault Transfer: تحويل نقدي للخزينة (Cash Transfer)<a class="h-anchor" href="#cash-transfer-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>من صندوق النقد (From Cash Box)</strong></td><td><code>from_cash_box</code></td><td>Link (Mandatory)</td><td>Originating attendant cash drawer.</td></tr>
+<tr><td><strong>إلى خزينة المحطة (To Station Safe)</strong></td><td><code>to_safe</code></td><td>Link (Mandatory)</td><td>Destination station vault.</td></tr>
+<tr><td><strong>المبلغ (Amount)</strong></td><td><code>amount</code></td><td>Currency (Mandatory)</td><td>Cash sum transferred.</td></tr>
+<tr><td><strong>الموظف المسلّم (From Employee)</strong></td><td><code>from_employee</code></td><td>Link</td><td>Handing over attendant.</td></tr>
+<tr><td><strong>الموظف المستلم (To Employee)</strong></td><td><code>to_employee</code></td><td>Link</td><td>Receiving safe custodian.</td></tr>
+<tr><td><strong>تأكيد استلام أمين الخزينة (Receiver Confirmed)</strong></td><td><code>receiver_confirmed</code></td><td>Check</td><td>Digital receipt confirmation by custodian.</td></tr>
+<tr><td><strong>الحالة (Status)</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code>, <code>Transferred</code>, <code>Confirmed</code>.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="cash-custody-doctype">9. Custody & Floats: عهدة النقد (Fuel Cash Custody)<a class="h-anchor" href="#cash-custody-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>الموظف / العامل (Employee)</strong></td><td><code>employee</code></td><td>Link (Mandatory)</td><td>Custodian employee.</td></tr>
+<tr><td><strong>المبلغ الافتتاحي للعهدة (Opening Amount)</strong></td><td><code>opening_amount</code></td><td>Currency (Mandatory)</td><td>Change float principal amount.</td></tr>
+<tr><td><strong>المبلغ المتوقع (Expected Amount)</strong></td><td><code>expected_amount</code></td><td>Currency</td><td>System target balance.</td></tr>
+<tr><td><strong>المبلغ الفعلي (Actual Amount)</strong></td><td><code>actual_amount</code></td><td>Currency</td><td>Physical count at settlement.</td></tr>
+<tr><td><strong>مبلغ الفرق (Variance Amount)</strong></td><td><code>variance_amount</code></td><td>Currency</td><td>Shortage or overage.</td></tr>
+<tr><td><strong>سند الدفع القياسي (Payment Entry)</strong></td><td><code>payment_entry</code></td><td>Link</td><td>ERPNext Payment Entry.</td></tr>
+</tbody>
+</table></div>

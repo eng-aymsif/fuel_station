@@ -1,0 +1,56 @@
+{%- from "fuel_station/templates/print_formats/base.html" import print_styles, is_arabic, dir -%}
+{{ print_styles() }}
+
+<div class="fuel-print-container fuel-print-thermal" dir="{{ dir() }}">
+	<div class="fuel-thermal-head">
+		<div style="font-size: 13px; font-weight: 700;">⛽ {{ doc.company or "Fuel Issue Order" }}</div>
+		<div class="fuel-thermal-title">{{ _("FUEL ISSUE PERMIT") if is_arabic() else "FUEL ISSUE PERMIT" }}</div>
+		<div class="fuel-thermal-sub">{{ _("Driver Vehicle Fuel Ticket") if is_arabic() else "Driver Vehicle Fuel Ticket" }}</div>
+	</div>
+
+	<div class="fuel-thermal-qr" style="padding: 4px 0;">
+		{{ fuel_qr_code(doc.print_token or doc.name) }}
+		<div style="font-size: 9px; color: #555; margin-top: 2px;">{{ doc.name }}</div>
+	</div>
+
+	<div class="fuel-thermal-divider"></div>
+
+	<div class="fuel-thermal-row">
+		<span><b>{{ _("Plate No") if is_arabic() else "Plate No" }}:</b></span>
+		<span><b>{{ doc.plate_number or doc.vehicle or _("Any Fleet") if is_arabic() else "Any Fleet" }}</b></span>
+	</div>
+	<div class="fuel-thermal-row">
+		<span><b>{{ _("Driver / Employee") if is_arabic() else "Driver" }}:</b></span>
+		<span>{{ doc.employee or doc.requester or "-" }}</span>
+	</div>
+	<div class="fuel-thermal-row">
+		<span><b>{{ _("Allowed Item") if is_arabic() else "Item" }}:</b></span>
+		<span><b>{{ doc.item }}</b></span>
+	</div>
+	<div class="fuel-thermal-row">
+		<span><b>{{ _("Station") if is_arabic() else "Station" }}:</b></span>
+		<span>{{ doc.station or _("All Stations") if is_arabic() else "All Stations" }}</span>
+	</div>
+
+	<div class="fuel-thermal-divider"></div>
+
+	<div class="fuel-thermal-row">
+		<span>{{ _("Qty Quota") if is_arabic() else "Qty Quota" }}:</span>
+		<span><b>{{ "{:,.2f}".format(doc.quantity_limit or 0.0) }} L</b></span>
+	</div>
+	<div class="fuel-thermal-row">
+		<span>{{ _("Remaining") if is_arabic() else "Remaining" }}:</span>
+		<span style="font-weight: 800; color: #047857;">{{ "{:,.2f}".format(doc.remaining_quantity or doc.quantity_limit or 0.0) }} L</span>
+	</div>
+	<div class="fuel-thermal-row">
+		<span>{{ _("Valid Until") if is_arabic() else "Valid Until" }}:</span>
+		<span>{{ doc.valid_until or _("No Expiry") if is_arabic() else "No Expiry" }}</span>
+	</div>
+
+	<div class="fuel-thermal-divider-double"></div>
+
+	<div class="fuel-thermal-footer">
+		<div>{{ _("Present this ticket at the pump nozzle.") if is_arabic() else "Present this ticket at pump." }}</div>
+		<div style="margin-top: 4px;">{{ _("Single/Multi use as authorized.") if is_arabic() else "Authorized Issue Ticket" }}</div>
+	</div>
+</div>

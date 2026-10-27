@@ -1,0 +1,317 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "station",
+  "business_date",
+  "shift_type",
+  "supervisor",
+  "column_break_1",
+  "status",
+  "opening_status",
+  "closing_status",
+  "opening_cash_float",
+  "section_break_2",
+  "opened_at",
+  "closed_at",
+  "column_break_2",
+  "first_closed_at",
+  "reopened_at",
+  "section_break_3",
+  "allow_exceptional_open",
+  "exceptional_open_reason",
+  "column_break_3",
+  "reopen_reason",
+  "approved_by",
+  "section_break_other",
+  "naming_series",
+  "planned_start_time",
+  "actual_start_time",
+  "opening_safe_balance_reference",
+  "requested_by",
+  "documents_affected",
+  "correction_plan"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Shift Information"
+  },
+  {
+   "fieldname": "station",
+   "label": "Station",
+   "fieldtype": "Link",
+   "options": "Fuel Station",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "business_date",
+   "label": "Business Date",
+   "fieldtype": "Date",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "shift_type",
+   "label": "Shift Type",
+   "fieldtype": "Link",
+   "options": "Fuel Shift Type",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "supervisor",
+   "label": "Supervisor",
+   "fieldtype": "Link",
+   "options": "Employee",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "Planned\nOpen\nIn Operation\nPending Closing\nCash Counted\nReconciled\nApproved\nClosed\nCancelled\nReopened With Approval",
+   "default": "Open",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "opening_status",
+   "label": "Opening Status",
+   "fieldtype": "Select",
+   "options": "Pending\nOpen\nVerified",
+   "default": "Open"
+  },
+  {
+   "fieldname": "closing_status",
+   "label": "Closing Status",
+   "fieldtype": "Select",
+   "options": "Open\nPending Review\nClosed",
+   "default": "Open"
+  },
+  {
+   "fieldname": "opening_cash_float",
+   "label": "Opening Cash Float",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Shift Timestamps"
+  },
+  {
+   "fieldname": "opened_at",
+   "label": "Opened At",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "closed_at",
+   "label": "Closed At",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "first_closed_at",
+   "label": "First Closed At",
+   "fieldtype": "Datetime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reopened_at",
+   "label": "Reopened At",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break",
+   "label": "Exceptional Operations"
+  },
+  {
+   "fieldname": "allow_exceptional_open",
+   "label": "Allow Exceptional Open",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "exceptional_open_reason",
+   "label": "Exceptional Open Reason",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reopen_reason",
+   "label": "Reopen Reason",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "approved_by",
+   "label": "Approved By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "FSH-.YYYY.-.#####",
+   "default": "FSH-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "planned_start_time",
+   "label": "Planned Start Time",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "actual_start_time",
+   "label": "Actual Start Time",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "opening_safe_balance_reference",
+   "label": "Opening Safe Balance Reference",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "requested_by",
+   "label": "Requested By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "documents_affected",
+   "label": "Documents Affected",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "correction_plan",
+   "label": "Correction Plan",
+   "fieldtype": "Small Text"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "issingle": 0,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Fuel Shift",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "System Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Station Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Shift Supervisor",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Cashier",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1
+  },
+  {
+   "role": "Inventory Officer",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Attendant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "print": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field"
+}

@@ -1,0 +1,68 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>Reconciliation & Reports:</strong> Reconciliation acts as the financial safeguard of the station. The engine reconciles meter counters against cash, bank POS cards, fleet credit accounts, and internal issue orders, escalating over-tolerance discrepancies through structured approval matrices.</p>
+</blockquote>
+
+<h2 id="reconciliation-overview">Reconciliation & Dispute Resolution Cycle<a class="h-anchor" href="#reconciliation-overview" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>Shift settlement and auditing operate through two primary records alongside operational reporting registers:</p>
+<ol class="steps">
+  <li>Perform pump reconciliation in <strong>تسوية المضخة (Fuel Pump Reconciliation)</strong>.</li>
+  <li>Escalate over-tolerance discrepancies into <strong>استثناء تسوية الوقود (Fuel Reconciliation Exception)</strong>.</li>
+  <li>Extract live registers and discrepancy summaries to ensure financial closure.</li>
+</ol>
+
+<h2 id="pump-reconciliation-doctype">1. Pump Reconciliation: تسوية المضخة (Fuel Pump Reconciliation)<a class="h-anchor" href="#pump-reconciliation-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>The <strong>تسوية المضخة (Fuel Pump Reconciliation)</strong> audits nozzle activity at shift close and computes inferred cash sales:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link (Mandatory)</td><td>Station location.</td></tr>
+<tr><td><strong>تاريخ العمل (Business Date)</strong></td><td><code>business_date</code></td><td>Date (Mandatory)</td><td>Operational accounting date.</td></tr>
+<tr><td><strong>الوردية (Shift)</strong></td><td><code>shift</code></td><td>Link</td><td>Reconciled shift.</td></tr>
+<tr><td><strong>المضخة (Pump)</strong></td><td><code>pump</code></td><td>Link (Mandatory)</td><td>Dispenser pump.</td></tr>
+<tr><td><strong>صنف الوقود (Fuel Item)</strong></td><td><code>item</code></td><td>Link</td><td>Fuel item.</td></tr>
+<tr><td><strong>قراءة البداية (Opening Reading)</strong></td><td><code>opening_reading</code></td><td>Float (Mandatory)</td><td>Approved opening counter totalizer.</td></tr>
+<tr><td><strong>قراءة النهاية (Closing Reading)</strong></td><td><code>closing_reading</code></td><td>Float (Mandatory)</td><td>Recorded closing counter totalizer.</td></tr>
+<tr><td><strong>كمية العداد (فرق القراءة) (Meter Quantity)</strong></td><td><code>meter_quantity</code></td><td>Float</td><td>Auto-calculated: Closing Reading - Opening Reading.</td></tr>
+<tr><td><strong>سعر اللتر (Unit Rate)</strong></td><td><code>rate</code></td><td>Currency</td><td>Applied fuel rate per litre.</td></tr>
+<tr><td><strong>كمية مبيعات البطاقات (لتر) (Card Quantity)</strong></td><td><code>card_quantity</code></td><td>Float</td><td>Litres billed via Mada and POS bank terminals.</td></tr>
+<tr><td><strong>كمية المبيعات الآجلة (لتر) (Credit Quantity)</strong></td><td><code>credit_quantity</code></td><td>Float</td><td>Litres billed to corporate credit fleets.</td></tr>
+<tr><td><strong>كمية الصرف الداخلي (لتر) (Internal Quantity)</strong></td><td><code>internal_quantity</code></td><td>Float</td><td>Litres drawn for internal company vehicles.</td></tr>
+<tr><td><strong>كمية المعايرة (لتر) (Calibration Quantity)</strong></td><td><code>calibration_quantity</code></td><td>Float</td><td>Litres deducted for calibration prover can testing.</td></tr>
+<tr><td><strong>كمية الهدر المعتمد (لتر) (Waste Quantity)</strong></td><td><code>waste_quantity</code></td><td>Float</td><td>Approved evaporation or operational shrinkage volume.</td></tr>
+<tr><td><strong>الكمية المصنفة الإجمالية (Classified Quantity)</strong></td><td><code>classified_quantity</code></td><td>Float</td><td>Total non-cash volume accounted for.</td></tr>
+<tr><td><strong>الكمية النقدية المتوقعة (Expected Cash Quantity)</strong></td><td><code>cash_quantity</code></td><td>Float</td><td>Inferred cash volume = Meter Delta - Classified Volume.</td></tr>
+<tr><td><strong>فرق الكمية (لتر) (Variance Quantity)</strong></td><td><code>variance_quantity</code></td><td>Float</td><td>Discrepancy between meter total and logged dispenses.</td></tr>
+<tr><td><strong>مبلغ الفرق (Variance Amount)</strong></td><td><code>variance_amount</code></td><td>Currency</td><td>Monetary variance (Variance Quantity × Rate).</td></tr>
+<tr><td><strong>الحالة (Status)</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code>, <code>Matched</code>, <code>Variance Pending</code>, <code>Approved</code>.</td></tr>
+<tr><td><strong>معتمد من (Approved By)</strong></td><td><code>approved_by</code></td><td>Link</td><td>Auditing supervisor or accountant.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="reconciliation-exception-doctype">2. Discrepancy Auditing: استثناء تسوية الوقود (Fuel Reconciliation Exception)<a class="h-anchor" href="#reconciliation-exception-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>نوع الاستثناء (Exception Type)</strong></td><td><code>exception_type</code></td><td>Select (Mandatory)</td><td><code>Meter Variance Exceeded</code>, <code>Cash Shortage Exceeded</code>, <code>Unexplained Tank Dip Variance</code>.</td></tr>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link (Mandatory)</td><td>Station branch where the breach occurred.</td></tr>
+<tr><td><strong>المضخة (Pump)</strong></td><td><code>pump</code></td><td>Link</td><td>Affected pump dispenser.</td></tr>
+<tr><td><strong>مستوى الأهمية (Severity)</strong></td><td><code>severity</code></td><td>Select</td><td><code>Low</code> (Supervisor limit), <code>Medium</code> (Station Manager), <code>Critical</code> (Operations Manager).</td></tr>
+<tr><td><strong>الكمية أو المبلغ المتوقع (Expected Quantity / Amount)</strong></td><td><code>expected_quantity</code></td><td>Float</td><td>System benchmark value.</td></tr>
+<tr><td><strong>الكمية أو المبلغ الفعلي (Actual Quantity / Amount)</strong></td><td><code>actual_quantity</code></td><td>Float</td><td>Physical field outcome.</td></tr>
+<tr><td><strong>الفارق (Difference)</strong></td><td><code>difference</code></td><td>Float</td><td>Discrepancy magnitude.</td></tr>
+<tr><td><strong>مُسند إلى (Assigned To)</strong></td><td><code>assigned_to</code></td><td>Link</td><td>Assigned investigator.</td></tr>
+<tr><td><strong>ملاحظات المعالجة والتحقيق (Resolution Notes)</strong></td><td><code>resolution_notes</code></td><td>Small Text</td><td>Investigation findings and corrective actions.</td></tr>
+<tr><td><strong>مستند المعالجة (Resolution Document)</strong></td><td><code>resolution_document</code></td><td>Data</td><td>Corrective ERPNext Journal Entry or Payroll deduction reference.</td></tr>
+<tr><td><strong>معتمد من (Approved By)</strong></td><td><code>approved_by</code></td><td>Link</td><td>Executive manager signing off the settlement.</td></tr>
+<tr><td><strong>الحالة (Status)</strong></td><td><code>status</code></td><td>Select</td><td><code>Open</code>, <code>Under Investigation</code>, <code>Resolved</code>, <code>Escalated</code>.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="operational-reports">Standard Operational Reports<a class="h-anchor" href="#operational-reports" aria-hidden="true" tabindex="-1">#</a></h2>
+<ul>
+  <li><strong>Daily Fuel Sales Register</strong>: Comprehensive breakdown of fuel dispenses by nozzle, payment mode, and VAT.</li>
+  <li><strong>Pump Meter Reconciliation Report</strong>: Meter counter delta versus logged sales volume per dispenser.</li>
+  <li><strong>Cash Box Variances Report</strong>: Shift-by-shift attendant cash shortages and overages with denomination details.</li>
+  <li><strong>Tank Stock Movement & Dip Balance</strong>: Comparison of live ATG/dipstick measurements against ERPNext Stock Ledger.</li>
+  <li><strong>Fleet Customer Consumption Report</strong>: Real-time corporate client consumption and remaining credit limits.</li>
+</ul>

@@ -1,0 +1,454 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "cash_box_code",
+  "box_type",
+  "station",
+  "business_date",
+  "shift",
+  "status",
+  "column_break_1",
+  "assigned_employee",
+  "assigned_user",
+  "opening_float",
+  "allow_multiple_active_boxes",
+  "section_break_2",
+  "cash_sales",
+  "card_sales_reference",
+  "approved_receipts",
+  "cash_transfers_in",
+  "column_break_2",
+  "approved_expenses",
+  "unapproved_expenses",
+  "refunds",
+  "cash_transfers_out",
+  "section_break_3",
+  "expense_reference_doctype",
+  "expense_reference_name",
+  "expected_cash",
+  "counted_cash",
+  "variance",
+  "column_break_3",
+  "counted_by",
+  "counted_at",
+  "first_closed_at",
+  "section_break_4",
+  "denominations",
+  "section_break_5",
+  "reopened_at",
+  "approved_by",
+  "column_break_5",
+  "reopen_reason",
+  "section_break_other",
+  "naming_series",
+  "assignment",
+  "mode_of_payment",
+  "cash_account",
+  "recipient_confirmed",
+  "reviewed_by",
+  "requested_by",
+  "documents_affected",
+  "correction_plan"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Cash Box Information"
+  },
+  {
+   "fieldname": "cash_box_code",
+   "label": "Cash Box Code",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "box_type",
+   "label": "Box Type",
+   "fieldtype": "Select",
+   "options": "Attendant Cash Box\nCashier Cash Box\nصندوق العامل\nصندوق الكاشير",
+   "default": "Attendant Cash Box",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "station",
+   "label": "Station",
+   "fieldtype": "Link",
+   "options": "Fuel Station",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "business_date",
+   "label": "Business Date",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "shift",
+   "label": "Shift",
+   "fieldtype": "Link",
+   "options": "Fuel Shift",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "Open\nPending Count\nCounted\nPending Review\nVariance Approved\nTransferred\nClosed\nReopened With Approval",
+   "default": "Open",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "assigned_employee",
+   "label": "Assigned Employee",
+   "fieldtype": "Link",
+   "options": "Employee",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "assigned_user",
+   "label": "Assigned User",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "opening_float",
+   "label": "Opening Float",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "allow_multiple_active_boxes",
+   "label": "Allow Multiple Active Boxes Override",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Cash Transactions"
+  },
+  {
+   "fieldname": "cash_sales",
+   "label": "Cash Sales",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "card_sales_reference",
+   "label": "Card Sales Reference Amount",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "approved_receipts",
+   "label": "Approved Cash Receipts",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "cash_transfers_in",
+   "label": "Cash Transfers In",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "approved_expenses",
+   "label": "Approved Expenses",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "unapproved_expenses",
+   "label": "Unapproved Expenses (Excluded)",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "refunds",
+   "label": "Refunds",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "cash_transfers_out",
+   "label": "Cash Transfers Out",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break",
+   "label": "Balances & Reconciliations"
+  },
+  {
+   "fieldname": "expense_reference_doctype",
+   "label": "Expense Reference DocType",
+   "fieldtype": "Select",
+   "options": "\nExpense Claim\nPayment Entry\nJournal Entry\nFuel Issue Order"
+  },
+  {
+   "fieldname": "expense_reference_name",
+   "label": "Expense Reference Name",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "expected_cash",
+   "label": "Expected Cash",
+   "fieldtype": "Currency",
+   "default": "0",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "counted_cash",
+   "label": "Counted Cash",
+   "fieldtype": "Currency",
+   "default": "0",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "variance",
+   "label": "Variance",
+   "fieldtype": "Currency",
+   "default": "0",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "counted_by",
+   "label": "Counted By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "counted_at",
+   "label": "Counted At",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "first_closed_at",
+   "label": "First Closed At",
+   "fieldtype": "Datetime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break",
+   "label": "Denomination Counting"
+  },
+  {
+   "fieldname": "denominations",
+   "label": "Denomination Counts",
+   "fieldtype": "Table",
+   "options": "Fuel Denomination Count"
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break",
+   "label": "Reopening"
+  },
+  {
+   "fieldname": "reopened_at",
+   "label": "Reopened At",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "approved_by",
+   "label": "Approved By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reopen_reason",
+   "label": "Reopen Reason",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "FCB-.YYYY.-.#####",
+   "default": "FCB-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "assignment",
+   "label": "Pump Assignment",
+   "fieldtype": "Link",
+   "options": "Fuel Pump Assignment"
+  },
+  {
+   "fieldname": "mode_of_payment",
+   "label": "Mode of Payment",
+   "fieldtype": "Link",
+   "options": "Mode of Payment"
+  },
+  {
+   "fieldname": "cash_account",
+   "label": "Cash Account",
+   "fieldtype": "Link",
+   "options": "Account"
+  },
+  {
+   "fieldname": "recipient_confirmed",
+   "label": "Recipient Confirmed Float",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "reviewed_by",
+   "label": "Reviewed By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "requested_by",
+   "label": "Requested By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "documents_affected",
+   "label": "Documents Affected",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "correction_plan",
+   "label": "Correction Plan",
+   "fieldtype": "Small Text"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "issingle": 0,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Fuel Cash Box",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "System Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Station Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Shift Supervisor",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Cashier",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1
+  },
+  {
+   "role": "Inventory Officer",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Attendant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "print": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field"
+}

@@ -1,0 +1,84 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>Tanks, Deliveries, Stock & Calibration:</strong> Underground storage tanks function as live physical warehouses. The platform connects bulk road tanker delivery documents with physical dipstick charts and automatic tank gauging (ATG) probes, generating standard <strong>ERPNext</strong> Stock and Purchase receipts.</p>
+</blockquote>
+
+<h2 id="tanks-overview">Tanks & Fuel Procurement Overview<a class="h-anchor" href="#tanks-overview" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>Fuel inventory management is executed through four core DocTypes:</p>
+<ol class="steps">
+  <li>Map physical tanks to ERPNext warehouses in <strong>خزان الوقود (Fuel Tank)</strong>.</li>
+  <li>Document road tanker discharges, ullage, and water paste tests in <strong>توريد وقود (Fuel Delivery)</strong>.</li>
+  <li>Deduct calibration prover volume from retail meter sales in <strong>عملية معايرة المضخة (Fuel Calibration Event)</strong>.</li>
+  <li>Reconcile book stock against dip readings via <strong>تسوية مخزون الخزان (Fuel Tank Reconciliation)</strong>.</li>
+</ol>
+
+<h2 id="fuel-tank-doctype">1. Underground Storage Tank: خزان الوقود (Fuel Tank)<a class="h-anchor" href="#fuel-tank-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link (Mandatory)</td><td>Station where the storage tank is installed.</td></tr>
+<tr><td><strong>رقم الخزان (Tank Number)</strong></td><td><code>tank_number</code></td><td>Data (Mandatory)</td><td>Unique tank identifier (e.g. T-01, Tank 91 North).</td></tr>
+<tr><td><strong>صنف الوقود (Fuel Item)</strong></td><td><code>item</code></td><td>Link (Mandatory)</td><td>Dedicated fuel product (Gasoline 91, 95, Diesel).</td></tr>
+<tr><td><strong>المستودع (Warehouse)</strong></td><td><code>warehouse</code></td><td>Link (Mandatory)</td><td>ERPNext stock warehouse mapped to this tank.</td></tr>
+<tr><td><strong>السعة (لتر) (Capacity (Liters))</strong></td><td><code>capacity</code></td><td>Float (Mandatory)</td><td>Maximum safe fill capacity (e.g. 50,000 L).</td></tr>
+<tr><td><strong>الحد الأدنى لمستوى الوقود (لتر) (Minimum Level (Liters))</strong></td><td><code>minimum_level</code></td><td>Float</td><td>Dead stock threshold preventing suction of bottom sludge.</td></tr>
+<tr><td><strong>نقطة إعادة الطلب (لتر) (Reorder Level (Liters))</strong></td><td><code>reorder_level</code></td><td>Float</td><td>Inventory reorder threshold triggering replenishment orders.</td></tr>
+<tr><td><strong>نقطة التنبيه والإنذار (Alert Point (Liters))</strong></td><td><code>alert_point</code></td><td>Float</td><td>Critical shortage alert triggering urgent notification.</td></tr>
+<tr><td><strong>نشط (Active)</strong></td><td><code>active</code></td><td>Check</td><td>Active toggle.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="fuel-delivery-doctype">2. Tanker Shipment Delivery: توريد وقود (Fuel Delivery)<a class="h-anchor" href="#fuel-delivery-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link (Mandatory)</td><td>Receiving station branch.</td></tr>
+<tr><td><strong>خزان الوقود (Fuel Tank)</strong></td><td><code>tank</code></td><td>Link (Mandatory)</td><td>Receiving storage tank.</td></tr>
+<tr><td><strong>المورد (Supplier)</strong></td><td><code>supplier</code></td><td>Link (Mandatory)</td><td>Petroleum supplier (e.g. Saudi Aramco).</td></tr>
+<tr><td><strong>تاريخ التوريد (Delivery Date)</strong></td><td><code>delivery_date</code></td><td>Date (Mandatory)</td><td>Discharge arrival date.</td></tr>
+<tr><td><strong>رقم الشاحنة / الصهريج (Truck Number)</strong></td><td><code>truck_number</code></td><td>Data</td><td>Road tanker license plate.</td></tr>
+<tr><td><strong>رقم مستند المورد / بوليصة الشحن (Supplier Document Number)</strong></td><td><code>supplier_document_no</code></td><td>Data</td><td>Bill of Lading / Invoiced delivery note number.</td></tr>
+<tr><td><strong>الكمية حسب المستند (لتر) (Document Quantity (Liters))</strong></td><td><code>document_quantity</code></td><td>Float (Mandatory)</td><td>Invoiced volume at standard 15°C temperature.</td></tr>
+<tr><td><strong>الكمية الفعلية المستلمة (لتر) (Actual Received Quantity (Liters))</strong></td><td><code>received_quantity</code></td><td>Float (Mandatory)</td><td>Physical volume measured in tank post-discharge.</td></tr>
+<tr><td><strong>فرق كمية التوريد (لتر) (Delivery Variance Quantity)</strong></td><td><code>variance_quantity</code></td><td>Float</td><td>Auto-calculated: Received Quantity - Document Quantity.</td></tr>
+<tr><td><strong>الكمية المسموح بالتسامح فيها (Allowed Tolerance Quantity)</strong></td><td><code>allowed_tolerance_quantity</code></td><td>Float</td><td>Allowable transit shrinkage tolerance (e.g. 0.2%).</td></tr>
+<tr><td><strong>قراءة الخزان قبل التفريغ (Tank Reading Before)</strong></td><td><code>tank_reading_before</code></td><td>Float</td><td>Dipstick or ATG reading prior to opening valves.</td></tr>
+<tr><td><strong>قراءة الخزان بعد التفريغ (Tank Reading After)</strong></td><td><code>tank_reading_after</code></td><td>Float</td><td>Dipstick or ATG reading after liquid settles.</td></tr>
+<tr><td><strong>درجة الحرارة (°م) (Temperature (°C))</strong></td><td><code>temperature</code></td><td>Float</td><td>Product temperature for density correction.</td></tr>
+<tr><td><strong>الكثافة المقاسة (Density)</strong></td><td><code>density</code></td><td>Float</td><td>Measured hydrometer density.</td></tr>
+<tr><td><strong>نتيجة فحص عينة الجودة والماء (Sample Quality Result)</strong></td><td><code>sample_result</code></td><td>Select</td><td><code>Passed</code>, <code>Water Detected</code>, <code>Contaminated</code>.</td></tr>
+<tr><td><strong>سند استلام المشتريات (Purchase Receipt)</strong></td><td><code>purchase_receipt</code></td><td>Link</td><td>Generated ERPNext Purchase Receipt updating stock ledger.</td></tr>
+<tr><td><strong>الحالة (Status)</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code>, <code>Received</code>, <code>Discrepancy Approved</code>.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="calibration-event-doctype">3. Pump Calibration & Testing: عملية معايرة المضخة (Fuel Calibration Event)<a class="h-anchor" href="#calibration-event-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link (Mandatory)</td><td>Station location.</td></tr>
+<tr><td><strong>المضخة (Pump)</strong></td><td><code>pump</code></td><td>Link (Mandatory)</td><td>Dispenser nozzle tested.</td></tr>
+<tr><td><strong>صنف الوقود (Fuel Item)</strong></td><td><code>item</code></td><td>Link (Mandatory)</td><td>Tested fuel item.</td></tr>
+<tr><td><strong>القراءة السابقة (Previous Reading)</strong></td><td><code>previous_reading</code></td><td>Float (Mandatory)</td><td>Meter counter reading before test run.</td></tr>
+<tr><td><strong>قراءة العداد الحالية (Current Reading)</strong></td><td><code>current_reading</code></td><td>Float (Mandatory)</td><td>Meter counter reading after test run.</td></tr>
+<tr><td><strong>كمية المعايرة (لتر) (Quantity (Liters))</strong></td><td><code>quantity</code></td><td>Float</td><td>Prover can volume (e.g. 20 Litres).</td></tr>
+<tr><td><strong>السبب (Reason)</strong></td><td><code>reason</code></td><td>Small Text (Mandatory)</td><td>Calibration rationale (official inspection, maintenance).</td></tr>
+<tr><td><strong>المعالجة المخزنية (Stock Treatment)</strong></td><td><code>stock_treatment</code></td><td>Select</td><td><code>Return to Tank</code> or <code>Waste Expense</code>.</td></tr>
+<tr><td><strong>حساب مصروف الهدر (Waste / Calibration Expense Account)</strong></td><td><code>waste_account</code></td><td>Link</td><td>P&L expense account debited if unrecovered.</td></tr>
+<tr><td><strong>حركة المخزون (Stock Entry)</strong></td><td><code>stock_entry</code></td><td>Link</td><td>ERPNext Stock Entry tracking fuel movement.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="tank-reconciliation-doctype">4. Tank Stock Audit: تسوية مخزون الخزان (Fuel Tank Reconciliation)<a class="h-anchor" href="#tank-reconciliation-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link (Mandatory)</td><td>Station location.</td></tr>
+<tr><td><strong>خزان الوقود (Fuel Tank)</strong></td><td><code>tank</code></td><td>Link (Mandatory)</td><td>Audited storage tank.</td></tr>
+<tr><td><strong>تاريخ العمل (Business Date)</strong></td><td><code>business_date</code></td><td>Date (Mandatory)</td><td>Audit accounting date.</td></tr>
+<tr><td><strong>الكمية الدفترية في المخزن (Book Stock Quantity (Stock Ledger))</strong></td><td><code>book_quantity</code></td><td>Float</td><td>Current ERPNext Stock Ledger balance.</td></tr>
+<tr><td><strong>الكمية الفعلية المقاسة بالمسطرة/المجس (Physical Dip Reading Quantity)</strong></td><td><code>physical_dip_quantity</code></td><td>Float (Mandatory)</td><td>Physical liquid volume measured in the tank.</td></tr>
+<tr><td><strong>فرق الكمية (لتر) (Variance Quantity)</strong></td><td><code>variance_quantity</code></td><td>Float</td><td>Auto-calculated: Physical Dip - Book Quantity.</td></tr>
+<tr><td><strong>تسوية المخزون القياسية (Stock Reconciliation)</strong></td><td><code>stock_reconciliation</code></td><td>Link</td><td>ERPNext Stock Reconciliation entry adjusting stock ledger.</td></tr>
+<tr><td><strong>الحالة (Status)</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code>, <code>Reconciled</code>, <code>Discrepancy Approved</code>.</td></tr>
+</tbody>
+</table></div>

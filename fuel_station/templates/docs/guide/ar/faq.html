@@ -1,0 +1,100 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>الأسئلة الشائعة وحلول المشاكل التشغيلية والميدانية (FAQ & Troubleshooting):</strong> يجمع هذا القسم أكثر من 15 سيناريو واقعي يواجه العاملين والمشرفين والمحاسبين في محطات الوقود مع خطوات الحل النظامية المعتمدة خطوة بخطوة.</p>
+</blockquote>
+
+<h2 id="faq-meter-rollover">س 1: ماذا نفعل إذا وصل عداد المضخة إلى الحد الأقصى (مثال: 999,999) وعاد إلى الصفر (Meter Rollover)؟<a class="h-anchor" href="#faq-meter-rollover" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>الحل التشغيلي:</strong> عندما يلتف عداد المضخة التراكمي من أقصى رقم إلى الصفر، سيعتبر النظام القراءة الحالية أقل من السابقة مما يعطي كمية سالبة. لمعالجة ذلك نظامياً:</p>
+<ol class="steps">
+  <li>افتح مستند <strong>قراءة عداد المضخة (Fuel Meter Reading)</strong> الختامية.</li>
+  <li>قم بتفعيل خيار <strong>هل تم تصفير العداد؟ (Is Meter Reset / Rollover)</strong>.</li>
+  <li>سيقوم النظام تلقائياً بتطبيق معادلة الالتفاف: <code>كمية العداد = (الحد الأقصى للعداد - القراءة السابقة) + القراءة الحالية</code>، وتُحسب اللترات المضخوخة بدقة تامة دون أي خطأ محاسبي.</li>
+</ol>
+
+<h2 id="faq-offline-power">س 2: كيف نتصرف عند انقطاع الكهرباء أو شبكة الإنترنت أثناء الوردية التشغيلية؟<a class="h-anchor" href="#faq-offline-power" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>الحل التشغيلي:</strong></p>
+<ol class="steps">
+  <li>تستمر المضخات في الضخ بفضل بطاريات الذاكرة الاحتياطية في العدادات الإلكترونية، أو عبر العدادات الميكانيكية التراكمية التي لا تفقد قراءاتها نهائياً.</li>
+  <li>يقوم العامل بتدوين مبيعات النقد والبطاقات يدوياً في كشف الطوارئ الميداني الورقي.</li>
+  <li>فور عودة الشبكة، يتم إدخال القراءات الختامية في <strong>قراءة عداد المضخة (Fuel Meter Reading)</strong> وتفعيل وضع <code>Post-Shift Capture</code> في <strong>إعدادات تشغيل محطة الوقود (Fuel Operations Settings)</strong>، ليقوم النظام باستنتاج مبيعات النقد ومطابقة إيصالات الشبكة بنجاح.</li>
+</ol>
+
+<h2 id="faq-credit-limit-breach">س 3: ماذا يحدث إذا تجاوزت سيارة العميل سقف الائتمان أثناء وقوفها عند المضخة؟<a class="h-anchor" href="#faq-credit-limit-breach" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>الحل التشغيلي:</strong> عند إدخال رقم اللوحة في <strong>عملية تعبئة وقود (Fuel Dispense Event)</strong> ويظهر إشعار <code>Credit Limit Exceeded</code>:</p>
+<ol class="steps">
+  <li>يقوم النظام بحظر إتمام العملية آلياً لحماية أموال الشركة.</li>
+  <li><strong>الخيار الأول (سداد فوري):</strong> يقوم العميل بتحويل بنكي أو سداد نقدي للمحاسب، ويُسجل المحاسب مستند <span class="badge badge-primary">Payment Entry</span> يُخصم فوراً من مديونية <strong>عقد عميل الوقود (Fuel Customer Contract)</strong> ويفتح السقف في ثوانٍ.</li>
+  <li><strong>الخيار الثاني (تجاوز استثنائي معتمد):</strong> إذا سمحت سياسة الشركة، يتدخل مدير العمليات ويدخل اسمه وسببه في حقل <strong>معتمد تجاوز الائتمان (Credit Override Approved By)</strong> وحقل <strong>سبب تجاوز الائتمان (Credit Override Reason)</strong> للسماح بالتعبئة المؤقتة مع توثيق ذلك في <strong>سجل تدقيق محطة الوقود (Fuel Audit Log)</strong>.</li>
+</ol>
+
+<h2 id="faq-pos-mismatch">س 4: جهاز نقاط البيع مدى خصم المبلغ من حساب العميل ولكن لم يطبع إيصالاً، فما الإجراء؟<a class="h-anchor" href="#faq-pos-mismatch" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>الحل التشغيلي:</strong></p>
+<ol class="steps">
+  <li>قم بطباعة تقرير آخر عملية ناجحة من جهاز نقاط البيع (POS Last Transaction Print).</li>
+  <li>إذا ظهرت العملية ناجحة برقم مرجعي (RRN)، يتم تسجيل العملية في <strong>عملية تعبئة وقود (Fuel Dispense Event)</strong> واختيار طريقة الدفع <code>Card</code> وإدخال رقم المرجع في حقل <strong>رقم المرجع / الإيصال (Payment Reference)</strong>.</li>
+  <li>إذا كانت العملية فاشلة أو ملغاة، يدفع العميل نقداً أو يعيد تمرير البطاقة، ويتم التأكد في نهاية الوردية من تطابق إجمالي إيصالات الجهاز مع تقرير <strong>تسوية البطاقات البنكية (Card Settlement)</strong>.</li>
+</ol>
+
+<h2 id="faq-unclosed-shift">س 5: نسي المشرف إغلاق الوردية السابقة وحضر طاقم الوردية الجديدة، كيف نفتح الوردية الجديدة؟<a class="h-anchor" href="#faq-unclosed-shift" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>الحل التشغيلي:</strong> لمنع تداخل الحسابات، يشترط النظام إغلاق الوردية السابقة. ولكن في الحالات الطارئة:</p>
+<ol class="steps">
+  <li>يقوم مدير المحطة بفتح مستند <strong>وردية الوقود (Fuel Shift)</strong> الجديدة وتفعيل خيار <strong>السماح بفتح استثنائي (Allow Exceptional Open)</strong>.</li>
+  <li>يقوم بإدخال المبرر في حقل <strong>سبب الفتح الاستثنائي (Exceptional Open Reason)</strong>.</li>
+  <li>يتم تكليف عمال الوردية الجديدة بمضخاتهم عبر <strong>تكليف عامل بمضخة (Fuel Pump Assignment)</strong> فورياً.</li>
+  <li>يلتزم مشرف الوردية السابقة بالحضور وإنهاء جرد صناديق نقديته في <strong>صندوق النقد (Fuel Cash Box)</strong> وإغلاق الوردية السابقة نظامياً دون تأخير.</li>
+</ol>
+
+<h2 id="faq-cash-shortage">س 6: ظهر عجز نقدي في صندوق العامل عند تفقيط فئات النقدية، كيف يتم توثيقه وإقفال الصندوق؟<a class="h-anchor" href="#faq-cash-shortage" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>الحل التشغيلي:</strong></p>
+<ol class="steps">
+  <li>يتم تفقيط كافة الأوراق والقطع النقدية بدقة في جدول <strong>عد فئات النقد (Fuel Denomination Count)</strong> في شاشة <strong>صندوق النقد (Fuel Cash Box)</strong>.</li>
+  <li>يظهر العجز تلقائياً بالسالب في حقل <strong>الفرق (عجز / زيادة) (Variance)</strong>.</li>
+  <li>إذا كان العجز ضمن حد التسامح (Tolerance)، يُقفل الصندوق وتُغلق الوردية ويُرحل العجز آلياً لحساب الفروقات.</li>
+  <li>إذا تجاوز العجز الحد المالي، يتم توليد <strong>استثناء تسوية الوقود (Fuel Reconciliation Exception)</strong>، ويتم تحويل المبلغ الفعلي المعدود فقط إلى <strong>خزينة المحطة (Fuel Station Safe)</strong> عبر <strong>تحويل نقدي للخزينة (Cash Transfer)</strong>، ويُسجل العجز ذمة على العامل أو يُخصم من راتبه في ERPNext.</li>
+</ol>
+
+<h2 id="faq-midshift-calibration">س 7: حضرت لجنة المعايرة من وزارة التجارة أثناء الوردية التشغيلية، كيف نوثق لترات الفحص؟<a class="h-anchor" href="#faq-midshift-calibration" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>الحل التشغيلي:</strong></p>
+<ol class="steps">
+  <li>سجل قراءة العداد الحالية قبل الفحص.</li>
+  <li>تضخ اللجنة كمية المعايرة (مثلاً 20 لتراً) في مكيال الفحص المعدني.</li>
+  <li>افتح شاشة <strong>عملية معايرة المضخة (Fuel Calibration Event)</strong> وأدخل رقم المضخة والكمية 20 لتراً واكتب في <strong>السبب (Reason)</strong>: "فحص دوري لوزارة التجارة".</li>
+  <li>في حقل <strong>المعالجة المخزنية (Stock Treatment)</strong> اختر <code>Return to Tank</code> وأعد سكب الوقود من المكيال إلى فتحة الخزان الأرضي فوراً.</li>
+  <li>عند إقفال الوردية في <strong>تسوية المضخة (Fuel Pump Reconciliation)</strong>، سيقوم النظام باستبعاد الـ 20 لتراً من مبيعات العداد، ولن يُطالب عامل المضخة بتوريد قيمتها نقداً.</li>
+</ol>
+
+<h2 id="faq-tank-water-detection">س 8: ماذا نفعل إذا أظهر اختبار معجون الماء وجود ماء في قاع صهريج الوقود قبل التفريغ؟<a class="h-anchor" href="#faq-tank-water-detection" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>الحل التشغيلي:</strong></p>
+<ol class="steps">
+  <li><strong>حظر التفريغ فوراً:</strong> يمنع منعاً باتاً توصيل خراطيم الصهريج بفتحة خزان المحطة.</li>
+  <li>في مستند <strong>توريد وقود (Fuel Delivery)</strong>، يتم ضبط حقل <strong>نتيجة فحص عينة الجودة والماء (Sample Quality Result)</strong> على خيار <code>Water Detected</code> أو <code>Contaminated</code>.</li>
+  <li>يتم إشعار شركة البترول الموردة هاتفياً ورسمياً لإعادة الشاحنة واستبدال الشحنة.</li>
+  <li>يتم إرفاق صورة مسطرة القياس التي تحول لون المعجون فيها للأحمر في حقل <strong>Supplier Document Attachment</strong> كإثبات رسمي لرفض الاستلام.</li>
+</ol>
+
+<h2 id="faq-convert-cash-to-tax-invoice">س 9: طلب عميل شركة فاتورة ضريبية رسمية باسم شركته ورقمها الضريبي بعد أن عبأ نقداً، كيف نحولها؟<a class="h-anchor" href="#faq-convert-cash-to-tax-invoice" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>الحل التشغيلي:</strong></p>
+<ol class="steps">
+  <li>افتح حركة التعبئة في <strong>عملية تعبئة وقود (Fuel Dispense Event)</strong> بالبحث برقم الإيصال أو توقيت التعبئة ورقم المضخة.</li>
+  <li>اضغط على زر <span class="badge badge-primary">Create Sales Invoice</span>.</li>
+  <li>غيّر حقل <strong>Customer</strong> من "عميل نقدي افتراضي" إلى اسم شركة العميل المسجلة بنظام ERPNext.</li>
+  <li>يتأكد النظام من وجود الرقم الضريبي للعميل وعنوانه الوطني طبقاً لـ <strong>سياسة ضرائب الوقود (Fuel Tax Policy)</strong>.</li>
+  <li>تُرحل الفاتورة وتُطبع الفاتورة الضريبية القياسية متضمنة رمز الاستجابة السريعة (ZATCA QR Code) بالبيانات القانونية الكاملة.</li>
+</ol>
+
+<h2 id="faq-correct-meter-reading">س 10: أدخل العامل قراءة عداد خاطئة سهواً واعتمدها، كيف يتم تصحيحها نظامياً؟<a class="h-anchor" href="#faq-correct-meter-reading" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>الحل التشغيلي:</strong></p>
+<ol class="steps">
+  <li>افتح مستند <strong>قراءة عداد المضخة (Fuel Meter Reading)</strong> المراد تصحيحه.</li>
+  <li>إذا كانت صلاحية تعديل العداد مفعلة في <strong>إعدادات تشغيل محطة الوقود (Fuel Operations Settings)</strong>، يقوم المشرف بتعديل حقل <strong>قيمة القراءة (Reading Value)</strong> إلى القراءة الصحيحة.</li>
+  <li>يلتزم المشرف بكتابة المبرر في حقل <strong>سبب التصحيح (Correction Reason)</strong> وإرفاق صورة العداد الحية في حقل <strong>صورة العداد (Photo)</strong>.</li>
+  <li>يقوم مدير المحطة باعتماد التصحيح عبر حقل <strong>معتمد من (Approved By)</strong>، ويتم تسجيل التغيير بالتفصيل في <strong>سجل تدقيق محطة الوقود (Fuel Audit Log)</strong>.</li>
+</ol>
+
+<h2 id="faq-reopen-shift">س 11: تم إغلاق الوردية بالخطأ قبل ترحيل بعض التعبئات، كيف نعيد فتحها بأمان؟<a class="h-anchor" href="#faq-reopen-shift" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>الحل التشغيلي:</strong></p>
+<ol class="steps">
+  <li>يتوجه مدير المحطة أو مدير العمليات (حامل الصلاحية الحصرية) إلى مستند <strong>وردية الوقود (Fuel Shift)</strong> المعني.</li>
+  <li>يضغط على زر إجراءات <span class="badge badge-warning">Reopen Shift</span>.</li>
+  <li>يشترط النظام كتابة مبرر تفصيلي في حقل <strong>سبب إعادة الفتح (Reopen Reason)</strong> وخطة التصحيح في <strong>Correction Plan</strong>.</li>
+  <li>تتحول حالة الوردية إلى <code>Reopened</code> ويُعاد فتح <strong>صندوق النقد (Fuel Cash Box)</strong> المرتبط لتسجيل التعبئات المتأخرة، ثم يُعاد الإغلاق والمطابقة بشكل نهائي.</li>
+</ol>

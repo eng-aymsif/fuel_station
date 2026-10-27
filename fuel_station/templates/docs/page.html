@@ -1,0 +1,73 @@
+{%- extends "fuel_station/templates/docs/base.html" -%}
+{%- from "fuel_station/templates/docs/macros.html" import tt, icon -%}
+
+{%- block body_class -%}doc-page{%- endblock -%}
+{%- block body_attrs %} style="--accent: {{ doc.color }}; --accent-2: {{ doc.color2 }};"{% endblock -%}
+
+{%- block body -%}
+<div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
+
+<div class="layout">
+	{% include "fuel_station/templates/docs/sidebar.html" %}
+
+	<main class="main" id="main">
+		<header class="doc-hero">
+			<div class="doc-hero-glow" aria-hidden="true"></div>
+			<nav class="crumbs" aria-label="Breadcrumb">
+				<a href="{{ site.base }}">{{ icon("home", 14) }} {{ tt(ui.docs) }}</a>
+				<span class="crumb-sep" aria-hidden="true">/</span>
+				<span aria-current="page">{{ tt(doc.title) }}</span>
+			</nav>
+			<div class="doc-hero-row">
+				<span class="doc-hero-icon">{{ icon(doc.icon, 30) }}</span>
+				<div>
+					<h1 class="doc-title">{{ tt(doc.title) }}</h1>
+					<p class="doc-lead">{{ tt(doc.description) }}</p>
+				</div>
+			</div>
+			<ul class="doc-meta">
+				<li>{{ icon("list", 15) }} <b>{{ doc_stats.sections }}</b> {{ tt(ui.sections) }}</li>
+				<li>{{ icon("clock", 15) }} <b>{{ doc_stats.minutes }}</b> {{ tt(ui.min_read) }}</li>
+				{% if doc_stats.updated %}<li>{{ icon("calendar", 15) }} {{ tt(ui.updated) }} <b>{{ doc_stats.updated }}</b></li>{% endif %}
+			</ul>
+		</header>
+
+		<article class="prose" id="doc-article" data-lang="{{ lang }}">
+{{ doc_content[lang] }}
+		</article>
+		{%- for code in ["ar", "en"] if code != lang %}
+		<template id="doc-content-{{ code }}">
+{{ doc_content[code] }}
+		</template>
+		{%- endfor %}
+
+		<nav class="pager" aria-label="Pagination">
+			{% if prev_doc %}
+			<a class="pager-card prev" href="{{ site.base }}/{{ prev_doc.slug }}" style="--c: {{ prev_doc.color }}">
+				<span class="pager-dir">{{ icon("arrow", 16) }} {{ tt(ui.prev) }}</span>
+				<span class="pager-title">{{ tt(prev_doc.title) }}</span>
+			</a>
+			{% else %}<span></span>{% endif %}
+			{% if next_doc %}
+			<a class="pager-card next" href="{{ site.base }}/{{ next_doc.slug }}" style="--c: {{ next_doc.color }}">
+				<span class="pager-dir">{{ tt(ui.next) }} {{ icon("arrow", 16) }}</span>
+				<span class="pager-title">{{ tt(next_doc.title) }}</span>
+			</a>
+			{% endif %}
+		</nav>
+
+		<footer class="site-foot">{{ tt(ui.footer) }}</footer>
+	</main>
+
+	<aside class="toc" aria-labelledby="toc-title">
+		<p class="toc-title" id="toc-title">{{ icon("list", 14) }} {{ tt(ui.on_this_page) }}</p>
+		<nav id="toc" class="toc-nav"></nav>
+	</aside>
+</div>
+
+<button class="to-top" id="to-top" type="button" data-i18n-aria="back_top" aria-label="{{ ui.back_top[lang] }}">
+	<svg class="to-top-ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/></svg>
+	{{ icon("up", 18) }}
+</button>
+{%- endblock -%}
+

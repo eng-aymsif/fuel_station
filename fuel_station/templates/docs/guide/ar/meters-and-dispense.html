@@ -1,0 +1,96 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>العدادات وعمليات التعبئة:</strong> تمثل المضخة وعدادها الحقيقة المادية الأولى لحركة الوقود. يربط النظام بين كمية العداد الميكانيكي/الإلكتروني ومجموع حركات التعبئة لضمان عدم خروج أي لتر وقود دون فوترة أو إثبات صرف رسمي.</p>
+</blockquote>
+
+<h2 id="dispense-overview">دورة العدادات وعمليات التعبئة الميدانية<a class="h-anchor" href="#dispense-overview" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>ترتكز عمليات ضخ الوقود على ثلاثة مستندات تشغيلية محورية:</p>
+<ol class="steps">
+  <li>تعريف المضخة ومصدر عدادها وخزانها في مستند <strong>مضخة الوقود (Fuel Pump)</strong>.</li>
+  <li>توثيق قراءات العدادات الافتتاحية والختامية بدقة في مستند <strong>قراءة عداد المضخة (Fuel Meter Reading)</strong>.</li>
+  <li>تسجيل كل عملية تزويد مركبة بالوقود عبر مستند <strong>عملية تعبئة وقود (Fuel Dispense Event)</strong>.</li>
+</ol>
+
+<h2 id="fuel-pump-doctype">1. مضخة الوقود (Fuel Pump)<a class="h-anchor" href="#fuel-pump-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>مضخة الوقود (Fuel Pump)</strong> يحدد المسار المادي لضخ الوقود من الخزان الأرضي إلى مركبة العميل:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link (إلزامي)</td><td>المحطة التي تقع فيها المضخة.</td></tr>
+<tr><td><strong>رقم المضخة</strong></td><td><strong>Pump Number</strong></td><td><code>pump_number</code></td><td>Data (إلزامي)</td><td>الرقم التعريفي المميز للمضخة (مثال: P-01، مضخة 3).</td></tr>
+<tr><td><strong>خزان الوقود</strong></td><td><strong>Fuel Tank</strong></td><td><code>tank</code></td><td>Link</td><td>الخزان الأرضي المتصلة به هذه المضخة مباشرة لسحب الوقود.</td></tr>
+<tr><td><strong>صنف الوقود</strong></td><td><strong>Fuel Item</strong></td><td><code>item</code></td><td>Link</td><td>صنف الوقود القياسي في ERPNext (بنزين 91، بنزين 95، ديزل).</td></tr>
+<tr><td><strong>مصدر قراءة العداد</strong></td><td><strong>Meter Source</strong></td><td><code>meter_source</code></td><td>Select</td><td><code>Manual</code> (تسجيل يدوي بواسطة العامل)، أو <code>Electronic / ATG / IoT</code> (ربط آلي ببروتوكول العداد).</td></tr>
+<tr><td><strong>قراءة العداد الحالية</strong></td><td><strong>Current Meter Reading</strong></td><td><code>current_meter_reading</code></td><td>Float</td><td>آخر قراءة تراكمية مسجلة في العداد حتى اللحظة.</td></tr>
+<tr><td><strong>نوع العداد</strong></td><td><strong>Meter Type</strong></td><td><code>meter_type</code></td><td>Select</td><td><code>Electronic</code> (إلكتروني رقمي) أو <code>Mechanical</code> (ميكانيكي دوار).</td></tr>
+<tr><td><strong>درجة / أوكتان الوقود</strong></td><td><strong>Fuel Grade</strong></td><td><code>fuel_grade</code></td><td>Data</td><td>المواصفة الفنية للوقود (مثال: RON 91، RON 95).</td></tr>
+<tr><td><strong>المستودع</strong></td><td><strong>Warehouse</strong></td><td><code>warehouse</code></td><td>Link</td><td>مستودع ERPNext التابع له خزان المضخة لخصم الأرصدة منه.</td></tr>
+<tr><td><strong>وحدة القياس</strong></td><td><strong>UOM</strong></td><td><code>uom</code></td><td>Link</td><td>وحدة قياس الصرف (لتر Litre).</td></tr>
+<tr><td><strong>يتطلب وردية مفتوحة</strong></td><td><strong>Requires Shift</strong></td><td><code>requires_shift</code></td><td>Check</td><td>منع التعبئة أو تسجيل العمليات إلا في وجود وردية نشطة.</td></tr>
+<tr><td><strong>نشط</strong></td><td><strong>Active</strong></td><td><code>active</code></td><td>Check</td><td>حالة تشغيل المضخة (إيقافها يمنع التكليفات في الصيانة).</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="meter-reading-doctype">2. قراءة عداد المضخة (Fuel Meter Reading)<a class="h-anchor" href="#meter-reading-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>قراءة عداد المضخة (Fuel Meter Reading)</strong> يثبت رقم العداد التراكمي في لحظة زمنية معينة. يمنع النظام التلاعب بالعدادات، ويحسب اللترات المضخوخة آلياً بطرح القراءة السابقة من القراءة الحالية:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف والشرح التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link (إلزامي)</td><td>محطة الوقود.</td></tr>
+<tr><td><strong>تاريخ العمل</strong></td><td><strong>Business Date</strong></td><td><code>business_date</code></td><td>Date</td><td>تاريخ يوم العمل المحاسبي.</td></tr>
+<tr><td><strong>الوردية</strong></td><td><strong>Shift</strong></td><td><code>shift</code></td><td>Link</td><td>الوردية التي تم تسجيل القراءة ضمنها.</td></tr>
+<tr><td><strong>المضخة</strong></td><td><strong>Pump</strong></td><td><code>pump</code></td><td>Link (إلزامي)</td><td>المضخة المراد تسجيل قراءتها.</td></tr>
+<tr><td><strong>نوع القراءة</strong></td><td><strong>Reading Type</strong></td><td><code>reading_type</code></td><td>Select (إلزامي)</td><td><code>Opening</code> (افتتاحية)، <code>Closing</code> (ختامية)، <code>Mid-Shift</code> (وسط الوردية)، <code>Calibration</code> (معايرة وفحص).</td></tr>
+<tr><td><strong>القراءة السابقة</strong></td><td><strong>Previous Reading</strong></td><td><code>previous_reading</code></td><td>Float</td><td>القراءة الختامية المعتمدة السابقة للمضخة (تُجلب آلياً ولا تُعدل).</td></tr>
+<tr><td><strong>قيمة القراءة</strong></td><td><strong>Reading Value</strong></td><td><code>reading_value</code></td><td>Float (إلزامي)</td><td>الرقم الظاهر على شاشة عداد المضخة الفعلي.</td></tr>
+<tr><td><strong>كمية العداد (فرق القراءة)</strong></td><td><strong>Meter Quantity</strong></td><td><code>meter_quantity</code></td><td>Float</td><td>محسوبة آلياً: (قيمة القراءة - القراءة السابقة) تمثل اللترات المضخوخة.</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code> (مسودة), <code>Submitted</code> (مرحلة ومعتمدة), <code>Corrected</code> (مصححة).</td></tr>
+<tr><td><strong>الموظف / العامل</strong></td><td><strong>Employee</strong></td><td><code>employee</code></td><td>Link</td><td>العامل أو المشرف الذي التقط القراءة.</td></tr>
+<tr><td><strong>صورة العداد</strong></td><td><strong>Photo</strong></td><td><code>photo</code></td><td>Attach Image</td><td>صورة حية لعداد المضخة بالجوال لإثبات النزاهة والتوثيق.</td></tr>
+<tr><td><strong>هل تم تصفير العداد؟</strong></td><td><strong>Is Meter Reset (Rollover)</strong></td><td><code>is_meter_reset</code></td><td>Check</td><td>يُفعل في حالة وصول عداد المضخة للحد الأقصى (مثال: 999,999) وعودته للصفر.</td></tr>
+<tr><td><strong>سبب التصحيح</strong></td><td><strong>Correction Reason</strong></td><td><code>correction_reason</code></td><td>Small Text</td><td>مبرر تعديل القراءة في حال موافقة الإدارة على التصحيح.</td></tr>
+<tr><td><strong>معتمد من</strong></td><td><strong>Approved By</strong></td><td><code>approved_by</code></td><td>Link</td><td>المشرف أو مدير المحطة المعتمد للقراءة.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="dispense-event-doctype">3. عملية تعبئة وقود (Fuel Dispense Event)<a class="h-anchor" href="#dispense-event-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>عملية تعبئة وقود (Fuel Dispense Event)</strong> هو المستند الأساسي لتوثيق كل حركة ضخ وقود لمركبة أو عميل نقدي أو جهة داخلية، ويحتوي على كافة التفاصيل المالية والضريبية والرقابية:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link (إلزامي)</td><td>المحطة التي تمت فيها التعبئة.</td></tr>
+<tr><td><strong>الوردية</strong></td><td><strong>Shift</strong></td><td><code>shift</code></td><td>Link</td><td>الوردية النشطة أثناء التعبئة.</td></tr>
+<tr><td><strong>المضخة</strong></td><td><strong>Pump</strong></td><td><code>pump</code></td><td>Link (إلزامي)</td><td>المضخة التي ضخت الوقود.</td></tr>
+<tr><td><strong>صنف الوقود</strong></td><td><strong>Fuel Item</strong></td><td><code>item</code></td><td>Link (إلزامي)</td><td>نوع الوقود المباع (بنزين 91، بنزين 95، ديزل).</td></tr>
+<tr><td><strong>عامل المضخة / الموظف</strong></td><td><strong>Attendant / Employee</strong></td><td><code>employee</code></td><td>Link</td><td>العامل المسؤول عن تنفيذ عملية الضخ.</td></tr>
+<tr><td><strong>تكليف المضخة</strong></td><td><strong>Pump Assignment</strong></td><td><code>assignment</code></td><td>Link</td><td>مستند تكليف العامل على هذه المضخة.</td></tr>
+<tr><td><strong>طريقة الدفع</strong></td><td><strong>Payment Method</strong></td><td><code>payment_method</code></td><td>Select</td><td><code>Cash</code> (نقداً)، <code>Card</code> (شبكة / مدى / POS)، <code>Credit Customer</code> (آجل أساطيل)، <code>Fuel Card / Coupon</code> (بطاقة وقود مسبقة)، <code>Internal Issue</code> (صرف داخلي).</td></tr>
+<tr><td><strong>الكمية (لتر)</strong></td><td><strong>Quantity (Liters)</strong></td><td><code>quantity</code></td><td>Float (إلزامي)</td><td>عدد اللترات المصروفة في هذه الحركة.</td></tr>
+<tr><td><strong>سعر اللتر</strong></td><td><strong>Unit Rate</strong></td><td><code>rate</code></td><td>Currency (إلزامي)</td><td>سعر بيع اللتر المعتمد من قائمة الأسعار الرسمية.</td></tr>
+<tr><td><strong>المبلغ الصافي الخاضع للضريبة</strong></td><td><strong>Net Amount</strong></td><td><code>amount</code></td><td>Currency</td><td>قيمة الوقود قبل إضافة ضريبة القيمة المضافة.</td></tr>
+<tr><td><strong>السعر شامل الضريبة</strong></td><td><strong>Prices Include Tax</strong></td><td><code>prices_include_tax</code></td><td>Check</td><td>تأكيد أن السعر المعلن يشمل ضريبة القيمة المضافة 15%.</td></tr>
+<tr><td><strong>مبلغ الضريبة</strong></td><td><strong>Tax Amount</strong></td><td><code>tax_amount</code></td><td>Currency</td><td>مبلغ ضريبة القيمة المضافة المستحق نظاماً.</td></tr>
+<tr><td><strong>الإجمالي الكلي</strong></td><td><strong>Grand Total</strong></td><td><code>grand_total</code></td><td>Currency</td><td>إجمالي المبلغ المطلوب من العميل دفعه شاملاً الضريبة.</td></tr>
+<tr><td><strong>العميل</strong></td><td><strong>Customer</strong></td><td><code>customer</code></td><td>Link</td><td>العميل (النقدي أو شركة الأسطول الآجل).</td></tr>
+<tr><td><strong>المركبة</strong></td><td><strong>Vehicle</strong></td><td><code>vehicle</code></td><td>Link</td><td>مركبة الأسطول المعبأة (من جدول مركبات العملاء).</td></tr>
+<tr><td><strong>رقم لوحة المركبة</strong></td><td><strong>Vehicle Plate Number</strong></td><td><code>vehicle_plate_number</code></td><td>Data</td><td>رقم اللوحة المكتوب أو المقروء بكاميرا LPR.</td></tr>
+<tr><td><strong>السائق</strong></td><td><strong>Driver</strong></td><td><code>driver</code></td><td>Link</td><td>سائق المركبة المسجل بالأسطول.</td></tr>
+<tr><td><strong>قراءة عداد المركبة</strong></td><td><strong>Vehicle Odometer Reading</strong></td><td><code>odometer_reading</code></td><td>Float</td><td>عداد الكيلومترات للسيارة لاحتساب معدل استهلاك الوقود.</td></tr>
+<tr><td><strong>رقم المرجع / الإيصال</strong></td><td><strong>Payment Reference</strong></td><td><code>payment_reference</code></td><td>Data</td><td>رقم إيصال مدى RRN أو تفويض البطاقة البنكية.</td></tr>
+<tr><td><strong>أمر صرف الوقود</strong></td><td><strong>Fuel Issue Order</strong></td><td><code>issue_order</code></td><td>Link</td><td>أمر الصرف المرجعي في حالات الاستهلاك الداخلي.</td></tr>
+<tr><td><strong>تفويض تعبئة الوقود</strong></td><td><strong>Fuel Authorization</strong></td><td><code>authorization</code></td><td>Link</td><td>رمز التفويض الإلكتروني المؤقت أو QR Code.</td></tr>
+<tr><td><strong>فاتورة المبيعات</strong></td><td><strong>Sales Invoice</strong></td><td><code>invoice</code></td><td>Link</td><td>فاتورة مبيعات ERPNext المرتبطة بحركة التعبئة.</td></tr>
+<tr><td><strong>حركة المخزون</strong></td><td><strong>Stock Entry</strong></td><td><code>stock_document</code></td><td>Link</td><td>سند القيد المخزني لخصم الوقود من الخزان.</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code>, <code>Completed</code>, <code>Invoiced</code>, <code>Cancelled</code>.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="cash-residual-logic">آلية استنتاج مبيعات النقدية (Cash Residual Inference Logic)<a class="h-anchor" href="#cash-residual-logic" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>في محطات الوقود ذات الكثافة العالية، يصعب على العامل إدخال كل سيارة نقدية في ثوانٍ. لذلك يتيح النظام خيار الاستنتاج المحاسبي الدقيق:</p>
+<div class="callout tip">
+  <p><strong>معادلة استنتاج كمية النقد:</strong></p>
+  <code>كمية مبيعات النقد (Liters) = إجمالي فرق قراءة العداد (Meter Quantity) - مبيعات البطاقات (Card Liters) - مبيعات العملاء الآجلين (Credit Fleet Liters) - كميات الصرف الداخلي (Issue Order Liters) - كميات فحص المعايرة (Calibration Liters)</code><br><br>
+  <code>المبلغ النقدي الواجب توريده = كمية مبيعات النقد × سعر اللتر شامل الضريبة</code>
+</div>

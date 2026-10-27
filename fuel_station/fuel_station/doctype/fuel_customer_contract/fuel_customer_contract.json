@@ -1,0 +1,317 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "customer",
+  "company",
+  "contract_number",
+  "status",
+  "column_break_1",
+  "start_date",
+  "end_date",
+  "price_list",
+  "discount_percentage",
+  "credit_control_policy",
+  "section_break_2",
+  "credit_limit",
+  "daily_limit",
+  "monthly_limit",
+  "column_break_2",
+  "requires_issue_order",
+  "requires_purchase_order",
+  "invoice_frequency",
+  "cost_center",
+  "section_break_3",
+  "allowed_items",
+  "allowed_stations",
+  "column_break_3",
+  "allowed_vehicles",
+  "allowed_drivers",
+  "section_break_other",
+  "discount_amount",
+  "payment_terms"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Contract Information"
+  },
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "options": "Customer",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "company",
+   "label": "Company",
+   "fieldtype": "Link",
+   "options": "Company"
+  },
+  {
+   "fieldname": "contract_number",
+   "label": "Contract Number",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "Draft\nActive\nSuspended\nExpired\nCancelled",
+   "default": "Active",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "start_date",
+   "label": "Start Date",
+   "fieldtype": "Date",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "end_date",
+   "label": "End Date",
+   "fieldtype": "Date",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "price_list",
+   "label": "Price List",
+   "fieldtype": "Link",
+   "options": "Price List"
+  },
+  {
+   "fieldname": "discount_percentage",
+   "label": "Contract Discount (%)",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "credit_control_policy",
+   "label": "Credit Over-Limit Policy",
+   "fieldtype": "Select",
+   "options": "BLOCK\nWARN_AND_ALLOW\nREQUIRE_SUPERVISOR_APPROVAL\nREQUIRE_FINANCE_APPROVAL\nALLOW_WITH_REASON",
+   "default": "BLOCK"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Consumption Limits"
+  },
+  {
+   "fieldname": "credit_limit",
+   "label": "Contract Credit Limit",
+   "fieldtype": "Currency",
+   "default": "0",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "daily_limit",
+   "label": "Daily Fuel Limit (Amount or Liters)",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "monthly_limit",
+   "label": "Monthly Fuel Limit (Amount or Liters)",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "requires_issue_order",
+   "label": "Requires Issue Order",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "requires_purchase_order",
+   "label": "Requires Customer Purchase Order",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "invoice_frequency",
+   "label": "Invoice Frequency",
+   "fieldtype": "Select",
+   "options": "Per Dispense\nDaily Per Vehicle\nDaily Per Customer\nWeekly\nMonthly\nPer Contract",
+   "default": "Monthly"
+  },
+  {
+   "fieldname": "cost_center",
+   "label": "Cost Center",
+   "fieldtype": "Link",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break",
+   "label": "Scope Restrictions"
+  },
+  {
+   "fieldname": "allowed_items",
+   "label": "Allowed Items (Comma-separated Item Codes)",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "allowed_stations",
+   "label": "Allowed Stations (Comma-separated)",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "allowed_vehicles",
+   "label": "Allowed Vehicles (Comma-separated Plate Numbers)",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "allowed_drivers",
+   "label": "Allowed Drivers (Comma-separated)",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "discount_amount",
+   "label": "Contract Discount Amount per Liter",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "payment_terms",
+   "label": "Payment Terms Template",
+   "fieldtype": "Link",
+   "options": "Payment Terms Template"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "issingle": 0,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Fuel Customer Contract",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "System Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Station Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Shift Supervisor",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Cashier",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1
+  },
+  {
+   "role": "Inventory Officer",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Attendant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "print": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "field:contract_number",
+ "naming_rule": "By fieldname"
+}

@@ -1,0 +1,210 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>دليل المستخدم التشغيلي الشامل:</strong> مخصص لكافة كوادر المحطة (عامل المضخة، مشرف الوردية، الكاشير، المحاسب، مسؤول المخزون، ومدير العمليات). صُمم النظام ليعمل بنزاهة محاسبية ومخزنية مطلقة على منصة <strong>ERPNext</strong> بدون أي دفاتر موازية أو قيود وسيطة غير موثقة.</p>
+</blockquote>
+
+<h2 id="what-is-fuel-station">ما هو نظام إدارة محطة الوقود (Fuel Station)؟<a class="h-anchor" href="#what-is-fuel-station" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>نظام <strong>Fuel Station</strong> هو منظومة متطورة مخصصة لمحطات الوقود وموزعي المشتقات البترولية (بنزين 91، بنزين 95، ديزل، غاز، كيروسين)، تربط حركة العدادات الميكانيكية والإلكترونية على المضخات بالخزانات الأرضية، وتُترجم كل قطرة وقود يتم ضخها إلى قيود مالية وحركات مخزنية دقيقة وفورية في دفاتر <strong>ERPNext</strong> العامة.</p>
+
+<div class="callout success">
+  <p><strong>القاعدة الذهبية للنظام (Zero Parallel Ledgers):</strong> لا توجد أي حسابات أو مخازن منفصلة خارج شجرة الحسابات ودليل المستودعات الرئيسي للشركة؛ فكل حركة تعبئة تولد أثرها المباشر في دفتر الأستاذ العام <span class="ui">General Ledger</span> ودفتر حركة المخزون <span class="ui">Stock Ledger</span> وفق المعايير المحاسبية المعتمدة ونظام الفوترة الإلكترونية وهيئة الزكاة والضريبة والجمارك (ZATCA).</p>
+</div>
+
+<h2 id="field-naming-convention">معايير تسمية الحقول والدوكتيبات في الدليل<a class="h-anchor" href="#field-naming-convention" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>لتسهيل العمل على الموظفين بمختلف لغات واجهاتهم في النظام، يلتزم هذا الدليل بالمعايير التالية:</p>
+<ul>
+  <li>تُكتب كافة أسماء المستندات والدوكتيبات <strong>بالخط العريض</strong> وباللغتين العربية والإنجليزية: مثال: <strong>وردية الوقود (Fuel Shift)</strong>.</li>
+  <li>تُذكر أسماء الحقول ومسمياتها (Labels) دوماً باللغتين العربية والإنجليزية مع توضيح اسم الحقل البرمجي عند الحاجة: مثال: <strong>العهدة النقدية الافتتاحية (Opening Cash Float)</strong>.</li>
+</ul>
+
+<h2 id="master-doctypes-directory">دليل الدوكتيبات الشامل في النظام (Master DocTypes Directory)<a class="h-anchor" href="#master-doctypes-directory" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>يحتوي نظام محطة الوقود على <strong>34 مستنداً ودوكتيباً (DocType)</strong> تغطي أدق التفاصيل التشغيلية والمالية والرقابية:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th class="col-num">#</th><th style="min-width: 200px;">اسم الدوكتيب (DocType Name)</th><th style="min-width: 160px;">التصنيف والموديول (Module)</th><th style="min-width: 160px;">الدور المسؤول (Primary Role)</th><th class="col-desc">الأثر والارتباط القياسي في ERPNext</th></tr></thead>
+<tbody>
+<tr><td class="col-num">1</td><td><strong>محطة الوقود (Fuel Station)</strong></td><td>البيانات الأساسية (Master Data)</td><td>مدير العمليات (Operations Manager)</td><td>مركز التكلفة (Cost Center) وحسابات التسوية</td></tr>
+<tr><td class="col-num">2</td><td><strong>خزان الوقود (Fuel Tank)</strong></td><td>المخزون (Stock)</td><td>مسؤول المخزون (Inventory Officer)</td><td>مستودع الوقود (Warehouse) وصنف الوقود</td></tr>
+<tr><td class="col-num">3</td><td><strong>مضخة الوقود (Fuel Pump)</strong></td><td>المعدات والمضخات (Pumps)</td><td>مشرف المحطة (Supervisor)</td><td>أصل المضخة والعدادات المرتبطة</td></tr>
+<tr><td class="col-num">4</td><td><strong>نوع الوردية (Fuel Shift Type)</strong></td><td>إدارة التشغيل (Operations)</td><td>مدير المحطة (Station Manager)</td><td>تحديد فترات وساعات العمل القياسية</td></tr>
+<tr><td class="col-num">5</td><td><strong>وردية الوقود (Fuel Shift)</strong></td><td>إدارة التشغيل (Operations)</td><td>مشرف الوردية (Shift Supervisor)</td><td>دورة التشغيل الشاملة وتجميع الحسابات</td></tr>
+<tr><td class="col-num">6</td><td><strong>تكليف عامل بمضخة (Fuel Pump Assignment)</strong></td><td>إدارة الورديات (Shifts)</td><td>مشرف الوردية (Shift Supervisor)</td><td>ربط العامل بمضخة وصندوق نقد محدد</td></tr>
+<tr><td class="col-num">7</td><td><strong>تسليم واستلام المضخة (Pump Handover)</strong></td><td>إدارة الورديات (Shifts)</td><td>عامل المضخة (Attendant)</td><td>توثيق قراءة العداد والنقد عند تبديل العمال</td></tr>
+<tr><td class="col-num">8</td><td><strong>صندوق النقد (Fuel Cash Box)</strong></td><td>النقدية والخزائن (Cash Management)</td><td>عامل المضخة / الكاشير (Attendant/Cashier)</td><td>حساب عهدة العامل الميدانية والتحصيل</td></tr>
+<tr><td class="col-num">9</td><td><strong>عد فئات النقد (Fuel Denomination Count)</strong></td><td>النقدية والخزائن (Cash Management)</td><td>المشرف / الكاشير (Supervisor/Cashier)</td><td>جدول تفقيط العملات الورقية والمعدنية</td></tr>
+<tr><td class="col-num">10</td><td><strong>خزينة المحطة (Fuel Station Safe)</strong></td><td>النقدية والخزائن (Cash Management)</td><td>أمين الخزينة (Safe Custodian)</td><td>حساب الخزينة الرئيسي (Cash Account)</td></tr>
+<tr><td class="col-num">11</td><td><strong>تحويل نقدي للخزينة (Cash Transfer)</strong></td><td>النقدية والخزائن (Cash Management)</td><td>المشرف / أمين الخزينة</td><td>سند قيد تحويل داخلي بين الصندوق والخزينة</td></tr>
+<tr><td class="col-num">12</td><td><strong>عهدة النقد (Fuel Cash Custody)</strong></td><td>النقدية والخزائن (Cash Management)</td><td>المحاسب (Accountant)</td><td>صرف واسترداد الفكة الافتتاحية للمحطة</td></tr>
+<tr><td class="col-num">13</td><td><strong>قراءة عداد المضخة (Fuel Meter Reading)</strong></td><td>العدادات والقياس (Meters)</td><td>عامل المضخة / المشرف</td><td>إثبات القراءات الافتتاحية والختامية للعداد</td></tr>
+<tr><td class="col-num">14</td><td><strong>عملية تعبئة وقود (Fuel Dispense Event)</strong></td><td>المبيعات والضخ (Dispense)</td><td>عامل المضخة (Attendant)</td><td>توليد فاتورة مبيعات وحركة خصم المخزون</td></tr>
+<tr><td class="col-num">15</td><td><strong>تسوية المضخة (Fuel Pump Reconciliation)</strong></td><td>المطابقة والرقابة (Reconciliation)</td><td>مشرف الوردية / المحاسب</td><td>مطابقة فرق العداد مع مجمل التعبئات والنقد</td></tr>
+<tr><td class="col-num">16</td><td><strong>استثناء تسوية الوقود (Fuel Reconciliation Exception)</strong></td><td>المطابقة والرقابة (Reconciliation)</td><td>مدير المحطة / مدير العمليات</td><td>إدارة واعتماد فروقات العدادات والنقد المتجاوزة</td></tr>
+<tr><td class="col-num">17</td><td><strong>دفعة فواتير المضخة (Fuel Pump Invoice Batch)</strong></td><td>الفوترة والمبيعات (Invoicing)</td><td>المحاسب / النظام تلقائياً</td><td>فاتورة مبيعات مجمعة (Sales Invoice Batch)</td></tr>
+<tr><td class="col-num">18</td><td><strong>حدث دفعة فواتير المضخة (Fuel Pump Invoice Batch Event)</strong></td><td>الفوترة والمبيعات (Invoicing)</td><td>النظام تلقائياً</td><td>جدول فرعي لربط التعبئات بفاتورة الدفعة</td></tr>
+<tr><td class="col-num">19</td><td><strong>مركبة العميل (Customer Vehicle)</strong></td><td>الأساطيل والعملاء (Fleet)</td><td>مسؤول الأساطيل (Fleet Manager)</td><td>ربط اللوحة بالعميل ونوع الوقود وسقف اللترات</td></tr>
+<tr><td class="col-num">20</td><td><strong>سائق العميل (Customer Driver)</strong></td><td>الأساطيل والعملاء (Fleet)</td><td>مسؤول الأساطيل (Fleet Manager)</td><td>توثيق هوية السائق ورقم الجوال والـ PIN</td></tr>
+<tr><td class="col-num">21</td><td><strong>عقد عميل الوقود (Fuel Customer Contract)</strong></td><td>الأساطيل والعملاء (Fleet)</td><td>مدير المبيعات / المحاسب</td><td>سقف الائتمان، شروط السداد، والأصناف المصرحة</td></tr>
+<tr><td class="col-num">22</td><td><strong>بطاقة / كوبون وقود (Fuel Card)</strong></td><td>البطاقات والمحافظ (Cards)</td><td>أمين الصندوق / المحاسب</td><td>بطاقات مسبقة الدفع أو حصص لترية رقمية</td></tr>
+<tr><td class="col-num">23</td><td><strong>إعدادات مزود البطاقات (Fuel Card Provider Settings)</strong></td><td>نقاط البيع والبطاقات (POS)</td><td>المحاسب (Accountant)</td><td>عمولات الشبكة المصرفية وحسابات الوسيط (MDR)</td></tr>
+<tr><td class="col-num">24</td><td><strong>تسوية البطاقات البنكية (Card Settlement)</strong></td><td>نقاط البيع والبطاقات (POS)</td><td>المحاسب (Accountant)</td><td>مطابقة مقبوضات الشبكة مع كشف الحساب البنكي</td></tr>
+<tr><td class="col-num">25</td><td><strong>أمر صرف الوقود (Fuel Issue Order)</strong></td><td>الاستهلاك الداخلي (Internal Issue)</td><td>مدير الحركة / الصيانة</td><td>سند صرف مخزني قياسي (Stock Entry)</td></tr>
+<tr><td class="col-num">26</td><td><strong>تفويض تعبئة الوقود (Fuel Authorization)</strong></td><td>التشغيل والأمان (Security)</td><td>النظام / المشرف</td><td>رمز تفويض رقمي أو QR مؤقت للتعبئة الميدانية</td></tr>
+<tr><td class="col-num">27</td><td><strong>توريد وقود (Fuel Delivery)</strong></td><td>المشتريات والمخزون (Procurement)</td><td>مسؤول المخزون (Inventory Officer)</td><td>سند استلام بضاعة (Purchase Receipt) للخزان</td></tr>
+<tr><td class="col-num">28</td><td><strong>عملية معايرة المضخة (Fuel Calibration Event)</strong></td><td>المعايرة والجودة (Calibration)</td><td>فني المعايرة / المشرف</td><td>استبعاد لترات الفحص من مبيعات العداد تجنباً للخلط</td></tr>
+<tr><td class="col-num">29</td><td><strong>تسوية مخزون الخزان (Fuel Tank Reconciliation)</strong></td><td>المخزون والجرد (Stock Reconciliation)</td><td>مسؤول المخزون / المحاسب</td><td>قيد تسوية مخزنية (Stock Reconciliation Entry)</td></tr>
+<tr><td class="col-num">30</td><td><strong>سياسة ضرائب الوقود (Fuel Tax Policy)</strong></td><td>الضرائب والمالية (Taxes)</td><td>المحاسب المالي (Accountant)</td><td>قوالب ضريبة القيمة المضافة ZATCA والأسعار الشاملة</td></tr>
+<tr><td class="col-num">31</td><td><strong>إعدادات تشغيل محطة الوقود (Fuel Operations Settings)</strong></td><td>تهيئة النظام (System Config)</td><td>مدير العمليات / مسؤول النظام</td><td>التحكم الكامل بأنماط الفوترة، الورديات، والحدود</td></tr>
+<tr><td class="col-num">32</td><td><strong>قاعدة نطاق الصلاحيات التشغيلية (Fuel Operations Scope Rule)</strong></td><td>الأمان والامتيازات (Security)</td><td>مدير النظام (System Manager)</td><td>تخصيص محطات ومضخات محددة للمستخدمين</td></tr>
+<tr><td class="col-num">33</td><td><strong>سجل تدقيق محطة الوقود (Fuel Audit Log)</strong></td><td>الأمان والمطابقة (Audit Trail)</td><td>المراجع الداخلي (Internal Auditor)</td><td>توثيق الحركات الحساسة وفك الإغلاق والتعديل</td></tr>
+<tr><td class="col-num">34</td><td><strong>سجل تكامل محطة الوقود (Fuel Integration Log)</strong></td><td>الربط التقني (IoT & POS)</td><td>مسؤول الأنظمة التقنية</td><td>سجل استجابات الأجهزة والعدادات الرقمية و ZATCA</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="erp-interlinking">الترابط والتكامل الشامل وأزرار الإجراءات المباشرة (ERP Interlinking & Action Buttons)<a class="h-anchor" href="#erp-interlinking" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>صُمم نظام <strong>Fuel Station</strong> ليعمل كنواة متكاملة وغير منفصلة عن دورة عمل ERPNext المحاسبية والمخزنية. تم تزويد كافة شاشات ودوكتيبات النظام بأزرار إجراءات ذكية (Action Buttons) وأقسام ربط تفاعلية (Dashboard Connections) تتيح الانتقال والإنشاء الفوري بين الوحدات دون الحاجة لإعادة إدخال أي بيانات يدوياً:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>المستند في المحطة (DocType)</th><th>قائمة الإنشاء المباشر (Create Buttons)</th><th>قائمة العرض السريع (View Buttons)</th><th>الارتباط المحاسبي والمخزني في ERPNext</th></tr></thead>
+<tbody>
+<tr>
+  <td><strong>توريد وقود (Fuel Delivery)</strong></td>
+  <td>
+    <span class="badge badge-primary">Purchase Receipt</span><br>
+    <span class="badge badge-secondary">Purchase Invoice</span>
+  </td>
+  <td>
+    <span class="badge badge-light">Stock Ledger</span><br>
+    <span class="badge badge-light">Purchase Order</span>
+  </td>
+  <td>إنشاء استلام مشتريات وتحديث رصيد مستودع خزان الوقود في ثوانٍ، مع إثبات استحقاق المورد في حساب الذمم الدائنة.</td>
+</tr>
+<tr>
+  <td><strong>عملية تعبئة وقود (Fuel Dispense Event)</strong></td>
+  <td>
+    <span class="badge badge-primary">Sales Invoice</span>
+  </td>
+  <td>
+    <span class="badge badge-light">Sales Invoice</span><br>
+    <span class="badge badge-light">Accounting Ledger</span><br>
+    <span class="badge badge-light">Stock Ledger</span>
+  </td>
+  <td>توليد فاتورة مبيعات معتمدة فورية أو تجميعية، مع استعراض قيود اليومية وحركة المخزون بضغطة زر واحدة.</td>
+</tr>
+<tr>
+  <td><strong>أمر صرف الوقود (Fuel Issue Order)</strong></td>
+  <td>
+    <span class="badge badge-primary">Stock Entry (Material Issue)</span>
+  </td>
+  <td>
+    <span class="badge badge-light">Stock Entries</span><br>
+    <span class="badge badge-light">Dispense Events</span>
+  </td>
+  <td>صرف مخزني مباشر من خزان الوقود لحساب مصاريف سيارات الشركة ومركز التكلفة المعتمد دون توليد مبيعات وهمية.</td>
+</tr>
+<tr>
+  <td><strong>عقد عميل الوقود (Fuel Customer Contract)</strong></td>
+  <td>
+    <span class="badge badge-primary">Payment Entry (Receipt)</span>
+  </td>
+  <td>
+    <span class="badge badge-warning">Credit Health Check</span><br>
+    <span class="badge badge-light">Dispense Events</span><br>
+    <span class="badge badge-light">Sales Invoices</span>
+  </td>
+  <td>فحص فوري للرصيد الائتماني الحقيقي وسندات القبض المباشرة لفتح سقف الائتمان تلقائياً عند السداد.</td>
+</tr>
+<tr>
+  <td><strong>صندوق النقد (Fuel Cash Box)</strong></td>
+  <td>
+    <span class="badge badge-primary">Transfer to Safe</span>
+  </td>
+  <td>
+    <span class="badge badge-light">Cash Transfers</span><br>
+    <span class="badge badge-light">Denominations Breakdown</span>
+  </td>
+  <td>تحويل النقد المعدود فعلياً إلى خزينة المحطة بمستند تحويل موثق ومعتمد من الطرفين.</td>
+</tr>
+<tr>
+  <td><strong>تسوية المضخة (Fuel Pump Reconciliation)</strong></td>
+  <td>
+    <span class="badge badge-primary">Journal Entry (Adjustment)</span>
+  </td>
+  <td>
+    <span class="badge badge-light">Sales Invoices</span><br>
+    <span class="badge badge-light">Meter Readings</span>
+  </td>
+  <td>إثبات الفروقات المحاسبية وعجز/زيادة النقدية والعدادات بقيود نظامية معتمدة وفق سقف الصلاحيات.</td>
+</tr>
+</tbody>
+</table></div>
+
+<h2 id="operational-lifecycles">دورات العمل التشغيلية التسع (The 9 Core Operational Lifecycles)<a class="h-anchor" href="#operational-lifecycles" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>يقوم النظام بإدارة وتغطية تسع دورات عمل يومية أساسية تغطي كافة جوانب تشغيل المحطة من المضخة إلى القوائم المالية، ويمكن مراجعة كل دورة بالتفصيل في أقسام الدليل المخصصة لها:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th class="col-num">#</th><th style="min-width: 220px;">نوع العملية المتكاملة</th><th style="min-width: 220px;">أطراف ومسار العملية</th><th class="col-desc">المستندات القياسية الناتجة في ERPNext</th><th style="min-width: 140px;">القسم في الدليل</th></tr></thead>
+<tbody>
+<tr>
+  <td class="col-num">1</td>
+  <td><strong>دورة البيع النقدي المباشر والفوري</strong></td>
+  <td>المضخة ➔ العامل ➔ العميل النقدي</td>
+  <td>فاتورة مبيعات <span class="ui">Sales Invoice</span> + خصم المخزون + إيصال حراري 80 مم مع QR</td>
+  <td><a href="/docs/meters-and-dispense">العدادات وعمليات التعبئة</a></td>
+</tr>
+<tr>
+  <td class="col-num">2</td>
+  <td><strong>دورة البيع ببطاقات الشبكة والـ POS</strong></td>
+  <td>المضخة ➔ جهاز مدى/البطاقة ➔ وسيط الشبكة</td>
+  <td>حساب وسيط البطاقات + فاتورة مبيعات + تسوية بنكية <span class="ui">Card Settlement</span></td>
+  <td><a href="/docs/meters-and-dispense">العدادات وعمليات التعبئة</a></td>
+</tr>
+<tr>
+  <td class="col-num">3</td>
+  <td><strong>دورة البيع الآجل للأساطيل والشركات</strong></td>
+  <td>لوحة المركبة ➔ فحص الائتمان الحقيقي ➔ التعبئة ➔ الفوترة المجمعة</td>
+  <td>عقد العميل <span class="ui">Fuel Customer Contract</span> + فاتورة أسطول مجمعة + سند قبض</td>
+  <td><a href="/docs/customers-and-fleet">العملاء وإدارة الأساطيل</a></td>
+</tr>
+<tr>
+  <td class="col-num">4</td>
+  <td><strong>دورة أذونات وتصاريح الصرف الداخلي</strong></td>
+  <td>إذن الصرف ➔ اعتماد الـ QR ➔ مسح الرمز ➔ استهلاك الحصة</td>
+  <td>سند قيد مخزني مباشر <span class="ui">Stock Entry (Material Issue)</span> على مركز التكلفة</td>
+  <td><a href="/docs/issue-orders-and-internal">أوامر الصرف والاستهلاك الداخلي</a></td>
+</tr>
+<tr>
+  <td class="col-num">5</td>
+  <td><strong>دورة استلام شحنات وتفريغ الوقود</strong></td>
+  <td>صهريج التوريد ➔ فحص الجودة والماء ➔ عيار الخزان (قبل/بعد)</td>
+  <td>سند استلام مشتريات <span class="ui">Purchase Receipt</span> + زيادة رصيد المخزن في الخزان</td>
+  <td><a href="/docs/tanks-and-procurement">الخزانات والتوريدات والمخزون</a></td>
+</tr>
+<tr>
+  <td class="col-num">6</td>
+  <td><strong>دورة إقفال الوردية ومطابقة الخزائن</strong></td>
+  <td>قراءات الختام ➔ تفقيط الفئات النقدية ➔ حساب الفروقات ➔ توريد الخزينة</td>
+  <td>سند تسليم نقدية <span class="ui">Cash Transfer</span> + تقرير الإقفال المعتمد + إيداع بنكي</td>
+  <td><a href="/docs/shifts-and-safes">إدارة الورديات والصناديق</a></td>
+</tr>
+<tr>
+  <td class="col-num">7</td>
+  <td><strong>دورة معايرة المضخات والفواقد</strong></td>
+  <td>مكيال المعايرة ➔ إرجاع الوقود للخزان ➔ خصم كمية الفحص من العداد</td>
+  <td>حركة معايرة <span class="ui">Fuel Calibration Event</span> + مطابقة العداد وإسقاط العجز الوهمي</td>
+  <td><a href="/docs/tanks-and-procurement">الخزانات والتوريدات والمخزون</a></td>
+</tr>
+<tr>
+  <td class="col-num">8</td>
+  <td><strong>دورة الفوترة والضريبة و ZATCA QR</strong></td>
+  <td>الأسعار الشاملة ➔ احتساب الضريبة ➔ تشفير رمز QR بتقنية TLV</td>
+  <td>فاتورة ضريبية رسمية <span class="ui">Fuel Standard Tax Invoice</span> + إقرار ضريبة القيمة المضافة</td>
+  <td><a href="/docs/invoicing-and-taxes">المبيعات والفوترة والضرائب</a></td>
+</tr>
+<tr>
+  <td class="col-num">9</td>
+  <td><strong>دورة المرتجعات والتسويات المحاسبية</strong></td>
+  <td>طلب إلغاء تعبئة ➔ توثيق سبب المشرف ➔ إشعار دائن/مدين</td>
+  <td>إشعار دائن <span class="ui">Sales Invoice Return</span> + قيد يومية <span class="ui">Journal Entry</span> لتسوية الفروقات</td>
+  <td><a href="/docs/returns-and-adjustments">المرتجعات والتسويات</a></td>
+</tr>
+</tbody>
+</table></div>

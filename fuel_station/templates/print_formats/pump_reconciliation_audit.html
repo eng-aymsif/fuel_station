@@ -1,0 +1,193 @@
+{%- from "fuel_station/templates/print_formats/base.html" import print_styles, is_arabic, dir -%}
+{{ print_styles() }}
+
+<div class="fuel-print-container fuel-print-standard" dir="{{ dir() }}">
+	<div class="fuel-print-header">
+		<table class="fuel-header-table">
+			<tr>
+				<td>
+					<div class="fuel-brand-name">⛽ {{ doc.station or "Fuel Station" }}</div>
+					<div class="fuel-brand-sub">{{ _("Pump Mechanical & Totalizer Meter Audit Statement") if is_arabic() else "Pump Meter Audit Statement" }}</div>
+				</td>
+				<td class="fuel-doc-title-box">
+					<div class="fuel-doc-title">{{ _("PUMP AUDIT REPORT") if is_arabic() else "PUMP AUDIT REPORT" }}</div>
+					<div><b>{{ doc.name }}</b></div>
+					<div style="margin-top: 4px;">
+						{% if doc.status == "Reconciled" or doc.docstatus == 1 %}
+						<span class="fuel-badge badge-success">{{ _("Reconciled") if is_arabic() else "Reconciled" }}</span>
+						{% elif doc.status == "Draft" %}
+						<span class="fuel-badge badge-warning">{{ _("Draft") if is_arabic() else "Draft" }}</span>
+						{% else %}
+						<span class="fuel-badge badge-info">{{ doc.status or "Audited" }}</span>
+						{% endif %}
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- Meta Grid -->
+	<div class="fuel-meta-grid">
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Pump / Dispenser Unit") if is_arabic() else "Pump Unit" }}</div>
+			<div class="fuel-meta-val"><b>{{ doc.pump }}</b></div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Fuel Product / Grade") if is_arabic() else "Fuel Grade" }}</div>
+			<div class="fuel-meta-val">{{ doc.item }}</div>
+		</div>
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Business Date") if is_arabic() else "Business Date" }}</div>
+			<div class="fuel-meta-val">{{ doc.business_date }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Shift") if is_arabic() else "Shift" }}</div>
+			<div class="fuel-meta-val">{{ doc.shift }}</div>
+		</div>
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Station Location") if is_arabic() else "Station" }}</div>
+			<div class="fuel-meta-val">{{ doc.station }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Approved By") if is_arabic() else "Approved By" }}</div>
+			<div class="fuel-meta-val">{{ doc.approved_by or "-" }}</div>
+		</div>
+	</div>
+
+	<!-- Meter Totalizer Readings -->
+	<div style="font-weight: 800; font-size: 14px; margin-bottom: 8px; color: #1e293b;">
+		🔢 {{ _("Totalizer Meter Readings") if is_arabic() else "Totalizer Meter Readings" }}
+	</div>
+	<table class="fuel-data-table">
+		<thead>
+			<tr>
+				<th>{{ _("Opening Meter (L)") if is_arabic() else "Opening Meter (L)" }}</th>
+				<th>{{ _("Closing Meter (L)") if is_arabic() else "Closing Meter (L)" }}</th>
+				<th class="text-center" style="background: #fff7ed; color: #c2410c;">{{ _("Net Metered Output (L)") if is_arabic() else "Net Output (L)" }}</th>
+				<th class="text-center">{{ _("Standard Tariff Rate") if is_arabic() else "Tariff Rate" }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><b>{{ "{:,.2f}".format(doc.opening_reading or 0.0) }}</b></td>
+				<td><b>{{ "{:,.2f}".format(doc.closing_reading or 0.0) }}</b></td>
+				<td class="text-center" style="font-size: 15px; font-weight: 800; background: #fff7ed; color: #c2410c;">
+					{{ "{:,.2f}".format(doc.meter_quantity or 0.0) }} L
+				</td>
+				<td class="text-center">{{ fuel_money(doc.rate) }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- Sales Stream Breakdown -->
+	<div style="font-weight: 800; font-size: 14px; margin-top: 15px; margin-bottom: 8px; color: #1e293b;">
+		📊 {{ _("Sales Channels & Volume Classification Breakdown") if is_arabic() else "Sales Channels Breakdown" }}
+	</div>
+	<table class="fuel-data-table">
+		<thead>
+			<tr>
+				<th>{{ _("Channel / Category") if is_arabic() else "Channel" }}</th>
+				<th class="text-center">{{ _("Quantity (Liters)") if is_arabic() else "Quantity (L)" }}</th>
+				<th class="text-center">{{ _("Percentage (%)") if is_arabic() else "Percentage (%)" }}</th>
+				<th class="text-center">{{ _("Estimated Value") if is_arabic() else "Value" }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>💵 {{ _("Cash Sales (Direct & POS)") if is_arabic() else "Cash Sales" }}</td>
+				<td class="text-center"><b>{{ "{:,.2f}".format(doc.cash_quantity or 0.0) }} L</b></td>
+				<td class="text-center">{{ "{:,.1f}".format(((doc.cash_quantity or 0) / (doc.meter_quantity or 1)) * 100) }}%</td>
+				<td class="text-center">{{ fuel_money((doc.cash_quantity or 0.0) * (doc.rate or 0.0)) }}</td>
+			</tr>
+			<tr>
+				<td>💳 {{ _("POS Cards & Bank Terminals") if is_arabic() else "Card Sales" }}</td>
+				<td class="text-center"><b>{{ "{:,.2f}".format(doc.card_quantity or 0.0) }} L</b></td>
+				<td class="text-center">{{ "{:,.1f}".format(((doc.card_quantity or 0) / (doc.meter_quantity or 1)) * 100) }}%</td>
+				<td class="text-center">{{ fuel_money((doc.card_quantity or 0.0) * (doc.rate or 0.0)) }}</td>
+			</tr>
+			<tr>
+				<td>🏢 {{ _("Fleet / On-Account Credit Sales") if is_arabic() else "Fleet / Credit" }}</td>
+				<td class="text-center"><b>{{ "{:,.2f}".format(doc.credit_quantity or 0.0) }} L</b></td>
+				<td class="text-center">{{ "{:,.1f}".format(((doc.credit_quantity or 0) / (doc.meter_quantity or 1)) * 100) }}%</td>
+				<td class="text-center">{{ fuel_money((doc.credit_quantity or 0.0) * (doc.rate or 0.0)) }}</td>
+			</tr>
+			<tr>
+				<td>🎫 {{ _("Internal Issue Orders & Vouchers") if is_arabic() else "Issue Orders" }}</td>
+				<td class="text-center"><b>{{ "{:,.2f}".format(doc.issue_order_quantity or 0.0) }} L</b></td>
+				<td class="text-center">{{ "{:,.1f}".format(((doc.issue_order_quantity or 0) / (doc.meter_quantity or 1)) * 100) }}%</td>
+				<td class="text-center">{{ fuel_money((doc.issue_order_quantity or 0.0) * (doc.rate or 0.0)) }}</td>
+			</tr>
+			{% if doc.calibration_quantity %}
+			<tr>
+				<td>🧪 {{ _("Calibration, Testing & Stamping") if is_arabic() else "Calibration & Testing" }}</td>
+				<td class="text-center"><b>{{ "{:,.2f}".format(doc.calibration_quantity) }} L</b></td>
+				<td class="text-center">{{ "{:,.1f}".format((doc.calibration_quantity / (doc.meter_quantity or 1)) * 100) }}%</td>
+				<td class="text-center">{{ fuel_money(doc.calibration_quantity * (doc.rate or 0.0)) }}</td>
+			</tr>
+			{% endif %}
+			{% if doc.waste_quantity %}
+			<tr>
+				<td>💧 {{ _("Forecourt Evaporation / Waste Allowance") if is_arabic() else "Waste / Evaporation" }}</td>
+				<td class="text-center"><b>{{ "{:,.2f}".format(doc.waste_quantity) }} L</b></td>
+				<td class="text-center">{{ "{:,.1f}".format((doc.waste_quantity / (doc.meter_quantity or 1)) * 100) }}%</td>
+				<td class="text-center">{{ fuel_money(doc.waste_quantity * (doc.rate or 0.0)) }}</td>
+			</tr>
+			{% endif %}
+			<tr style="background: #f1f5f9; font-weight: 800;">
+				<td>{{ _("Total Classified Quantity") if is_arabic() else "Total Classified" }}</td>
+				<td class="text-center">{{ "{:,.2f}".format(doc.classified_quantity or 0.0) }} L</td>
+				<td class="text-center">100%</td>
+				<td class="text-center">{{ fuel_money((doc.classified_quantity or 0.0) * (doc.rate or 0.0)) }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- Discrepancy & Variance Analysis -->
+	<div style="display: table; width: 100%; margin-top: 15px;">
+		<div style="display: table-cell; width: 50%; vertical-align: top;">
+			<div style="padding: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
+				<div style="font-weight: 700; margin-bottom: 4px;">{{ _("Variance Analysis & Reason:") if is_arabic() else "Variance Reason:" }}</div>
+				<div><b>{{ doc.variance_reason or _("Normal Meter Operation") if is_arabic() else "Normal Operation" }}</b></div>
+				{% if doc.exception_reference %}
+				<div style="font-size: 11px; color: #475569; margin-top: 4px;">
+					<b>{{ _("Exception Reference:") if is_arabic() else "Exception Ref:" }}</b> {{ doc.exception_reference }}
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		<div style="display: table-cell; width: 50%; vertical-align: top;">
+			<table class="fuel-totals-table" style="width: 100%;">
+				<tr>
+					<td>{{ _("Metered Output") if is_arabic() else "Metered Output" }}</td>
+					<td class="text-left"><b>{{ "{:,.2f}".format(doc.meter_quantity or 0.0) }} L</b></td>
+				</tr>
+				<tr>
+					<td>{{ _("Classified Deliveries") if is_arabic() else "Classified Deliveries" }}</td>
+					<td class="text-left"><b>{{ "{:,.2f}".format(doc.classified_quantity or 0.0) }} L</b></td>
+				</tr>
+				<tr class="fuel-grand-total">
+					<td>{{ _("Variance Volume") if is_arabic() else "Variance Volume" }}</td>
+					<td class="text-left" style="color: {{ '#16a34a' if (doc.variance_quantity or 0) == 0 else '#dc2626' }};">
+						{{ "{:,.2f}".format(doc.variance_quantity or 0.0) }} L
+					</td>
+				</tr>
+				{% if doc.variance_amount %}
+				<tr>
+					<td style="color: #dc2626; font-weight: 700;">{{ _("Variance Monetary Value") if is_arabic() else "Variance Amount" }}</td>
+					<td class="text-left" style="color: #dc2626; font-weight: 700;">{{ fuel_money(doc.variance_amount) }}</td>
+				</tr>
+				{% endif %}
+			</table>
+		</div>
+	</div>
+
+	<!-- Signatures -->
+	<div class="fuel-sign-row">
+		<div class="fuel-sign-cell">
+			{{ _("Technician / Calibrator") if is_arabic() else "Technician" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("Station Supervisor") if is_arabic() else "Supervisor" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("Operations Auditor") if is_arabic() else "Operations Auditor" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+	</div>
+</div>

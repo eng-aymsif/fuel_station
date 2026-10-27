@@ -1,0 +1,576 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "external_id",
+  "station",
+  "business_date",
+  "shift",
+  "pump",
+  "item",
+  "status",
+  "column_break_1",
+  "employee",
+  "assignment",
+  "customer",
+  "vehicle",
+  "vehicle_plate_number",
+  "driver",
+  "driver_name",
+  "odometer_reading",
+  "section_break_2",
+  "reading_before",
+  "reading_after",
+  "column_break_2",
+  "quantity",
+  "rate_before_discount",
+  "rate",
+  "amount_before_discount",
+  "amount",
+  "section_break_3",
+  "discount_percentage",
+  "discount_amount",
+  "discount_source",
+  "discount_reason",
+  "discount_approved_by",
+  "column_break_3",
+  "tax_template",
+  "prices_include_tax",
+  "tax_amount",
+  "grand_total",
+  "section_break_4",
+  "payment_method",
+  "payment_reference",
+  "fuel_card",
+  "card_last_four",
+  "column_break_4",
+  "authorization",
+  "issue_order",
+  "contract",
+  "section_break_5",
+  "credit_check_result",
+  "credit_override_approved_by",
+  "credit_override_reason",
+  "column_break_5",
+  "invoice",
+  "stock_document",
+  "section_break_other",
+  "naming_series",
+  "source_key",
+  "tank",
+  "warehouse",
+  "uom",
+  "trip_number",
+  "work_order_reference",
+  "price_list",
+  "card_provider",
+  "invoice_batch",
+  "cancellation_reason",
+  "cancelled_by",
+  "cancelled_at"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Event Information"
+  },
+  {
+   "fieldname": "external_id",
+   "label": "External ID",
+   "fieldtype": "Data",
+   "unique": 1
+  },
+  {
+   "fieldname": "station",
+   "label": "Station",
+   "fieldtype": "Link",
+   "options": "Fuel Station",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "business_date",
+   "label": "Business Date",
+   "fieldtype": "Date",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "shift",
+   "label": "Shift",
+   "fieldtype": "Link",
+   "options": "Fuel Shift",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "pump",
+   "label": "Pump",
+   "fieldtype": "Link",
+   "options": "Fuel Pump",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "item",
+   "label": "Fuel Item",
+   "fieldtype": "Link",
+   "options": "Item",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "Draft\nRecorded\nClassified\nReviewed\nInvoiced\nStock Posted\nCancelled\nException",
+   "default": "Recorded",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "employee",
+   "label": "Attendant / Employee",
+   "fieldtype": "Link",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "assignment",
+   "label": "Pump Assignment",
+   "fieldtype": "Link",
+   "options": "Fuel Pump Assignment"
+  },
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "vehicle",
+   "label": "Vehicle",
+   "fieldtype": "Link",
+   "options": "Customer Vehicle"
+  },
+  {
+   "fieldname": "vehicle_plate_number",
+   "label": "Vehicle Plate Number",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "driver",
+   "label": "Driver",
+   "fieldtype": "Link",
+   "options": "Customer Driver"
+  },
+  {
+   "fieldname": "driver_name",
+   "label": "Driver Name",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "odometer_reading",
+   "label": "Vehicle Odometer Reading",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Meter & Quantities"
+  },
+  {
+   "fieldname": "reading_before",
+   "label": "Reading Before",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "reading_after",
+   "label": "Reading After",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "quantity",
+   "label": "Quantity (Liters)",
+   "fieldtype": "Float",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "rate_before_discount",
+   "label": "Rate Before Discount",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "rate",
+   "label": "Unit Rate",
+   "fieldtype": "Currency",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount_before_discount",
+   "label": "Amount Before Discount",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "amount",
+   "label": "Net Amount",
+   "fieldtype": "Currency",
+   "default": "0",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break",
+   "label": "Discounts & Taxes"
+  },
+  {
+   "fieldname": "discount_percentage",
+   "label": "Discount Percentage",
+   "fieldtype": "Float",
+   "default": "0"
+  },
+  {
+   "fieldname": "discount_amount",
+   "label": "Discount Amount",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "discount_source",
+   "label": "Discount Source",
+   "fieldtype": "Select",
+   "options": "\nCustomer Contract\nPrice List\nPricing Rule\nQuantity Threshold\nFleet Agreement\nManager Approval\nManual Authorized Discount"
+  },
+  {
+   "fieldname": "discount_reason",
+   "label": "Discount Reason",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "discount_approved_by",
+   "label": "Discount Approved By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tax_template",
+   "label": "Sales Taxes and Charges Template",
+   "fieldtype": "Link",
+   "options": "Sales Taxes and Charges Template"
+  },
+  {
+   "fieldname": "prices_include_tax",
+   "label": "Prices Include Tax",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "tax_amount",
+   "label": "Tax Amount",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "grand_total",
+   "label": "Grand Total",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break",
+   "label": "Payment & Verification"
+  },
+  {
+   "fieldname": "payment_method",
+   "label": "Payment Method",
+   "fieldtype": "Select",
+   "options": "Cash\nCard\nCredit\nPrepaid\nInternal Issue\nCoupon\nContract",
+   "default": "Cash",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "payment_reference",
+   "label": "Payment Reference",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "fuel_card",
+   "label": "Fuel Card / Coupon",
+   "fieldtype": "Link",
+   "options": "Fuel Card"
+  },
+  {
+   "fieldname": "card_last_four",
+   "label": "Card Last Four Digits",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "authorization",
+   "label": "Fuel Authorization",
+   "fieldtype": "Link",
+   "options": "Fuel Authorization"
+  },
+  {
+   "fieldname": "issue_order",
+   "label": "Fuel Issue Order",
+   "fieldtype": "Link",
+   "options": "Fuel Issue Order"
+  },
+  {
+   "fieldname": "contract",
+   "label": "Customer Contract",
+   "fieldtype": "Link",
+   "options": "Fuel Customer Contract"
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break",
+   "label": "Credit Check & Documents"
+  },
+  {
+   "fieldname": "credit_check_result",
+   "label": "Credit Check Result",
+   "fieldtype": "Data",
+   "read_only": 1
+  },
+  {
+   "fieldname": "credit_override_approved_by",
+   "label": "Credit Override Approved By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "credit_override_reason",
+   "label": "Credit Override Reason",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "invoice",
+   "label": "Sales Invoice",
+   "fieldtype": "Link",
+   "options": "Sales Invoice"
+  },
+  {
+   "fieldname": "stock_document",
+   "label": "Stock Entry",
+   "fieldtype": "Link",
+   "options": "Stock Entry"
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "FDE-.YYYY.-.#####",
+   "default": "FDE-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "source_key",
+   "label": "Source Key",
+   "fieldtype": "Data",
+   "unique": 1
+  },
+  {
+   "fieldname": "tank",
+   "label": "Fuel Tank",
+   "fieldtype": "Link",
+   "options": "Fuel Tank"
+  },
+  {
+   "fieldname": "warehouse",
+   "label": "Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "uom",
+   "label": "UOM",
+   "fieldtype": "Link",
+   "options": "UOM",
+   "default": "Liter"
+  },
+  {
+   "fieldname": "trip_number",
+   "label": "Trip Number",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "work_order_reference",
+   "label": "Work Order Reference",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "price_list",
+   "label": "Price List",
+   "fieldtype": "Link",
+   "options": "Price List"
+  },
+  {
+   "fieldname": "card_provider",
+   "label": "Card Provider",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "invoice_batch",
+   "label": "Invoice Batch",
+   "fieldtype": "Link",
+   "options": "Fuel Pump Invoice Batch"
+  },
+  {
+   "fieldname": "cancellation_reason",
+   "label": "Cancellation Reason",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "cancelled_by",
+   "label": "Cancelled By",
+   "fieldtype": "Link",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cancelled_at",
+   "label": "Cancelled At",
+   "fieldtype": "Datetime",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "issingle": 0,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Fuel Dispense Event",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "System Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Station Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Shift Supervisor",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Cashier",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1
+  },
+  {
+   "role": "Inventory Officer",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Attendant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "print": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field"
+}

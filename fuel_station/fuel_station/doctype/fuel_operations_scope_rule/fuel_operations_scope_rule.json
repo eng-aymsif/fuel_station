@@ -1,0 +1,146 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "company",
+  "station",
+  "pump",
+  "active",
+  "column_break_1",
+  "customer",
+  "operation_type",
+  "role",
+  "section_break_other",
+  "scope_type",
+  "invoice_creator_mode",
+  "invoice_submitter_mode",
+  "invoice_timing",
+  "transaction_capture_timing",
+  "stock_posting_timing",
+  "shift_mode_enabled"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Scope Rule"
+  },
+  {
+   "fieldname": "company",
+   "label": "Company",
+   "fieldtype": "Link",
+   "options": "Company",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "station",
+   "label": "Station",
+   "fieldtype": "Link",
+   "options": "Fuel Station",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "pump",
+   "label": "Pump",
+   "fieldtype": "Link",
+   "options": "Fuel Pump"
+  },
+  {
+   "fieldname": "active",
+   "label": "Active",
+   "fieldtype": "Check",
+   "default": "1",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "operation_type",
+   "label": "Operation Type",
+   "fieldtype": "Select",
+   "options": "\nCash\nCard\nCredit\nPrepaid\nInternal Issue\nCoupon\nContract"
+  },
+  {
+   "fieldname": "role",
+   "label": "Role",
+   "fieldtype": "Link",
+   "options": "Role"
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "scope_type",
+   "label": "Scope Type",
+   "fieldtype": "Select",
+   "options": "Company\nStation\nPump\nCustomer\nOperation Type\nRole",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "invoice_creator_mode",
+   "label": "Invoice Creator Mode",
+   "fieldtype": "Select",
+   "options": "\nATTENDANT\nSUPERVISOR\nCASHIER\nACCOUNTANT\nAUTOMATIC\nHYBRID",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "invoice_submitter_mode",
+   "label": "Invoice Submitter Mode",
+   "fieldtype": "Select",
+   "options": "\nATTENDANT\nSUPERVISOR\nCASHIER\nACCOUNTANT\nMANAGER\nAUTOMATIC_IF_NO_VARIANCE"
+  },
+  {
+   "fieldname": "invoice_timing",
+   "label": "Invoice Timing",
+   "fieldtype": "Select",
+   "options": "\nBEFORE_DISPENSE\nAFTER_DISPENSE\nPER_TRANSACTION\nPER_PUMP_SHIFT\nPER_ATTENDANT_SHIFT\nPER_PUMP_DAY\nPER_STATION_DAY\nMANUAL_BATCH\nAUTOMATIC_ON_CLOSING",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "transaction_capture_timing",
+   "label": "Transaction Capture Timing",
+   "fieldtype": "Select",
+   "options": "\nBEFORE_DISPENSE\nDURING_DISPENSE\nAFTER_DISPENSE\nMETER_CLOSING_ONLY\nAPI_EVENT"
+  },
+  {
+   "fieldname": "stock_posting_timing",
+   "label": "Stock Posting Timing",
+   "fieldtype": "Select",
+   "options": "\nON_DISPENSE\nON_INVOICE_SUBMIT\nON_SHIFT_CLOSE\nON_DAY_CLOSE\nMANUAL_APPROVAL"
+  },
+  {
+   "fieldname": "shift_mode_enabled",
+   "label": "Shift Mode Enabled",
+   "fieldtype": "Select",
+   "options": "\n1\n0"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "issingle": 0,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Fuel Operations Scope Rule",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

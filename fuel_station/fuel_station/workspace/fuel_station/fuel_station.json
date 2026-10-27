@@ -1,0 +1,712 @@
+{
+ "charts": [],
+ "content": "[{\"id\": \"fs_header\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>\\u0625\\u062f\\u0627\\u0631\\u0629 \\u0645\\u062d\\u0637\\u0627\\u062a \\u0627\\u0644\\u0648\\u0642\\u0648\\u062f - Fuel Station Management</b></span>\", \"col\": 12}}, {\"id\": \"fs_spacer_top\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"fs_shortcut_1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Fuel Dispense Event\", \"col\": 3}}, {\"id\": \"fs_shortcut_2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Fuel Shift\", \"col\": 3}}, {\"id\": \"fs_shortcut_3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Fuel Delivery\", \"col\": 3}}, {\"id\": \"fs_shortcut_4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Fuel Cash Box\", \"col\": 3}}, {\"id\": \"fs_shortcut_5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Fuel Pump Reconciliation\", \"col\": 3}}, {\"id\": \"fs_shortcut_6\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Fuel Tank Reconciliation\", \"col\": 3}}, {\"id\": \"fs_shortcut_7\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Cash Transfer\", \"col\": 3}}, {\"id\": \"fs_shortcut_8\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Fuel Customer Contract\", \"col\": 3}}, {\"id\": \"fs_spacer_mid\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"fs_card_1\", \"type\": \"card\", \"data\": {\"card_name\": \"Setup & Configuration\", \"col\": 4}}, {\"id\": \"fs_card_2\", \"type\": \"card\", \"data\": {\"card_name\": \"Forecourt & Operations\", \"col\": 4}}, {\"id\": \"fs_card_3\", \"type\": \"card\", \"data\": {\"card_name\": \"Tanks & Inventory\", \"col\": 4}}, {\"id\": \"fs_card_4\", \"type\": \"card\", \"data\": {\"card_name\": \"Cash & Treasury\", \"col\": 4}}, {\"id\": \"fs_card_5\", \"type\": \"card\", \"data\": {\"card_name\": \"Fleet & Customer Contracts\", \"col\": 4}}, {\"id\": \"fs_card_6\", \"type\": \"card\", \"data\": {\"card_name\": \"Reconciliation & Audit\", \"col\": 4}}, {\"id\": \"fs_card_7\", \"type\": \"card\", \"data\": {\"card_name\": \"Operational Reports\", \"col\": 6}}, {\"id\": \"fs_card_8\", \"type\": \"card\", \"data\": {\"card_name\": \"Financial & Compliance Reports\", \"col\": 6}}]",
+ "creation": "2026-10-26 06:14:04.868578",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "fuel-pump",
+ "idx": 0,
+ "indicator_color": "blue",
+ "is_hidden": 0,
+ "label": "Fuel Station",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Setup & Configuration",
+   "link_count": 0,
+   "link_to": "DocType",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Station",
+   "link_count": 0,
+   "link_to": "Fuel Station",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Shift Type",
+   "link_count": 0,
+   "link_to": "Fuel Shift Type",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Operations Settings",
+   "link_count": 0,
+   "link_to": "Fuel Operations Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Tax Policy",
+   "link_count": 0,
+   "link_to": "Fuel Tax Policy",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Card Provider Settings",
+   "link_count": 0,
+   "link_to": "Fuel Card Provider Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Operations Scope Rule",
+   "link_count": 0,
+   "link_to": "Fuel Operations Scope Rule",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Forecourt & Operations",
+   "link_count": 0,
+   "link_to": "DocType",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Dispense Event",
+   "link_count": 0,
+   "link_to": "Fuel Dispense Event",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Shift",
+   "link_count": 0,
+   "link_to": "Fuel Shift",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Pump Assignment",
+   "link_count": 0,
+   "link_to": "Fuel Pump Assignment",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Meter Reading",
+   "link_count": 0,
+   "link_to": "Fuel Meter Reading",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Pump Handover",
+   "link_count": 0,
+   "link_to": "Pump Handover",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Calibration Event",
+   "link_count": 0,
+   "link_to": "Fuel Calibration Event",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Issue Order",
+   "link_count": 0,
+   "link_to": "Fuel Issue Order",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Pump Invoice Batch",
+   "link_count": 0,
+   "link_to": "Fuel Pump Invoice Batch",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Tanks & Inventory",
+   "link_count": 0,
+   "link_to": "DocType",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Tank",
+   "link_count": 0,
+   "link_to": "Fuel Tank",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Pump",
+   "link_count": 0,
+   "link_to": "Fuel Pump",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Delivery",
+   "link_count": 0,
+   "link_to": "Fuel Delivery",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Cash & Treasury",
+   "link_count": 0,
+   "link_to": "DocType",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Cash Box",
+   "link_count": 0,
+   "link_to": "Fuel Cash Box",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Station Safe",
+   "link_count": 0,
+   "link_to": "Fuel Station Safe",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Cash Transfer",
+   "link_count": 0,
+   "link_to": "Cash Transfer",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Cash Custody",
+   "link_count": 0,
+   "link_to": "Fuel Cash Custody",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Denomination Count",
+   "link_count": 0,
+   "link_to": "Fuel Denomination Count",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Card Settlement",
+   "link_count": 0,
+   "link_to": "Card Settlement",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fleet & Customer Contracts",
+   "link_count": 0,
+   "link_to": "DocType",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Customer Vehicle",
+   "link_count": 0,
+   "link_to": "Customer Vehicle",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Customer Driver",
+   "link_count": 0,
+   "link_to": "Customer Driver",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Customer Contract",
+   "link_count": 0,
+   "link_to": "Fuel Customer Contract",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Card",
+   "link_count": 0,
+   "link_to": "Fuel Card",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Authorization",
+   "link_count": 0,
+   "link_to": "Fuel Authorization",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reconciliation & Audit",
+   "link_count": 0,
+   "link_to": "DocType",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Pump Reconciliation",
+   "link_count": 0,
+   "link_to": "Fuel Pump Reconciliation",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Tank Reconciliation",
+   "link_count": 0,
+   "link_to": "Fuel Tank Reconciliation",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Reconciliation Exception",
+   "link_count": 0,
+   "link_to": "Fuel Reconciliation Exception",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Audit Log",
+   "link_count": 0,
+   "link_to": "Fuel Audit Log",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Fuel Integration Log",
+   "link_count": 0,
+   "link_to": "Fuel Integration Log",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Operational Reports",
+   "link_count": 0,
+   "link_to": "DocType",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Daily Fuel Sales",
+   "link_count": 0,
+   "link_to": "Daily Fuel Sales",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Pump Sales Report",
+   "link_count": 0,
+   "link_to": "Pump Sales Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Fuel Dispense Report",
+   "link_count": 0,
+   "link_to": "Fuel Dispense Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Meter Reading Report",
+   "link_count": 0,
+   "link_to": "Meter Reading Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Tank Stock Report",
+   "link_count": 0,
+   "link_to": "Tank Stock Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Pump Reconciliation Report",
+   "link_count": 0,
+   "link_to": "Pump Reconciliation Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Attendant Performance Report",
+   "link_count": 0,
+   "link_to": "Attendant Performance Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Fuel Delivery Report",
+   "link_count": 0,
+   "link_to": "Fuel Delivery Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Financial & Compliance Reports",
+   "link_count": 0,
+   "link_to": "DocType",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Cash Boxes and Safe Closing Report",
+   "link_count": 0,
+   "link_to": "Cash Boxes and Safe Closing Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Cash Custody Report",
+   "link_count": 0,
+   "link_to": "Cash Custody Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Customer Fuel Consumption",
+   "link_count": 0,
+   "link_to": "Customer Fuel Consumption",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Vehicle Fuel Consumption",
+   "link_count": 0,
+   "link_to": "Vehicle Fuel Consumption",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Credit Aging Report",
+   "link_count": 0,
+   "link_to": "Credit Aging Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Tax Sales Report",
+   "link_count": 0,
+   "link_to": "Tax Sales Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Discount Analysis Report",
+   "link_count": 0,
+   "link_to": "Discount Analysis Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Electronic Invoice Status Report",
+   "link_count": 0,
+   "link_to": "Electronic Invoice Status Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Shift Closing Report",
+   "link_count": 0,
+   "link_to": "Shift Closing Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Fuel Period Closing Checklist",
+   "link_count": 0,
+   "link_to": "Fuel Period Closing Checklist",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Card Settlement Reconciliation Report",
+   "link_count": 0,
+   "link_to": "Card Settlement Reconciliation Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Fuel Audit Trail Report",
+   "link_count": 0,
+   "link_to": "Fuel Audit Trail Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-10-26 06:14:04.868578",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Fuel Station",
+ "number_cards": [],
+ "owner": "Administrator",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 0.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "",
+   "format": "{} Available",
+   "icon": "",
+   "label": "Fuel Dispense Event",
+   "link_to": "Fuel Dispense Event",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "",
+   "format": "{} Available",
+   "icon": "",
+   "label": "Fuel Shift",
+   "link_to": "Fuel Shift",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "",
+   "format": "{} Available",
+   "icon": "",
+   "label": "Fuel Delivery",
+   "link_to": "Fuel Delivery",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "",
+   "format": "{} Available",
+   "icon": "",
+   "label": "Fuel Cash Box",
+   "link_to": "Fuel Cash Box",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "",
+   "format": "{} Available",
+   "icon": "",
+   "label": "Fuel Pump Reconciliation",
+   "link_to": "Fuel Pump Reconciliation",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "",
+   "format": "{} Available",
+   "icon": "",
+   "label": "Fuel Tank Reconciliation",
+   "link_to": "Fuel Tank Reconciliation",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "",
+   "format": "{} Available",
+   "icon": "",
+   "label": "Cash Transfer",
+   "link_to": "Cash Transfer",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "",
+   "format": "{} Available",
+   "icon": "",
+   "label": "Fuel Customer Contract",
+   "link_to": "Fuel Customer Contract",
+   "type": "DocType"
+  }
+ ],
+ "title": "Fuel Station"
+}

@@ -1,0 +1,712 @@
+A Daily Close already exists for Station {0} on {1} for {2} shift,يوجد إغلاق يومي بالفعل للمحطة {0} بتاريخ {1} لوردية {2}
+A reading already exists for Pump {0} on {1} for {2} shift,توجد قراءة بالفعل للمضخة {0} بتاريخ {1} لوردية {2}
+A submitted Fuel Sales Entry already exists for Pump {0} on {1} for {2} shift,توجد فاتورة بيع وقود مُرحَّلة بالفعل للمضخة {0} بتاريخ {1} لوردية {2}
+Account,حساب
+Account {0} does not belong to Company {1},الحساب {0} لا ينتمي إلى الشركة {1}
+Accounting & Security,الحسابات والأمان
+Accounts (Snapshot),الحسابات (نسخة عند الترحيل)
+Accounts are not configured for a {0} movement,الحسابات غير مهيأة للحركة من نوع {0}
+Active,نشط
+Active Fuel Customer,عميل وقود نشط
+Active Shift,الوردية النشطة
+Actual Cash,النقد الفعلي
+Additional Information,معلومات إضافية
+Address,العنوان
+Adjustment Type,نوع التسوية
+Allow A Manual Price,السماح بسعر يدوي
+Allow Exceptional Open,السماح بفتح استثنائي
+Allow Meter Sale,السماح بالبيع عبر العداد
+Allow Multiple Active Boxes,السماح بأكثر من صندوق نشط لنفس العامل
+Allow Multiple Attendants Per Pump,السماح بأكثر من عامل على نفس المضخة
+Allow Negative Stock (Not Recommended),السماح بالرصيد السالب (غير مستحسن)
+Allow Reopen Closed Cash Box,السماح بإعادة فتح صندوق مغلق
+Allow Reopen Closed Shift,السماح بإعادة فتح وردية مغلقة
+Allow a price that differs from the price list,السماح بسعر يختلف عن قائمة الأسعار
+Allowed Drivers,السائقون المسموحون
+Allowed Entities,الجهات والكيانات المسموحة
+Allowed Item,الصنف المسموح
+Allowed Items,الأصناف المسموحة
+Allowed Stations,المحطات المسموحة
+Allowed Vehicles,المركبات المسموحة
+Amended From,معدَّل من
+Amount,المبلغ
+Amount After Discount,المبلغ بعد الخصم
+Amount Before Discount,المبلغ قبل الخصم
+Amount Limit,الحد الأقصى للمبلغ
+Amount must be greater than zero,يجب أن يكون المبلغ أكبر من صفر
+Amount to Handover,المبلغ المورد
+An adjustment must be approved by another user,يجب أن تعتمد التسوية مستخدمًا آخر
+An adjustment needs an approver,تحتاج التسوية إلى معتمِد
+Applicable Items,الأصناف الخاضعة
+Applicable Stations,المحطات المشمولة
+Approved By,معتمد من
+Approved Credit Limit,سقف الائتمان المعتمد
+Approved Expenses,المصروفات النقدية المعتمدة
+Approved Receipts,المقبوضات المعتمدة
+Assigned To,مُسند إلى
+Assignment Details,بيانات التكليف
+Assignment Information,معلومات التكليف
+At least one debit or credit entry is required,يلزم قيد مدين أو دائن واحد على الأقل
+Attendant,عامل المضخة
+Attendant & Pump Controls,ضوابط العمال والمضخات
+Attendant Cash Box,صندوق العامل
+Attendant Performance Report,تقرير أداء عمال المضخات
+Audit Details,بيانات التدقيق
+Authorization,التفويض
+Authorization Details,بيانات التفويض
+Available Remaining Credit,الرصيد الائتماني المتبقي المتاح
+Average Cost,متوسط التكلفة
+Avg Cost,متوسط التكلفة
+Balance,الرصيد
+Balance Qty,رصيد الكمية
+Balances & Count,الأرصدة والعد الفعلي
+Balances & Reconciliations,الأرصدة والمطابقات
+Bank Account (Snapshot),حساب البنك (نسخة عند الترحيل)
+Bank Deposit Safe,خزينة الإيداع البنكي
+Bank Deposit from Vault,إيداع بنكي من خزينة المحطة
+Bank Transferred Amount,المبلغ المحول لحساب البنك
+Batch Details,تفاصيل الدفعة
+Batch Invoices,إنشاء الفواتير المجمعة
+Batch generating sales invoices...,جارٍ إنشاء الفواتير المجمعة للوردية...
+Block Close With Unclassified Events,منع الإغلاق في وجود تعبئات غير مصنفة
+Book Balance,الرصيد الدفتري بالنظام (لتر)
+Box Type,نوع الصندوق
+Branch,الفرع
+Business Date,تاريخ العمل
+Calculated Volume,الحجم الفعلي المحسوب (لتر)
+Calibration Details,بيانات المعايرة
+Calibration Quantity,كمية المعايرة (لتر)
+Capacity,السعة القصوى (لتر)
+Capacity (L),السعة (لتر)
+Capacity (Liters),السعة (لتر)
+Card,بطاقة
+Card Amount,مبلغ البطاقة
+Card Details,تفاصيل البطاقة
+Card Information,بيانات البطاقة
+Card Last Four Digits,آخر 4 أرقام من البطاقة
+Card Number,رقم البطاقة
+Card Provider,مزود البطاقة البنكية
+Card Quantity,كمية مبيعات البطاقات (لتر)
+Card Sales Reference,مرجع مبيعات البطاقات (للمطابقة فقط)
+Card Settlement,تسوية البطاقات البنكية
+Card Settlement Reconciliation Report,تقرير مطابقة البطاقات
+Card Type,نوع البطاقة
+Card amount should be zero for Cash payment mode,يجب أن يكون مبلغ البطاقة صفرًا في وضع الدفع النقدي
+Cash,نقدي
+Cash + Card amounts must equal total amount,يجب أن يساوي مجموع النقدي والبطاقة إجمالي المبلغ
+Cash Account (Snapshot),حساب الصندوق (نسخة عند الترحيل)
+Cash Amount,المبلغ النقدي
+Cash Box,صندوق النقد
+Cash Box Code,رمز الصندوق
+Cash Box Information,بيانات صندوق النقد
+Cash Boxes and Safe Closing Report,التقرير اليومي للخزائن والصناديق
+Cash Count At Handover,النقد المسلّم باليد
+Cash Custody Report,تقرير عهد العمال
+Cash Customers,عملاء نقديون
+Cash Deposited To Bank,النقد المودع بالبنك
+Cash Quantity,الكمية النقدية المستنتجة (لتر)
+Cash Received From Boxes,النقد المستلم من الصناديق
+Cash Residual & Variances,النقد المستنتج والفروقات
+Cash Sales,المبيعات النقدية المسجلة
+Cash Transactions,الحركات النقدية
+Cash Transactions & Limits,الحركات النقدية والحدود
+Cash Transfer,تحويل نقدي للخزينة
+Cash Transfers In,تحويلات نقدية واردة
+Cash Transfers Out,تحويلات نقدية خارجة للخزينة
+Cash amount should be zero for Card payment mode,يجب أن يكون المبلغ النقدي صفرًا في وضع الدفع بالبطاقة
+Cash and Safes,النقدية والخزائن
+"Cash counted at the till, the variance is the difference with the expected cash",النقد المعدود في الدرج، والفرق هو الفرق بينه وبين النقد المتوقع
+Cashier Cash Box,صندوق الكاشير
+Classified Quantity,الكمية المصنفة الإجمالية
+Closed,مغلق
+Closed At,تاريخ ووقت الإغلاق
+Closed By,أغلقه
+Closing Meter Reading,قراءة العداد الختامية
+Closing Reading,قراءة النهاية
+Closing Reading ({0}) cannot be less than Opening Reading ({1}),لا يمكن أن تكون القراءة الختامية ({0}) أقل من القراءة الافتتاحية ({1})
+Closing Status,حالة الإغلاق
+Collected By,حصّلها
+Collection,تحصيل
+Company,الشركة
+Company Bank Account,حساب البنك للشركة
+Company is not set on Station {0},الشركة غير محددة في المحطة {0}
+Company is required,الشركة مطلوبة
+Company is required to post General Ledger entries,الشركة مطلوبة لقيود دفتر القيود
+Confirm Dispense & Print,تأكيد الصرف وطباعة الإيصال
+Confirmed At,وقت وتاريخ التأكيد
+Confirmed By,تم التأكيد بواسطة
+Connection Status,حالة الاتصال
+Consumption Limits,حدود الاستهلاك
+Contact Person,جهة الاتصال
+Contract,العقد
+Contract Information,بيانات العقد
+Contract Number,رقم العقد
+Contract Terms,شروط العقد
+Correction & Approval,التصحيح والاعتماد
+Correction Approved,اعتماد التصحيح
+Correction Reason,سبب التصحيح
+Cost Center,مركز التكلفة
+Cost Plus,التكلفة زائد هامش
+Cost of Fuel Sold,تكلفة مبيعات الوقود
+Cost of Sales,تكلفة البضاعة المباعة
+Count & Variance,العد والفروقات
+Counted At,وقت وتاريخ العد
+Counted By,تم العد بواسطة
+Counted Cash,النقد المعدود فعلياً
+Counted Safe Balance,رصيد الخزينة المعدود
+Coupon Quantity,كمية الكوبونات والبطاقات مسبقة الدفع
+Create Invoice Drafts On Close,إنشاء مسودات الفواتير تلقائياً عند الإغلاق
+Create Purchase Invoice,إنشاء فاتورة مشتريات
+Creating ERPNext Purchase Invoice...,جارٍ إنشاء فاتورة المشتريات في ERPNext...
+Creating ERPNext Purchase Receipt...,جارٍ إنشاء سند استلام المشتريات في ERPNext...
+Creating ERPNext Sales Invoice...,جارٍ إنشاء فاتورة المبيعات في ERPNext...
+Creating Material Issue Stock Entry...,جارٍ إنشاء سند الصرف المخزني في ERPNext...
+Credit,دائن
+Credit Aging Report,تقرير الرصيد الائتماني وأعمار الديون
+Credit Check & Documents,الفحص الائتماني والفوترة
+Credit Check Result,نتيجة الفحص الائتماني
+Credit Control Policy,سياسة التحكم بالائتمان
+Credit Fleet Customers,عملاء آجلون وأساطيل
+Credit Health Check,فحص الملاءة الائتمانية
+Credit Limit,الحد الائتماني
+Credit Override Approved By,معتمد تجاوز الائتمان
+Credit Override Reason,سبب تجاوز الائتمان
+Credit Policy,سياسة الائتمان
+Credit Quantity,كمية المبيعات الآجلة (لتر)
+Current Meter Reading,قراءة العداد الحالية
+Current Qty (L),الرصيد الحالي (لتر)
+Current Quantity,الكمية الحالية
+Current Stock Level,مستوى المخزون الحالي (لتر)
+Custody Information,بيانات العهدة النقدية
+Customer Driver,سائق العميل
+Customer Fuel Consumption,كشف استهلاك العميل
+Customer Purchase Order,أمر شراء العميل
+Customer Vehicle,مركبة العميل
+Daily Fuel Limit,حد الوقود اليومي
+Daily Fuel Sales,المبيعات اليومية للوقود
+Daily Limit,الحد اليومي
+Daily Maintenance Enabled,تفعيل مهام الصيانة والمطابقة اليومية
+Date,التاريخ
+Debit,مدين
+Default Accounting & Customers,الحسابات والعملاء الافتراضية
+Default Accounts,الحسابات الافتراضية
+Default Accounts & Customers,الحسابات والعملاء الافتراضية
+Default Accounts (Optional Override),الحسابات الافتراضية (تجاوز اختياري)
+Default Bank Account,حساب البنك الافتراضي
+Default Card Clearing Account,حساب وسيط البطاقات
+Default Cash Account,حساب الصندوق الافتراضي
+Default Cash Customer,العميل النقدي الافتراضي
+Default Cost Account,حساب التكلفة الافتراضي
+Default Cost Center,مركز التكلفة الافتراضي
+Default Expense Account,حساب المصروف الافتراضي
+Default Income Account,حساب الإيراد الافتراضي
+Default Income Account is not set in Fuel Settings for {0},حساب الإيراد الافتراضي غير محدد في إعدادات الوقود للشركة {0}
+Default Margin %,هامش الربح الافتراضي %
+Default Payable Account,حساب الذمم للموردين الافتراضي
+Default Price List,قائمة الأسعار الافتراضية
+Default Receivable Account,حساب الذمم الافتراضي
+Default Variance Account,حساب الفروقات الافتراضي
+Default Waste Account,حساب الهدر الافتراضي
+Delivery Date,تاريخ التوريد
+Delivery Header,رأس التوريد
+Delivery Information,بيانات التوريد
+Denomination Counting,عد فئات النقدية
+Denominations,فئات النقدية
+Density (kg/L),الكثافة (كجم/لتر)
+Density Observed,الكثافة المقاسة
+Deposit,إيداع
+Deposit Amount,مبلغ الإيداع
+Diesel,ديزل
+Diesel Fuel,ديزل
+Dipstick Reading CM,قراءة مقياس العمق (سم)
+Direction,الاتجاه
+Discount Amount,قيمة الخصم
+Discount Analysis Report,تقرير تحليل الخصومات
+Discount Approved By,معتمد الخصم
+Discount Percentage,نسبة الخصم %
+Discount Reason,سبب الخصم
+Discount Source,مصدر الخصم
+Discounts & Taxes,الخصومات والضرائب
+Dispense Quantity (Liters),كمية الوقود المنصرفة (باللتر)
+Driver,السائق
+Driver Code,رمز السائق
+Driver Details,بيانات السائق
+Driver Information,معلومات السائق
+Driver Name,اسم السائق
+Driver Reference,مرجع السائق
+Driver Required,إلزامية تحديد السائق
+E-Invoice QR Payload,بيانات رمز الاستجابة السريعة (QR)
+E-Invoice Response,استجابة منصة الفوترة الإلكترونية
+E-Invoice Status,حالة الفاتورة الإلكترونية
+E-Invoice Submitted At,تاريخ ووقت إرسال الفاتورة الإلكترونية
+E-Invoice UUID,المعرف الفريد للفاتورة الإلكترونية (UUID)
+ERPNext Item,صنف ERPNext
+Electronic,إلكتروني
+Electronic Invoice Status Report,تقرير حالة الفواتير الإلكترونية
+Email,البريد الإلكتروني
+Employee,الموظف / العامل
+Enable Daily Close,تفعيل الإغلاق اليومي
+Enable Shift Close,تفعيل إغلاق الوردية
+End Date,تاريخ الانتهاء
+End Time,وقت الانتهاء
+Endpoint URL,رابط الواجهة (Endpoint)
+Entered By,أدخله
+Error Message,رسالة الخطأ
+Evaporation,تبخر
+Evening,مسائية
+Event ID,رقم الحركة
+Event Information,معلومات حدث التعبئة
+Event Type,نوع الحدث
+Exception Details,تفاصيل الاستثناء
+Exception Reference,مرجع الاستثناء
+Exception Type,نوع الاستثناء
+Exceptional Open Reason,سبب الفتح الاستثنائي
+Exceptional Operations,العمليات الاستثنائية
+Execution Details,تفاصيل التنفيذ
+Expected Cash,النقد المتوقع بالنظام
+Expected Safe Balance,رصيد الخزينة المتوقع
+Expense Account,حساب المصروف
+Filters and Consumables,فلاتر ومستهلكات
+First Closed At,أول إغلاق موثق
+Fleet Credit Evaluation,تقييم الائتمان لأسطول العميل
+Fleet and Contracts,الأسطول والعقود
+Forecourt Dispenser Totalizers & Attendants,عدادات المضخات وتكليفات العمال
+Forecourt Pumps Active,المضخات العاملة في المحطة
+From Cash Box,من صندوق النقد
+From Date,من تاريخ
+Fuel,وقود
+Fuel Accountant,محاسب المحطة
+Fuel Audit Log,سجل تدقيق محطة الوقود
+Fuel Audit Trail Report,سجل المراجعة والتدقيق الشامل
+Fuel Authorization,تفويض تعبئة الوقود
+Fuel Calibration Event,عملية معايرة المضخة
+Fuel Calibration and Waste Expense,مصروف هدر ومعايرة الوقود
+Fuel Card,بطاقة / كوبون وقود
+Fuel Card Provider Settings,إعدادات مزود البطاقات
+Fuel Cards and Coupons,بطاقات وكوبونات وقود
+Fuel Cash Box,صندوق النقد
+Fuel Cash Custody,عهدة النقد
+Fuel Cash Customer,عميل نقدي - محطة الوقود
+Fuel Cashier,كاشير الوقود
+Fuel Customer Contract,عقد عميل الوقود
+Fuel Customer Type,نوع عميل الوقود
+Fuel Delivery,توريد وقود
+Fuel Delivery Report,تقرير توريدات الخزانات
+Fuel Dispense Event,عملية تعبئة وقود
+Fuel Dispense Report,تقرير عمليات التعبئة
+Fuel Distribution Companies,شركات توريد الوقود
+Fuel Fast POS,نقطة بيع الوقود السريعة
+Fuel Fleet Contracts,عقود أساطيل الوقود
+Fuel Gas,غاز وقود
+Fuel Grade,درجة / أوكتان الوقود
+Fuel Integration Log,سجل تكامل محطة الوقود
+Fuel Invoice Type,نوع فاتورة الوقود
+Fuel Issue Order,أمر صرف الوقود
+Fuel Management,إدارة الوقود
+Fuel Manager,مدير المحطة
+Fuel Meter Reading,قراءة عداد المضخة
+Fuel Operations,عمليات الوقود
+Fuel Operations Settings,إعدادات تشغيل محطة الوقود
+Fuel Period Closing Checklist,قائمة فحص إغلاق الفترة
+Fuel Pump,مضخة الوقود
+Fuel Pump Assignment,تكليف عامل بمضخة
+Fuel Pump Invoice Batch,دفعة فواتير المضخة
+Fuel Pump Reconciliation,تسوية المضخة
+Fuel Reconciliation Exception,استثناء تسوية الوقود
+Fuel Sales Revenue,إيرادات مبيعات الوقود
+Fuel Settings,إعدادات الوقود
+Fuel Shift,وردية الوقود
+Fuel Shift Type,نوع الوردية
+Fuel Source Key,مفتاح مصدر الوقود
+Fuel Station,محطة الوقود
+Fuel Station Control Center,مركز عمليات ومراقبة محطة الوقود
+Fuel Station Dashboard,لوحة تحكم محطة الوقود
+Fuel Station Safe,خزينة المحطة
+Fuel Stock Ledger entries are created automatically by the system,صفوف دفتر مخزون الوقود ينشئها النظام تلقائيًا
+Fuel Stock Ledger entries cannot be modified (append-only),لا يمكن تعديل صفوف دفتر مخزون الوقود (إضافة فقط)
+Fuel Stock Variance Expense,فروقات جرد الوقود
+Fuel Tank,خزان الوقود
+Fuel Tank Delivery,شحنة تفريغ الخزان
+Fuel Tank Reconciliation,تسوية مخزون الخزان
+Fuel Tank for this Station and Product already exists,يوجد خزان لهذه المحطة وهذا المنتج بالفعل
+Fuel Tax Policy,سياسة ضرائب الوقود
+Fuel Type,نوع الوقود
+Fuel Viewer,مشاهد المحطة
+Fuel and Station Suppliers,موردو وقود ومحطات
+Gain,زيادة
+Gasoline,بنزين
+Gasoline 91,بنزين 91
+Gasoline 95,بنزين 95
+General Operating Modes,أنماط التشغيل العامة
+General Operations,العمليات العامة
+Generate consolidated Sales Invoices for un-invoiced pump events in this shift?,هل تريد إنشاء فواتير مبيعات مجمعة لكافة حركات المضخات غير المفوترة في هذه الوردية؟
+Generated Invoice,الفاتورة المولدة
+Generated sales invoices successfully!,تم إنشاء فواتير المبيعات المجمعة بنجاح!
+Government Entities,جهات حكومية
+Grand Total,الإجمالي الكلي
+Group By Attendant,تجميع حسب عامل المضخة
+Group By Cost Center,تجميع حسب مركز التكلفة
+Group By Customer,تجميع حسب العميل
+Group By Item,تجميع حسب الصنف
+Group By Payment Method,تجميع حسب طريقة الدفع
+Group By Pump,تجميع حسب المضخة
+Group By Rate,تجميع حسب السعر
+Group By Shift,تجميع حسب الوردية
+Group By Station,تجميع حسب المحطة
+Grouping Policies,سياسات التجميع
+Handover Cash to Safe,توريد النقد لخزينة المحطة
+Handover Time,وقت التسليم
+IP Address,عنوان IP
+Income Account (Snapshot),حساب الإيراد (نسخة عند الترحيل)
+Incoming Assignment,تكليف المستلم
+Incoming Attendant & Readings,العامل المستلم والقراءات
+Incoming Employee,الموظف المستلم
+Incoming Handover & Meter,الاستلام والقراءات
+Initializing Fast POS Terminal...,جارٍ تهيئة نقطة البيع السريعة...
+"Insufficient stock in Tank {0} ({1} L available, {2} L sold)",المخزون غير كافٍ في الخزان {0} (المتاح {1} لتر، والمباع {2} لتر)
+Insufficient stock in tank for {0} adjustment,المخزون غير كافٍ في الخزان لتسوية من نوع {0}
+Integration Log,سجل التكامل
+Integration Name,اسم التكامل
+Internal Quantity,كمية الصرف الداخلي (لتر)
+Inventory Value Account,حساب قيمة المخزون
+Invoice Amount,مبلغ الفاتورة
+Invoice Batch,دفعة الفواتير
+Invoice Creator Mode,منشئ الفاتورة
+Invoice Grouping Configuration,تهيئة تجميع الفواتير
+Invoice Quantity,كمية الفاتورة
+Invoice Reference,مرجع الفاتورة
+Invoice Submitter Mode,معتمد الفاتورة
+Invoice Timing,توقيت إنشاء الفاتورة
+Invoice Type,نوع الفاتورة
+Invoicing & References,الفوترة والمراجع
+Is Active,مفعّل
+Is Correction,قراءة تصحيحية
+Is Fuel Item,صنف وقود
+Is Inclusive,الأسعار شاملة الضريبة
+Is Reversal,سطر عكسي
+Issue Order,أمر الصرف
+Issue Order Quantity,كمية أوامر الصرف (لتر)
+Item,الصنف
+Journal Entry,قيد اليومية
+Kerosene,كيروسين
+Last Reading,آخر قراءة
+Last Reading Date,تاريخ آخر قراءة
+License Number,رقم رخصة القيادة
+Limits & Balances,الحدود والأرصدة
+Limits & Validity,الحدود والصلاحية
+Linked Vehicle,المركبة المرتبطة
+Live Forecourt Operations & Tanks Cockpit,شاشة العمليات الحية للخزانات والمضخات
+Loading Fuel Station live operations...,جارٍ تحميل العمليات الحية للمحطة...
+Loss,نقص
+Main Station,المحطة الرئيسية
+Margin,الهامش
+Margin %,الهامش %
+Max Uses,أقصى عدد مرات استخدام
+Mechanical,ميكانيكي
+Meter & Quantities,قراءات العداد والكميات
+Meter Details,بيانات العداد
+Meter Quantity,كمية العداد (فرق القراءة)
+Meter Reading At Handover,قراءة العداد عند التسليم
+Meter Reading Report,تقرير قراءات العدادات
+Meter Readings,قراءات العدادات
+Meter Readings & Quantities,قراءات العداد والكميات
+Meter Serial Number,الرقم التسلسلي للعداد
+Meter Source,مصدر قراءة العداد
+Meter Type,نوع العداد
+Meter UOM,وحدة قياس العداد
+Method,طريقة الدفع
+Migration Cutover Date,تاريخ بدء تشغيل النظام (Cutover Date)
+Minimum Level,حد الأمان الأدنى (لتر)
+Minimum Sale (L),أصغر كمية بيع (لتر)
+Minimum Sale cannot be negative,أصغر كمية بيع لا يمكن أن تكون سالبة
+Mixed,مختلط
+Mobile Number,رقم الجوال
+Mode of Payment,طريقة الدفع
+Monthly Fuel Limit,حد الوقود الشهري
+Monthly Limit,الحد الشهري
+Morning,صباحية
+National ID,رقم الهوية / الإقامة
+New Value,القيمة الجديدة
+Night,ليلية
+No Open Shift,لا توجد وردية مفتوحة
+No Price List specified and no default Selling Price List in Selling Settings,لم تُحدَّد قائمة أسعار ولا توجد قائمة أسعار بيع افتراضية في إعدادات البيع
+No account is configured to debit for payment mode {0},لا يوجد حساب مدين مهيأ لطريقة الدفع {0}
+No cash account is configured for Mode of Payment {0},لا يوجد حساب نقدي مهيأ لطريقة الدفع {0}
+No default company set,لم تُحدَّد شركة افتراضية
+No valid price found for Product {0} on {1},لا يوجد سعر صالح للمنتج {0} بتاريخ {1}
+Non-Cash Sales Breakdown,تفصيل المبيعات غير النقدية
+Notes,ملاحظات
+Odometer Reading,قراءة عداد المركبة
+Odometer Required,إلزامية تسجيل عداد المسافة
+Oil and Derivative Companies,شركات الزيوت والمشتقات
+Oils and Lubricants,زيوت ومواد تشحيم
+Only Fuel Vouchers,فواتير الوقود فقط
+Only Tanks With Stock,الخزانات ذات المخزون فقط
+Open,مفتوح
+Open Shift,وردية مفتوحة
+Opened At,تاريخ ووقت الفتح
+Opening Balance,الرصيد الافتتاحي
+Opening Cash Float,العهدة النقدية الافتتاحية
+Opening Float,العهدة النقدية الافتتاحية
+Opening Meter Reading,قراءة العداد الافتتاحية
+Opening Reading,قراءة البداية
+Opening Status,حالة الفتح
+Operation Rules,قواعد التشغيل
+Operation Type,نوع العملية
+Operational Information,البيانات التشغيلية
+Operations and Shifts,العمليات والورديات
+Order Information,بيانات أمر الصرف
+Outgoing Assignment,تكليف المسلّم
+Outgoing Attendant,العامل المسلّم
+Outgoing Employee,الموظف المسلّم
+Outgoing Handover,التسليم (العامل المسلّم)
+Overlapping price record exists for this Product and Price List,يوجد سعر متداخل لهذا المنتج وقائمة الأسعار
+POS Card Clearing Account,وسيط بطاقات الشبكة البنكية
+POS and System Vendors,مزودو أنظمة ونقاط البيع
+Payment & Documents,طرق الدفع والمستندات
+Payment & Verification,الدفع والتحقق
+Payment Entry (Receipt),سند قبض (دفعة عميل)
+Payment Entry {0} created successfully!,تم إنشاء سند الدفع {0} بنجاح!
+Payment Method,طريقة الدفع
+Payment Method & Customer,طريقة الدفع وبيانات العميل
+Payment Method Type,نوع طريقة الدفع
+Payment Mode,طريقة الدفع
+Payment Reference,رقم المرجع / الإيصال
+Payout,دفع
+Phone,الهاتف
+Photo,صورة العداد
+Pin Code,الرمز السري (PIN)
+Plate Number,رقم اللوحة
+Policy Name,اسم السياسة
+Posted Ledger Outstanding (AR),الرصيد المرحل بالأستاذ العام
+Posting Date,تاريخ القييد
+Posting Time,وقت القييد
+Precision Settings,إعدادات الدقة
+Preparing Payment Entry...,جارٍ إعداد سند القبض...
+Previous Reading,القراءة السابقة
+Previous Value,القيمة السابقة
+Price List,قائمة الأسعار
+Price Per Liter,سعر اللتر
+Prices Include Tax,السعر شامل الضريبة
+Prices Include Tax Default,الأسعار شاملة الضريبة افتراضياً
+Pricing Basis,أساس التسعير
+Pricing Settings,إعدادات التسعير
+Primary Variance Cause,السبب الرئيسي للفرق
+Print 80mm Thermal Receipt,طباعة إيصال حراري 80 مم
+Print Token,رمز التحقق للطباعة
+Priority,الأولوية
+Product,المنتج
+Product Name,اسم المنتج
+Product and Price List are required to name a Fuel Price,المنتج وقائمة الأسعار مطلوبان لتسمية سعر الوقود
+Project,المشروع
+Provider,مزود الخدمة البنكية
+Provider Configuration,تهيئة مزود الخدمة
+Provider Fee Amount,عمولة الشبكة البنكية
+Pump,المضخة
+Pump Details,بيانات المضخة
+Pump Handover,تسليم واستلام المضخة
+Pump Information,معلومات المضخة
+Pump Number,رقم المضخة
+Pump Number {0} already exists for this Station,رقم المضخة {0} موجود بالفعل في هذه المحطة
+Pump Reconciliation Report,تقرير تسوية المضخات
+Pump Sales Report,تقرير مبيعات المضخات
+Pump and Tank Maintenance Companies,شركات صيانة المضخات والخزانات
+Pumps and Meters,المضخات والعدادات
+Purchase Receipt,سند استلام المشتريات
+QR Code,رمز الاستجابة السريعة (QR)
+Qty (L),الكمية (لتر)
+Qty Change,التغير في الكمية
+Qty Issued (L),الكمية المصروفة (لتر)
+Quantity,الكمية (لتر)
+Quantity (Liters),الكمية (لتر)
+Quantity Limit,الحد الأقصى للكمية
+Quantity Precision (Decimals),دقة الكمية (خانات عشرية)
+Quantity must be greater than zero,يجب أن تكون الكمية أكبر من صفر
+Quantity must be greater than zero. Closing Reading must be greater than Opening Reading.,يجب أن تكون الكمية أكبر من صفر. القراءة الختامية يجب أن تكون أكبر من القراءة الافتتاحية.
+Rapid Forecourt Dispense Terminal,كابينة البيع المباشر السريعة للمضخات
+Rate,السعر (لتر)
+Rate After Discount,السعر بعد الخصم
+Rate Before Discount,السعر قبل الخصم
+Rate/Amount Precision (Decimals),دقة السعر والمبلغ (خانات عشرية)
+Reading Date,تاريخ القراءة
+Reading Details,بيانات القراءة
+Reading Information,معلومات القراءة
+Reading Source & Approval,مصدر القراءة والاعتماد
+Reading Time,وقت القراءة
+Reading Type,نوع القراءة
+Reading Value,قيمة القراءة
+Reading Value (Liters),قيمة القراءة (لتر)
+Reading value ({0}) must be greater than last reading ({1}),قيمة القراءة ({0}) يجب أن تكون أكبر من آخر قراءة ({1})
+Reading value cannot be negative,قيمة القراءة لا يمكن أن تكون سالبة
+Readings & Financial Totals,القراءات والإجماليات المالية
+Reason,السبب
+Receivable Account (Snapshot),حساب الذمم (نسخة عند الترحيل)
+Receiver Confirmed,تأكيد استلام أمين الخزينة
+Recent Forecourt Dispense Stream,سجل حركات التعبئة اللحظية الأخيرة
+Reconciliation Details,بيانات التسوية
+Reconciliation Header,رأس التسوية
+Recording Bank Deposit Payment Entry...,جارٍ إنشاء سند الإيداع البنكي في ERPNext...
+Recording Safe Transfer...,جارٍ تسجيل توريد النقد للخزينة...
+Reference DocType,نوع المستند المرجعي
+Reference Doctype,نوع المستند المرجعي
+Reference Name,اسم المستند المرجعي
+Refunds,المبالغ المرتجعة
+Remaining Amount,المبلغ المتبقي
+Remaining Quantity,الكمية المتبقية
+Remarks,ملاحظات
+Reopen Reason,سبب إعادة الفتح
+Reopened At,تاريخ ووقت إعادة الفتح
+Reopening,إعادة الفتح
+Reopening Details,تفاصيل إعادة الفتح
+Reorder Level,حد إعادة الطلب
+Reorder Needed,يحتاج إعادة طلب
+Replaces Reading,بديل للقراءة
+Reports and Analytics,التقارير والتحليلات
+Request Log,سجل الطلب
+Require Approval for Adjustments,طلب اعتماد التسويات
+Require The Cash Count In The Daily Close,اشتراط عدّ النقد في الإغلاق اليومي
+Requires Shift,يتطلب وردية مفتوحة
+Reserve In Tank (L),الاحتياطي في الخزان (لتر)
+Reserve In Tank cannot be negative,الاحتياطي في الخزان لا يمكن أن يكون سالبًا
+Resolution,الحل والإجراء المتخذ
+Resolution Document,مستند المعالجة
+Response Log,سجل الاستجابة
+Revenue,الإيراد
+Rule Name,اسم القاعدة
+Safe Code,رمز الخزينة
+Safe Details,تفاصيل الخزينة
+Safe Information,بيانات الخزينة
+Safe Type,نوع الخزينة
+Sales Invoice,فاتورة المبيعات
+Scope Restrictions,نطاق الصلاحيات والتكليف
+Scope Rule,قاعدة النطاق
+Select Pump / Nozzle,اختر المضخة والمسدس
+Sender Signature,توقيع المسلّم
+Series,السلسلة
+Settings and Policies,الإعدادات والسياسات
+Settlement Details,تفاصيل التسوية البنكية
+Settlement Information,بيانات التسوية البنكية
+Severity,مستوى الأهمية
+Shift,الوردية
+Shift Closing Report,تقرير إغلاق الوردية
+Shift Details,بيانات الوردية
+Shift Information,معلومات الوردية
+Shift Name,اسم الوردية
+Shift Timestamps,التوقيتات وسجلات الوردية
+Shift Type,نوع الوردية
+Shift Type Details,تفاصيل نوع الوردية
+Source,المصدر
+Source Key,مفتاح المصدر الفريد
+Standard Density,الكثافة القياسية
+Start Date,تاريخ البدء
+Start Time,وقت البدء
+Station,المحطة
+Station Card Amount,مبيعات البطاقات بالمحطة
+Station Code,رمز المحطة
+Station Details,بيانات المحطة
+Station Employees,موظفو المحطة
+Station Information,معلومات المحطة
+Station Name,اسم المحطة
+Station Operational Supplies,مواد تشغيلية للمحطة
+Station Operations Monitor,مراقبة عمليات المحطة
+Station Safe,خزينة المحطة
+Station Scope,المحطة المخصصة للعميل
+Station and Product are required to name a Fuel Tank,المحطة والمنتج مطلوبان لتسمية خزان الوقود
+Station and Pump Number are required to name a Fuel Pump,المحطة ورقم المضخة مطلوبان لتسمية مضخة الوقود
+Stations and Tanks,المحطات والخزانات
+Status,الحالة
+Stock & Accounting Treatment,المعالجة المخزنية والمحاسبية
+Stock Document,مستند المخزون
+Stock Entry,حركة المخزون
+Stock Entry (Material Issue),صرف مخزني (استهلاك داخلي)
+Stock Posting Timing,توقيت ترحيل المخزون
+Stock Reconciliation,تسوية المخزون
+Stock Treatment,المعالجة المخزنية
+Stock Value,قيمة المخزون
+Supervisor,المشرف
+Supplier,المورد
+Supplier Invoice Number,رقم فاتورة المورد
+Tank,الخزان
+Tank Details,بيانات الخزان
+Tank Information,معلومات الخزان
+Tank Number,رقم الخزان
+Tank Stock Report,تقرير مخزون الخزانات
+Tank {0} does not belong to Station {1},الخزان {0} لا ينتمي إلى المحطة {1}
+"Tank {0} is for Product {1}, not {2}",الخزان {0} مخصص للمنتج {1} وليس {2}
+Target Safe,الخزينة المستهدفة
+Tax & Precision Settings,إعدادات الضرائب ودقة التقريب
+Tax Amount,مبلغ الضريبة
+Tax Inclusive (Price includes VAT),السعر شامل الضريبة
+Tax Policy Configuration,تهيئة سياسة الضرائب
+Tax Rounding Precision,دقة تقريب العمليات والضرائب
+Tax Sales Report,تقرير المبيعات الضريبية
+Tax Settings (VAT Inclusive - No Separation),إعدادات الضريبة (شاملة - بلا فصل)
+Tax Template,قالب الضرائب والرسوم
+Tax Template (Reference Only),قالب الضريبة (مرجع فقط)
+Taxes & Currency Precision,الضرائب ودقة العملة
+Temperature Observed,درجة الحرارة المقاسة (م°)
+Terminal Report Amount,إجمالي تقرير أجهزة نقاط البيع (POS)
+The counted cash is mandatory before a shift can be closed,عدّ النقد إلزامي قبل إغلاق الوردية
+The counted cash is required to close the shift,النقد المعدود مطلوب لإغلاق الوردية
+The day {0} of {1} is closed,اليوم {0} من {1} مغلق
+"The quantity that stays in the tank and cannot be sold, 0 means no reserve",الكمية التي تبقى في الخزان ولا يمكن بيعها، صفر يعني بلا احتياطي
+The shift {0} of {1} is closed,الوردية {0} من {1} مغلقة
+"The smallest quantity a sale may carry, 0 means no minimum",أصغر كمية يمكن أن تحملها عملية بيع، صفر يعني بلا حد أدنى
+The smallest sale of {0} is {1} L,أصغر عملية بيع في {0} هي {1} لتر
+Theft,سرقة
+Ticket Summary,ملخص تذكرة الوقود
+To Date,إلى تاريخ
+To Safe,إلى الخزينة
+Total Card,إجمالي البطاقة
+Total Cash,إجمالي النقد
+Total Revenue Today,إجمالي إيراد المبيعات اليوم
+Total Sales,إجمالي المبيعات
+Transaction Capture Timing,توقيت تسجيل حركة التعبئة
+Transfer,توريد
+Transfer Details,تفاصيل التحويل النقدي
+Transfer Information,بيانات التحويل النقدي
+Transferred cash to Safe successfully!,تم توريد النقد لخزينة المحطة بنجاح!
+Transport Companies,شركات نقل
+Type,النوع
+UOM,وحدة القياس
+Un-invoiced Approved Dispenses,حركات التعبئة غير المفوترة
+Unapproved Expenses,مصروفات غير معتمدة (معلقة)
+Unassigned,غير مكلف
+Underground Storage Tanks (Live Stock Balances),خزانات الوقود الأرضية (أرصدة المخزون المباشرة)
+Usage Limits,حدود الاستخدام
+Used Count,عدد مرات الاستخدام
+Used Quantity,الكمية المستخدمة
+User,المستخدم
+Utilisation %,نسبة الاستغلال %
+Valid From,صالح من
+Valid From cannot be after Valid To,تاريخ بدء السريان لا يمكن أن يكون بعد تاريخ انتهاء السريان
+Valid To,ساري إلى
+Valid Until,صالح حتى
+Value Change,التغير في القيمة
+Value Issued,القيمة المصروفة
+Variance,الفرق (عجز / زيادة)
+Variance Amount,مبلغ الفرق
+Variance Percentage,نسبة الفرق %
+Variance Quantity,فرق الكمية (لتر)
+Variance Volume,فرق الحجم (لتر)
+Vehicle,المركبة
+Vehicle / Client,المركبة / العميل
+Vehicle Code,رمز المركبة
+Vehicle Details,بيانات المركبة
+Vehicle Fuel Consumption,كشف استهلاك المركبات
+Vehicle Information,معلومات المركبة
+Vehicle Odometer Reading,قراءة عداد المركبة
+Vehicle Plate Number,رقم لوحة المركبة
+Vehicle Required,إلزامية تحديد المركبة
+Vehicle Type,نوع المركبة
+Volume At 15C,الحجم المصحح عند 15 م°
+Volume Dispensed Today,إجمالي الكمية المنصرفة اليوم
+Volume Observed,الحجم المقاس (لتر)
+Voucher,السند
+Voucher No,رقم السند
+Voucher Type,نوع السند
+Warehouse,المستودع
+Waste Account,حساب الهدر
+Waste Quantity,كمية الهدر المعتمد (لتر)
+Working Hours,ساعات العمل والفترة
+دليل المستخدم,دليل المستخدم

@@ -1,0 +1,91 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>المستخدمون والأدوار والصلاحيات:</strong> يطبق النظام معايير الرقابة والحوكمة المؤسسية المتقدمة عبر مبدأ الفصل الصارم للمهام (Segregation of Duties - SOD)، مما يضمن عدم انفراد أي موظف بدورة العمل كاملة (من الضخ وحتى الترحيل المالي والاعتماد).</p>
+</blockquote>
+
+<h2 id="station-roles">الأدوار التشغيلية السبعة في محطة الوقود<a class="h-anchor" href="#station-roles" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>تم تصميم النظام بسبعة أدوار وظيفية قياسية تغطي كافة العمليات الميدانية والإدارية والمالية:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th class="col-num">#</th><th style="min-width: 220px;">اسم الدور (Role Name)</th><th class="col-desc">الصلاحيات والمهام المسموحة</th><th class="col-desc">الممنوعات والقيود النظامية</th></tr></thead>
+<tbody>
+<tr>
+  <td class="col-num">1</td>
+  <td><strong>عامل المضخة (Fuel Attendant)</strong></td>
+  <td>تسجيل قراءات العدادات، تسجيل عمليات التعبئة المباشرة، جرد وإدخال فئات النقد في صندوقه الميداني، وتسليم المضخة لزميله.</td>
+  <td>ممنوع تماماً من تعديل القراءات السابقة، إلغاء الفواتير، فتح أو إغلاق الوردية العامة، وتعديل أسعار الوقود.</td>
+</tr>
+<tr>
+  <td class="col-num">2</td>
+  <td><strong>مشرف الوردية (Shift Supervisor)</strong></td>
+  <td>فتح وإغلاق الورديات، تكليف العمال بالمضخات، استلام النقدية والتحويل للخزينة، واعتماد الفروقات النقدية ضمن حدود التسامح المالي.</td>
+  <td>ممنوع من ترحيل القيود المحاسبية النهائية في دفتر الأستاذ العام، أو تعديل إعدادات وسياسات الضرائب.</td>
+</tr>
+<tr>
+  <td class="col-num">3</td>
+  <td><strong>أمين الصندوق / الكاشير (Cashier)</strong></td>
+  <td>استلام النقد من العمال، إيداع الأموال في خزينة المحطة، إدارة عهد الفكة، ومطابقة إيصالات الدفع الإلكتروني ونقاط البيع (POS).</td>
+  <td>ممنوع من تعديل قراءات عدادات المضخات، أو إنشاء أذونات صرف داخلي.</td>
+</tr>
+<tr>
+  <td class="col-num">4</td>
+  <td><strong>محاسب المحطة (Accountant)</strong></td>
+  <td>مراجعة وترحيل فواتير المبيعات، إصدار قيود اليومية المحاسبية، تسوية مبيعات البطاقات البنكية، ومطابقة القيود مع ERPNext.</td>
+  <td>ممنوع من ممارسة العمليات الميدانية كضخ الوقود أو استلام وتسليم المضخات.</td>
+</tr>
+<tr>
+  <td class="col-num">5</td>
+  <td><strong>مسؤول المخزون (Inventory Officer)</strong></td>
+  <td>إثبات توريدات صهاريج الوقود، أخذ قياسات المسطرة والمجسات في الخزانات، تسجيل أحداث المعايرة، وإجراء تسويات جرد الخزانات.</td>
+  <td>ممنوع من إصدار فواتير المبيعات للعملاء أو تحصيل النقد.</td>
+</tr>
+<tr>
+  <td class="col-num">6</td>
+  <td><strong>مدير المحطة (Station Manager)</strong></td>
+  <td>الإشراف التشغيلي الشامل على المحطة، اعتماد استثناءات الفروقات الكبيرة، واعتماد إعادة فتح الوردية عند الضرورة القصوى.</td>
+  <td>تخضع كافة قراراته الاستثنائية للتوثيق التلقائي غير القابل للحذف في سجلات التدقيق.</td>
+</tr>
+<tr>
+  <td class="col-num">7</td>
+  <td><strong>مدير العمليات (Fuel Operations Manager)</strong></td>
+  <td>إدارة وضبط إعدادات النظام، تحديد سياسات الفوترة، واعتماد العقود وسقوف الائتمان للأساطيل على مستوى جميع المحطات.</td>
+  <td>صلاحية إدارية ورقابية شاملة على كافة الفروع.</td>
+</tr>
+</tbody>
+</table></div>
+
+<h2 id="audit-log-doctype">سجل تدقيق محطة الوقود (Fuel Audit Log)<a class="h-anchor" href="#audit-log-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>سجل تدقيق محطة الوقود (Fuel Audit Log)</strong> هو سجل أمني وتدقيقي غير قابل للتعديل أو الحذف، يقوم النظام آلياً بتوثيق كافة العمليات الحساسة والاستثنائية بداخله لحماية أصول الشركة ومنع التلاعب:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الشرح والأثر التدقيقي</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link</td><td>المحطة التي حدث فيها الإجراء الحساس.</td></tr>
+<tr><td><strong>المستخدم</strong></td><td><strong>User</strong></td><td><code>user</code></td><td>Link</td><td>اسم المستخدم الذي قام بالإجراء (مرتبط بـ User ID).</td></tr>
+<tr><td><strong>نوع الإجراء</strong></td><td><strong>Action Type</strong></td><td><code>action_type</code></td><td>Select</td><td>نوع الحدث (إعادة فتح وردية مغلقة، تعديل قراءة عداد، اعتماد فارق متجاوز، إلغاء تحويل نقدي).</td></tr>
+<tr><td><strong>المستند المرجعي</strong></td><td><strong>Reference DocType</strong></td><td><code>reference_doctype</code></td><td>Link</td><td>نوع المستند الخاضع للتدقيق (مثل: Fuel Shift, Fuel Cash Box, Fuel Pump Reconciliation).</td></tr>
+<tr><td><strong>اسم المستند</strong></td><td><strong>Reference Name</strong></td><td><code>reference_name</code></td><td>Dynamic Link</td><td>الرقم التعريفي الفريد للمستند المرجعي.</td></tr>
+<tr><td><strong>الوصف والسبب</strong></td><td><strong>Reason / Description</strong></td><td><code>description</code></td><td>Small Text</td><td>المبرر التشغيلي الإلزامي الذي أدخله المستخدم لتنفيذ هذا الإجراء.</td></tr>
+<tr><td><strong>القيم السابقة</strong></td><td><strong>Previous Value</strong></td><td><code>previous_value</code></td><td>Code / JSON</td><td>نسخة مطابقة من البيانات قبل إجراء التعديل للمقارنة.</td></tr>
+<tr><td><strong>القيم الجديدة</strong></td><td><strong>New Value</strong></td><td><code>new_value</code></td><td>Code / JSON</td><td>البيانات المحدثة بعد التعديل.</td></tr>
+<tr><td><strong>تاريخ ووقت الحدث</strong></td><td><strong>Timestamp</strong></td><td><code>timestamp</code></td><td>Datetime</td><td>التوقيت الزمني الدقيق بالثانية لتسجيل الحركة.</td></tr>
+<tr><td><strong>عنوان الشبكة</strong></td><td><strong>IP Address</strong></td><td><code>ip_address</code></td><td>Data</td><td>عنوان الـ IP للجهة أو الجهاز المنفذ للحركة.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="integration-log-doctype">سجل تكامل محطة الوقود (Fuel Integration Log)<a class="h-anchor" href="#integration-log-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>سجل تكامل محطة الوقود (Fuel Integration Log)</strong> يختص بمراقبة الاتصالات والربط الإلكتروني بين نظام المحطة والأنظمة الخارجية (عدادات المضخات الرقمية، مجسات الخزانات ATG، أجهزة نقاط البيع POS، ومنصة الفاتورة الإلكترونية ZATCA):</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي للربط التقني</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link</td><td>المحطة التابع لها جهاز أو خدمة الربط.</td></tr>
+<tr><td><strong>نظام التكامل</strong></td><td><strong>Integration System</strong></td><td><code>integration_system</code></td><td>Select</td><td>الطرف الخارجي (Dispenser Controller, ATG Tank Gauge, Bank POS, ZATCA Portal).</td></tr>
+<tr><td><strong>نوع الرسالة</strong></td><td><strong>Message Type</strong></td><td><code>message_type</code></td><td>Data</td><td>طبيعة الطلب (مثل: Meter Pulse, Dip Reading, Card Payment, Invoice Clearance).</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Success</code> (نجاح)، <code>Failed</code> (فشل)، <code>Pending Retry</code> (معلق بانتظار الإعادة).</td></tr>
+<tr><td><strong>حمولة الطلب</strong></td><td><strong>Request Payload</strong></td><td><code>request_payload</code></td><td>Code / JSON</td><td>البيانات المرسلة بصيغة JSON أو بروتوكول اتصال العداد.</td></tr>
+<tr><td><strong>حمولة الاستجابة</strong></td><td><strong>Response Payload</strong></td><td><code>response_payload</code></td><td>Code / JSON</td><td>الرد المستلم من الطرف الخارجي.</td></tr>
+<tr><td><strong>رمز الاستجابة</strong></td><td><strong>Response Code</strong></td><td><code>response_code</code></td><td>Data</td><td>كود الحالة (مثل: 200 OK, 400 Bad Request, 500 Error).</td></tr>
+<tr><td><strong>رسالة الخطأ</strong></td><td><strong>Error Message</strong></td><td><code>error_message</code></td><td>Small Text</td><td>تفاصيل الخطأ التشغيلي أو انقطاع الاتصال لمساعدة الدعم الفني.</td></tr>
+<tr><td><strong>عدد محاولات الإعادة</strong></td><td><strong>Retry Count</strong></td><td><code>retry_count</code></td><td>Int</td><td>عدد مرات المحاولة الآلية لإرسال البيانات عند انقطاع الاتصال.</td></tr>
+</tbody>
+</table></div>

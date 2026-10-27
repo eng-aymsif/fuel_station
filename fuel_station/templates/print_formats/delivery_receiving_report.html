@@ -1,0 +1,134 @@
+{%- from "fuel_station/templates/print_formats/base.html" import print_styles, is_arabic, dir -%}
+{{ print_styles() }}
+
+<div class="fuel-print-container fuel-print-standard" dir="{{ dir() }}">
+	<div class="fuel-print-header">
+		<table class="fuel-header-table">
+			<tr>
+				<td>
+					<div class="fuel-brand-name">⛽ {{ doc.company or "Fuel Station Logistics" }}</div>
+					<div class="fuel-brand-sub">{{ _("Bulk Fuel Delivery Receiving & Underground Tank Dip Audit") if is_arabic() else "Bulk Fuel Delivery Receiving Report" }}</div>
+				</td>
+				<td class="fuel-doc-title-box">
+					<div class="fuel-doc-title">{{ _("DELIVERY RECEIVING REPORT") if is_arabic() else "DELIVERY RECEIVING REPORT" }}</div>
+					<div><b>{{ doc.name }}</b></div>
+					<div style="margin-top: 4px;">
+						{% if doc.status == "Completed" or doc.docstatus == 1 %}
+						<span class="fuel-badge badge-success">{{ _("Received & Approved") if is_arabic() else "Approved" }}</span>
+						{% elif doc.status == "Draft" %}
+						<span class="fuel-badge badge-warning">{{ _("Pending Discharge") if is_arabic() else "Draft" }}</span>
+						{% else %}
+						<span class="fuel-badge badge-info">{{ doc.status or "Recorded" }}</span>
+						{% endif %}
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- Meta Grid -->
+	<div class="fuel-meta-grid">
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Receiving Station & Tank") if is_arabic() else "Station & Tank" }}</div>
+			<div class="fuel-meta-val"><b>{{ doc.station }}</b> - {{ doc.tank }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Fuel Product / Grade") if is_arabic() else "Fuel Product" }}</div>
+			<div class="fuel-meta-val">{{ doc.item }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Warehouse Destination") if is_arabic() else "Warehouse" }}</div>
+			<div class="fuel-meta-val">{{ doc.warehouse or "-" }}</div>
+		</div>
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Petroleum Supplier") if is_arabic() else "Supplier" }}</div>
+			<div class="fuel-meta-val"><b>{{ doc.supplier or "-" }}</b></div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Supplier Invoice / BOL No") if is_arabic() else "Supplier BOL" }}</div>
+			<div class="fuel-meta-val">{{ doc.supplier_document_no or "-" }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("ERPNext Purchase Receipt") if is_arabic() else "Purchase Receipt" }}</div>
+			<div class="fuel-meta-val">{{ doc.purchase_receipt or "-" }}</div>
+		</div>
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Delivery Date") if is_arabic() else "Delivery Date" }}</div>
+			<div class="fuel-meta-val">{{ doc.delivery_date or "-" }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Road Tanker Truck No") if is_arabic() else "Tanker Truck No" }}</div>
+			<div class="fuel-meta-val"><b>{{ doc.truck_number or "-" }}</b> {% if doc.compartment_number %}({{ _("Comp:") if is_arabic() else "Comp:" }} {{ doc.compartment_number }}){% endif %}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Receiving Officer") if is_arabic() else "Receiving Officer" }}</div>
+			<div class="fuel-meta-val">{{ doc.received_by or doc.approved_by or "-" }}</div>
+		</div>
+	</div>
+
+	<!-- Quality & Laboratory Inspection -->
+	<div style="font-weight: 800; font-size: 14px; margin-bottom: 8px; color: #1e293b;">
+		🧪 {{ _("Quality Control & Laboratory Inspection") if is_arabic() else "Quality Control & Lab Inspection" }}
+	</div>
+	<table class="fuel-data-table">
+		<thead>
+			<tr>
+				<th>{{ _("Sample Test Result") if is_arabic() else "Sample Result" }}</th>
+				<th class="text-center">{{ _("Fuel Temperature (°C)") if is_arabic() else "Temperature (°C)" }}</th>
+				<th class="text-center">{{ _("Standard Density (kg/m³)") if is_arabic() else "Density (kg/m³)" }}</th>
+				<th class="text-center">{{ _("Water & Contaminants Check") if is_arabic() else "Contaminants Check" }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					{% if doc.sample_result == "Pass" %}
+					<span class="fuel-badge badge-success">✅ {{ _("Passed Specifications") if is_arabic() else "Pass" }}</span>
+					{% elif doc.sample_result == "Fail" %}
+					<span class="fuel-badge badge-danger">❌ {{ _("Failed - Rejected") if is_arabic() else "Fail" }}</span>
+					{% else %}
+					<span class="fuel-badge badge-warning">{{ doc.sample_result or _("Satisfactory") if is_arabic() else "Satisfactory" }}</span>
+					{% endif %}
+				</td>
+				<td class="text-center">{{ "{:,.1f}".format(doc.temperature or 0.0) }} °C</td>
+				<td class="text-center">{{ "{:,.3f}".format(doc.density or 0.0) }}</td>
+				<td class="text-center" style="color: #16a34a; font-weight: 700;">{{ _("Free of Water & Sludge") if is_arabic() else "Free of Water" }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- Tank Dip Readings & Quantities -->
+	<div style="font-weight: 800; font-size: 14px; margin-top: 15px; margin-bottom: 8px; color: #1e293b;">
+		📏 {{ _("Underground Tank Dip Readings & Discharged Volume") if is_arabic() else "Tank Dip Readings & Volume" }}
+	</div>
+	<table class="fuel-data-table">
+		<thead>
+			<tr>
+				<th class="text-center">{{ _("Dip Reading Before") if is_arabic() else "Dip Before" }}</th>
+				<th class="text-center">{{ _("Dip Reading After") if is_arabic() else "Dip After" }}</th>
+				<th class="text-center">{{ _("Document Qty (BOL)") if is_arabic() else "Document Qty" }}</th>
+				<th class="text-center" style="background: #eef2f6;">{{ _("Actual Received Qty") if is_arabic() else "Received Qty" }}</th>
+				<th class="text-center">{{ _("Allowed Tolerance") if is_arabic() else "Allowed Tolerance" }}</th>
+				<th class="text-center">{{ _("Variance Qty") if is_arabic() else "Variance Qty" }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="text-center">{{ "{:,.2f}".format(doc.tank_reading_before or 0.0) }}</td>
+				<td class="text-center">{{ "{:,.2f}".format(doc.tank_reading_after or 0.0) }}</td>
+				<td class="text-center">{{ "{:,.2f}".format(doc.document_quantity or 0.0) }} {{ doc.uom or "L" }}</td>
+				<td class="text-center" style="font-size: 14px; font-weight: 800; background: #eef2f6; color: #ea580c;">
+					{{ "{:,.2f}".format(doc.received_quantity or 0.0) }} {{ doc.uom or "L" }}
+				</td>
+				<td class="text-center">{{ "{:,.2f}".format(doc.allowed_tolerance_quantity or 0.0) }} L</td>
+				<td class="text-center" style="font-size: 14px; font-weight: 800; color: {{ '#16a34a' if (doc.variance_quantity or 0) == 0 else '#dc2626' }};">
+					{{ "{:,.2f}".format(doc.variance_quantity or 0.0) }} L
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- Signatures -->
+	<div class="fuel-sign-row">
+		<div class="fuel-sign-cell">
+			{{ _("Tanker Driver / Transporter") if is_arabic() else "Tanker Driver" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("Station Receiving Officer") if is_arabic() else "Receiving Officer" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("Quality Control Inspector") if is_arabic() else "QC Inspector" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,77 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>Issue Orders, Internal Consumption & Cards:</strong> When company vehicles, equipment, or generators refuel at company stations, the system avoids generating misleading sales revenue. Instead, it generates ERPNext <strong>Stock Entry (Material Issue)</strong> documents debited directly to cost centers and expense accounts.</p>
+</blockquote>
+
+<h2 id="internal-issue-concept">Internal Consumption & Fuel Cards Concept<a class="h-anchor" href="#internal-issue-concept" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>Internal fueling and prepaid allowances operate through three core DocTypes:</p>
+<ol class="steps">
+  <li>Issue and approve departmental fuel quotas via <strong>أمر صرف الوقود (Fuel Issue Order)</strong>.</li>
+  <li>Generate secure time-bound dispensing tokens via <strong>تفويض تعبئة الوقود (Fuel Authorization)</strong>.</li>
+  <li>Manage RFID smart cards and volume quotas via <strong>بطاقة / كوبون وقود (Fuel Card)</strong>.</li>
+</ol>
+
+<h2 id="issue-order-doctype">1. Issue Order: أمر صرف الوقود (Fuel Issue Order)<a class="h-anchor" href="#issue-order-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>The <strong>أمر صرف الوقود (Fuel Issue Order)</strong> is an authorization allowing company vehicles or machinery to draw fuel from station tanks:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link</td><td>Authorized dispensing station branch.</td></tr>
+<tr><td><strong>الشركة (Company)</strong></td><td><code>company</code></td><td>Link</td><td>Owning company entity.</td></tr>
+<tr><td><strong>نوع المعالجة (Treatment Type)</strong></td><td><code>treatment_type</code></td><td>Select</td><td><code>Internal Consumption</code> or <code>Customer Fleet</code>.</td></tr>
+<tr><td><strong>الموظف الطالب (Requester)</strong></td><td><code>requester</code></td><td>Link</td><td>Department supervisor requesting fuel.</td></tr>
+<tr><td><strong>القسم الطالب (Requesting Department)</strong></td><td><code>requesting_department</code></td><td>Link</td><td>Department bearing the operational expense.</td></tr>
+<tr><td><strong>حالة الاعتماد (Approval Status)</strong></td><td><code>approval_status</code></td><td>Select</td><td><code>Draft</code>, <code>Approved</code>, <code>Rejected</code>, <code>Expired</code>.</td></tr>
+<tr><td><strong>الموظف / السائق المستلم (Employee / Driver)</strong></td><td><code>employee</code></td><td>Link</td><td>Driver receiving fuel at the pump.</td></tr>
+<tr><td><strong>المركبة (Vehicle)</strong></td><td><code>vehicle</code></td><td>Link</td><td>Internal company car or heavy equipment asset.</td></tr>
+<tr><td><strong>رقم اللوحة (Plate Number)</strong></td><td><code>plate_number</code></td><td>Data</td><td>Vehicle license plate number.</td></tr>
+<tr><td><strong>صنف الوقود (Fuel Item)</strong></td><td><code>item</code></td><td>Link (Mandatory)</td><td>Approved fuel type (Gasoline 91, 95, Diesel).</td></tr>
+<tr><td><strong>الحد الأقصى للكمية (لتر) (Quantity Limit (Liters))</strong></td><td><code>quantity_limit</code></td><td>Float (Mandatory)</td><td>Maximum permissible volume in litres.</td></tr>
+<tr><td><strong>الحد الأقصى للمبلغ (Amount Limit)</strong></td><td><code>amount_limit</code></td><td>Currency</td><td>Monetary budget cap for this order.</td></tr>
+<tr><td><strong>أقصى عدد مرات استخدام (Max Allowed Uses)</strong></td><td><code>max_uses</code></td><td>Int</td><td>Single use or multiple partial dispenses.</td></tr>
+<tr><td><strong>صالح من (Valid From)</strong></td><td><code>valid_from</code></td><td>Date</td><td>Order validity start date.</td></tr>
+<tr><td><strong>صالح حتى (Valid Until)</strong></td><td><code>valid_until</code></td><td>Date</td><td>Order expiration date.</td></tr>
+<tr><td><strong>الكمية المستخدمة (Used Quantity)</strong></td><td><code>used_quantity</code></td><td>Float</td><td>Total cumulative litres dispensed against this order.</td></tr>
+<tr><td><strong>الكمية المتبقية (Remaining Quantity)</strong></td><td><code>remaining_quantity</code></td><td>Float</td><td>Auto-calculated remaining balance.</td></tr>
+<tr><td><strong>حساب المصروف (Expense Account)</strong></td><td><code>expense_account</code></td><td>Link</td><td>P&L fuel expense account charged in General Ledger.</td></tr>
+<tr><td><strong>مركز التكلفة (Cost Center)</strong></td><td><code>cost_center</code></td><td>Link</td><td>Departmental cost center.</td></tr>
+<tr><td><strong>المشروع (Project)</strong></td><td><code>project</code></td><td>Link</td><td>Project cost code if applicable.</td></tr>
+<tr><td><strong>رمز QR للتفويض (QR Code Token)</strong></td><td><code>qr_code</code></td><td>Data</td><td>Encrypted QR code for attendant optical scanning.</td></tr>
+<tr><td><strong>حركة المخزون القياسية (Stock Entry)</strong></td><td><code>stock_entry</code></td><td>Link</td><td>ERPNext Stock Entry (Material Issue) reference.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="fuel-authorization-doctype">2. Dispense Token: تفويض تعبئة الوقود (Fuel Authorization)<a class="h-anchor" href="#fuel-authorization-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>نوع التفويض (Authorization Type)</strong></td><td><code>authorization_type</code></td><td>Select (Mandatory)</td><td><code>Issue Order</code>, <code>Fleet Contract</code>, <code>Emergency</code>.</td></tr>
+<tr><td><strong>المركبة (Vehicle)</strong></td><td><code>vehicle</code></td><td>Link</td><td>Designated vehicle.</td></tr>
+<tr><td><strong>المضخة (Pump)</strong></td><td><code>pump</code></td><td>Link</td><td>Nozzle dispenser authorized for refueling.</td></tr>
+<tr><td><strong>صنف الوقود (Fuel Item)</strong></td><td><code>item</code></td><td>Link</td><td>Approved fuel item.</td></tr>
+<tr><td><strong>الحالة (Status)</strong></td><td><code>status</code></td><td>Select</td><td><code>Active</code>, <code>Used</code>, <code>Expired</code>.</td></tr>
+<tr><td><strong>صالح من (Valid From)</strong></td><td><code>valid_from</code></td><td>Datetime</td><td>Token activation timestamp.</td></tr>
+<tr><td><strong>صالح حتى (Valid Until)</strong></td><td><code>valid_until</code></td><td>Datetime</td><td>Token expiration timestamp (e.g. valid for 2 hours).</td></tr>
+<tr><td><strong>رمز التحقق المؤقت (QR Token)</strong></td><td><code>qr_code</code></td><td>Data</td><td>One-time authorization token string.</td></tr>
+<tr><td><strong>الكمية المستخدمة (Used Quantity)</strong></td><td><code>used_quantity</code></td><td>Float</td><td>Actual volume dispensed.</td></tr>
+<tr><td><strong>الكمية المتبقية (Remaining Quantity)</strong></td><td><code>remaining_quantity</code></td><td>Float</td><td>Unused volume remaining on token.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="fuel-card-doctype">3. Smart Card: بطاقة / كوبون وقود (Fuel Card)<a class="h-anchor" href="#fuel-card-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>رقم البطاقة أو الكوبون (Card / Coupon Number)</strong></td><td><code>card_number</code></td><td>Data (Mandatory)</td><td>RFID chip UID or embossed card number.</td></tr>
+<tr><td><strong>نوع البطاقة (Card Type)</strong></td><td><code>card_type</code></td><td>Select</td><td><code>Prepaid Amount</code> or <code>Liters Quota</code>.</td></tr>
+<tr><td><strong>العميل أو الجهة المالكة (Customer)</strong></td><td><code>customer</code></td><td>Link</td><td>Client or internal department owning the card.</td></tr>
+<tr><td><strong>المركبة المقترنة (Vehicle)</strong></td><td><code>vehicle</code></td><td>Link</td><td>Optional restriction to a single vehicle plate.</td></tr>
+<tr><td><strong>السائق المخصص (Driver)</strong></td><td><code>driver</code></td><td>Link</td><td>Authorized cardholder.</td></tr>
+<tr><td><strong>صنف الوقود المسموح (Allowed Fuel Item)</strong></td><td><code>allowed_item</code></td><td>Link</td><td>Permitted fuel type.</td></tr>
+<tr><td><strong>الحد اليومي (Daily Limit)</strong></td><td><code>daily_limit</code></td><td>Float</td><td>Daily allowable cap in currency or litres.</td></tr>
+<tr><td><strong>الكمية المتبقية (لتر) (Remaining Quantity)</strong></td><td><code>remaining_quantity</code></td><td>Float</td><td>Available litre quota.</td></tr>
+<tr><td><strong>المبلغ المتبقي (Remaining Amount)</strong></td><td><code>remaining_amount</code></td><td>Currency</td><td>Available prepaid cash balance.</td></tr>
+<tr><td><strong>صالح حتى (Valid Until)</strong></td><td><code>valid_until</code></td><td>Date</td><td>Card expiration date.</td></tr>
+<tr><td><strong>الحالة (Status)</strong></td><td><code>status</code></td><td>Select</td><td><code>Active</code>, <code>Blocked</code>, <code>Expired</code>.</td></tr>
+</tbody>
+</table></div>

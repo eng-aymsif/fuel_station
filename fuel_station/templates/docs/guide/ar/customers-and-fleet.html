@@ -1,0 +1,85 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>العملاء وإدارة الأساطيل والائتمان:</strong> يوفر النظام منظومة حماية ورقابة مالية متطورة لعملاء الشركات والأساطيل الآجلة، ترتكز على التحقق الفوري من سقف الائتمان الحقيقي لمنع التعثر، وضبط المركبات والسائقين والوقود المسموح بدقة تامة.</p>
+</blockquote>
+
+<h2 id="fleet-overview">دورة إدارة أساطيل العملاء والحسابات الآجلة<a class="h-anchor" href="#fleet-overview" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>ترتكز خدمة الأساطيل والشركات على ثلاثة مستندات تشغيلية:</p>
+<ol class="steps">
+  <li>تسجيل بيانات السيارات وشاحنات العميل في <strong>مركبة العميل (Customer Vehicle)</strong> وتحديد نوع الوقود المسموح وسعة الخزان.</li>
+  <li>توثيق السائقين المعتمدين وأرقام هوياتهم في <strong>سائق العميل (Customer Driver)</strong>.</li>
+  <li>إبرام وضبط الحدود المالية والائتمانية في <strong>عقد عميل الوقود (Fuel Customer Contract)</strong>.</li>
+</ol>
+
+<h2 id="customer-vehicle-doctype">1. مركبة العميل (Customer Vehicle)<a class="h-anchor" href="#customer-vehicle-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>مركبة العميل (Customer Vehicle)</strong> يمثل البطاقة الرقمية لكل سيارة أو شاحنة مصرح لها بالتزود بالوقود من محطات الشركة:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف والشرح التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>العميل</strong></td><td><strong>Customer</strong></td><td><code>customer</code></td><td>Link</td><td>الشركة أو المؤسسة المالكة للمركبة في دليل عملاء ERPNext.</td></tr>
+<tr><td><strong>رقم اللوحة</strong></td><td><strong>Plate Number</strong></td><td><code>plate_number</code></td><td>Data (إلزامي)</td><td>رقم وحروف لوحة السيارة (مثال: أ ب ج 1234).</td></tr>
+<tr><td><strong>رمز المركبة</strong></td><td><strong>Vehicle Code</strong></td><td><code>vehicle_code</code></td><td>Data</td><td>كود تعريفي داخلي للمركبة في أسطول العميل.</td></tr>
+<tr><td><strong>نوع المركبة</strong></td><td><strong>Vehicle Type</strong></td><td><code>vehicle_type</code></td><td>Data</td><td>تصنيف المركبة (سيدان، شاحنة ثقيلة، حافلة، معدة).</td></tr>
+<tr><td><strong>صنف / نوع الوقود</strong></td><td><strong>Fuel Type / Item</strong></td><td><code>fuel_type</code></td><td>Link</td><td>صنف الوقود المخصص لهذه المركبة فقط (يمنع تعبئة ديزل لبنزين).</td></tr>
+<tr><td><strong>سعة خزان المركبة (لتر)</strong></td><td><strong>Fuel Tank Capacity (Liters)</strong></td><td><code>fuel_tank_capacity</code></td><td>Float</td><td>السعة الهندسية القصوى لخزان السيارة (يمنع ضخ كمية تتجاوز سعة الخزان).</td></tr>
+<tr><td><strong>إلزامية تسجيل عداد المسافة</strong></td><td><strong>Odometer Required</strong></td><td><code>odometer_required</code></td><td>Check</td><td>إلزام العامل بإدخال قراءة عداد الكيلومترات قبل التعبئة لحساب الاستهلاك.</td></tr>
+<tr><td><strong>قراءة العداد الحالية</strong></td><td><strong>Current Odometer Reading</strong></td><td><code>odometer_reading</code></td><td>Float</td><td>آخر قراءة مسجلة لعداد المسافة للسيارة.</td></tr>
+<tr><td><strong>معدل الاستهلاك (لتر/100كم)</strong></td><td><strong>Average Consumption (L/100km)</strong></td><td><code>average_consumption</code></td><td>Float</td><td>المعدل القياسي لحرق الوقود للمركبة لاكتشاف الهدر والتسريب.</td></tr>
+<tr><td><strong>الجهة المالكة</strong></td><td><strong>Owner Type</strong></td><td><code>owner_type</code></td><td>Select</td><td><code>Customer Fleet</code> (أسطول عميل خارجي)، أو <code>Company Asset</code> (سيارات وأصول شركتنا الداخلية).</td></tr>
+<tr><td><strong>نشط</strong></td><td><strong>Active</strong></td><td><code>active</code></td><td>Check</td><td>سريان المركبة (إيقافها يحظر فوراً تزويدها بالوقود في المحطات).</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="customer-driver-doctype">2. سائق العميل (Customer Driver)<a class="h-anchor" href="#customer-driver-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>سائق العميل (Customer Driver)</strong> يوثق بيانات الشخص المخول باستلام وتعبئة الوقود للمركبات:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>العميل</strong></td><td><strong>Customer</strong></td><td><code>customer</code></td><td>Link (إلزامي)</td><td>الشركة التابع لها السائق.</td></tr>
+<tr><td><strong>اسم السائق</strong></td><td><strong>Driver Name</strong></td><td><code>driver_name</code></td><td>Data (إلزامي)</td><td>الاسم الكامل للسائق.</td></tr>
+<tr><td><strong>رمز السائق</strong></td><td><strong>Driver Code</strong></td><td><code>driver_code</code></td><td>Data</td><td>الرقم الوظيفي للسائق في شركته.</td></tr>
+<tr><td><strong>رقم الهوية أو الإقامة</strong></td><td><strong>National ID or Reference</strong></td><td><code>national_id_or_reference</code></td><td>Data</td><td>رقم الهوية الوطنية أو بطاقة الإقامة النظامية.</td></tr>
+<tr><td><strong>رقم رخصة القيادة</strong></td><td><strong>License Number</strong></td><td><code>license_number</code></td><td>Data</td><td>رقم رخصة القيادة المعتمدة.</td></tr>
+<tr><td><strong>تاريخ انتهاء الرخصة</strong></td><td><strong>License Expiry Date</strong></td><td><code>license_expiry</code></td><td>Date</td><td>تاريخ صلاحية الرخصة (لتنبيه العميل بالتجديد).</td></tr>
+<tr><td><strong>الهاتف</strong></td><td><strong>Phone</strong></td><td><code>phone</code></td><td>Data</td><td>رقم جوال السائق لاستقبال رسائل تفويض التعبئة أو الـ OTP.</td></tr>
+<tr><td><strong>نشط</strong></td><td><strong>Active</strong></td><td><code>active</code></td><td>Check</td><td>حالة السائق (إيقافه يمنعه من التعبئة بالمحطة).</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="customer-contract-doctype">3. عقد عميل الوقود (Fuel Customer Contract)<a class="h-anchor" href="#customer-contract-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>عقد عميل الوقود (Fuel Customer Contract)</strong> هو المرجع القانوني والمالي الذي يربط المحطة بالعميل الآجل، ويحدد الحدود الائتمانية والسياسات الصارمة:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف والشرح التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>العميل</strong></td><td><strong>Customer</strong></td><td><code>customer</code></td><td>Link (إلزامي)</td><td>العميل المعتمد في ERPNext.</td></tr>
+<tr><td><strong>الشركة</strong></td><td><strong>Company</strong></td><td><code>company</code></td><td>Link</td><td>الشركة التابع لها العقد.</td></tr>
+<tr><td><strong>رقم العقد</strong></td><td><strong>Contract Number</strong></td><td><code>contract_number</code></td><td>Data (إلزامي)</td><td>الرقم المرجعي الموثق للاتفاقية التجارية.</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Active</code> (سارٍ), <code>Suspended</code> (معلق), <code>Expired</code> (منتهٍ), <code>Terminated</code>.</td></tr>
+<tr><td><strong>تاريخ البدء</strong></td><td><strong>Start Date</strong></td><td><code>start_date</code></td><td>Date (إلزامي)</td><td>تاريخ تفعيل تقديم خدمة الوقود للعميل.</td></tr>
+<tr><td><strong>تاريخ الانتهاء</strong></td><td><strong>End Date</strong></td><td><code>end_date</code></td><td>Date (إلزامي)</td><td>تاريخ نهاية سريان العقد والتجديد.</td></tr>
+<tr><td><strong>سقف الائتمان المعتمد</strong></td><td><strong>Contract Credit Limit</strong></td><td><code>credit_limit</code></td><td>Currency</td><td>الحد المالي الأقصى للمديونية المسموح بها للعميل (مثال: 50,000 ريال).</td></tr>
+<tr><td><strong>الحد اليومي للوقود</strong></td><td><strong>Daily Fuel Limit</strong></td><td><code>daily_limit</code></td><td>Float</td><td>الحد الأقصى اليومي المسموح بسحبه (بالريال أو باللتر).</td></tr>
+<tr><td><strong>الحد الشهري للوقود</strong></td><td><strong>Monthly Fuel Limit</strong></td><td><code>monthly_limit</code></td><td>Float</td><td>الحد الأقصى الشهري المسموح بسحبه.</td></tr>
+<tr><td><strong>سياسة تجاوز سقف الائتمان</strong></td><td><strong>Credit Over-Limit Policy</strong></td><td><code>credit_control_policy</code></td><td>Select</td><td><code>Block Immediately</code> (حظر فوري ومنع الضخ)، أو <code>Require Manager Override</code> (طلب موافقة المدير التشغيلي).</td></tr>
+<tr><td><strong>قائمة الأسعار</strong></td><td><strong>Price List</strong></td><td><code>price_list</code></td><td>Link</td><td>قائمة أسعار البيع المعتمدة للعميل (مع الخصومات إن وجدت).</td></tr>
+<tr><td><strong>نسبة الخصم التعاقدي %</strong></td><td><strong>Contract Discount (%)</strong></td><td><code>discount_percentage</code></td><td>Float</td><td>نسبة الخصم التجاري الممنوح على إجمالي الفاتورة.</td></tr>
+<tr><td><strong>مبلغ الخصم باللتر</strong></td><td><strong>Contract Discount Amount per Liter</strong></td><td><code>discount_amount</code></td><td>Currency</td><td>خصم نقدي ثابت لكل لتر يتم تزويده للعميل (مثال: 0.05 ريال/لتر).</td></tr>
+<tr><td><strong>يتطلب أمر صرف</strong></td><td><strong>Requires Issue Order</strong></td><td><code>requires_issue_order</code></td><td>Check</td><td>اشتراط صدور أمر صرف رسمي مسبق لكل تعبئة.</td></tr>
+<tr><td><strong>تكرار الفوترة</strong></td><td><strong>Invoice Frequency</strong></td><td><code>invoice_frequency</code></td><td>Select</td><td><code>Daily</code> (يومي)، <code>Weekly</code> (أسبوعي)، <code>Bi-Weekly</code>، <code>Monthly</code> (شهري مجمع).</td></tr>
+<tr><td><strong>قالب شروط الدفع</strong></td><td><strong>Payment Terms Template</strong></td><td><code>payment_terms</code></td><td>Link</td><td>شروط وتواريخ استحقاق السداد (مثال: سداد خلال 30 يوماً).</td></tr>
+<tr><td><strong>الأصناف المسموحة</strong></td><td><strong>Allowed Items</strong></td><td><code>allowed_items</code></td><td>Small Text</td><td>قائمة أصناف الوقود المصرح بتزويد أسطول العميل بها حصراً.</td></tr>
+<tr><td><strong>المحطات المسموحة</strong></td><td><strong>Allowed Stations</strong></td><td><code>allowed_stations</code></td><td>Small Text</td><td>المحطات التابعة للشركة المصرح للعميل بالتزود منها.</td></tr>
+<tr><td><strong>المركبات المسموحة</strong></td><td><strong>Allowed Vehicles</strong></td><td><code>allowed_vehicles</code></td><td>Small Text</td><td>أرقام لوحات المركبات المعتمدة تحت هذا العقد.</td></tr>
+<tr><td><strong>السائقون المسموحون</strong></td><td><strong>Allowed Drivers</strong></td><td><code>allowed_drivers</code></td><td>Small Text</td><td>السائقون المعتمدون لتنفيذ العمليات.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="credit-check-algorithm">معادلة فحص الرصيد الائتماني الحقيقي (True Credit Health Check)<a class="h-anchor" href="#credit-check-algorithm" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>تتميز المنظومة بعدم الاكتفاء برصيد دفتر الأستاذ العام القديم؛ بل تحسب الرصيد اللحظي الحقيقي قبل كل ضخة لمنع تسريب أي كميات بعد تجاوز السقف:</p>
+<div class="callout tip">
+  <p><strong>معادلة الائتمان الحقيقي اللحظي:</strong></p>
+  <code>الرصيد المتاح للعميل = سقف الائتمان المعتمد (Credit Limit) - [فواتير المبيعات غير المسددة (Outstanding Sales Invoices) + حركات التعبئة الميدانية المعلقة التي لم تُفوتر بعد (Unbilled Dispense Events) - سندات القبض غير المخصصة (Unallocated Payment Entries)]</code><br><br>
+  <strong>قرار النظام:</strong> إذا كانت قيمة التعبئة الحالية > الرصيد المتاح ➔ <strong>يتم إيقاف عملية الضخ آلياً في المضخة</strong> وتظهر رسالة منع الائتمان.
+</div>

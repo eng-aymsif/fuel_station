@@ -1,0 +1,100 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>Frequently Asked Questions & Field Troubleshooting (FAQ):</strong> Practical resolutions for real-world scenarios encountered by attendants, supervisors, cashiers, and accountants during daily station operations.</p>
+</blockquote>
+
+<h2 id="faq-meter-rollover">Q1: How do we handle meter rollover when the dispenser counter exceeds max value (e.g. 999,999) and resets to zero?<a class="h-anchor" href="#faq-meter-rollover" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>Resolution:</strong> When totalizers roll over from max capacity to 000000, conventional subtraction produces negative volume. To resolve:</p>
+<ol class="steps">
+  <li>Open the closing <strong>قراءة عداد المضخة (Fuel Meter Reading)</strong> document.</li>
+  <li>Check the box <strong>هل تم تصفير العداد؟ (Is Meter Reset / Rollover)</strong>.</li>
+  <li>The calculation engine automatically applies rollover compensation: <code>Meter Litres = (Meter Max Capacity - Previous Reading) + Current Reading</code>, ensuring accurate volume recognition without distortion.</li>
+</ol>
+
+<h2 id="faq-offline-power">Q2: How do we manage transactions during a power outage or loss of internet connectivity?<a class="h-anchor" href="#faq-offline-power" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>Resolution:</strong></p>
+<ol class="steps">
+  <li>Dispensers continue pumping using mechanical totalizers or battery-backed electronic boards that never lose cumulative figures.</li>
+  <li>Attendants record cash and card transactions manually on the official emergency paper register.</li>
+  <li>When power and internet are restored, supervisors enter closing readings in <strong>قراءة عداد المضخة (Fuel Meter Reading)</strong> and execute post-shift inference in <strong>إعدادات تشغيل محطة الوقود (Fuel Operations Settings)</strong> to reconcile cash and electronic collections.</li>
+</ol>
+
+<h2 id="faq-credit-limit-breach">Q3: What happens if a fleet customer exceeds their approved credit limit at the pump?<a class="h-anchor" href="#faq-credit-limit-breach" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>Resolution:</strong> If license plate entry in <strong>عملية تعبئة وقود (Fuel Dispense Event)</strong> displays <code>Credit Limit Exceeded</code>:</p>
+<ol class="steps">
+  <li>Dispensing is automatically halted at the pump to eliminate financial risk.</li>
+  <li><strong>Option A (Immediate Settlement):</strong> The corporate customer issues an instant bank transfer. The accountant records an ERPNext Payment Entry against <strong>عقد عميل الوقود (Fuel Customer Contract)</strong>, instantly restoring available balance.</li>
+  <li><strong>Option B (Authorized Managerial Override):</strong> If corporate policy permits, the Operations Manager authorizes an override by recording credentials in <strong>معتمد تجاوز الائتمان (Credit Override Approved By)</strong> and <strong>سبب تجاوز الائتمان (Credit Override Reason)</strong>, logged in <strong>سجل تدقيق محطة الوقود (Fuel Audit Log)</strong>.</li>
+</ol>
+
+<h2 id="faq-pos-mismatch">Q4: The bank card POS terminal debited the customer's account, but failed to print a receipt slip. What should be done?<a class="h-anchor" href="#faq-pos-mismatch" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>Resolution:</strong></p>
+<ol class="steps">
+  <li>Print the POS Last Transaction Status from the terminal menu.</li>
+  <li>If the slip shows Approved with an RRN authorization code, log the transaction in <strong>عملية تعبئة وقود (Fuel Dispense Event)</strong> with payment method <code>Card</code> and record the RRN in <strong>رقم المرجع / الإيصال (Payment Reference)</strong>.</li>
+  <li>If cancelled or declined, the customer pays cash or re-swipes. At shift close, compare the terminal settlement report with <strong>تسوية البطاقات البنكية (Card Settlement)</strong>.</li>
+</ol>
+
+<h2 id="faq-unclosed-shift">Q5: The supervisor forgot to close the prior shift and the next crew has arrived. How do we open the new shift?<a class="h-anchor" href="#faq-unclosed-shift" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>Resolution:</strong> The system enforces sequential shift discipline. In emergencies:</p>
+<ol class="steps">
+  <li>The Station Manager creates the new <strong>وردية الوقود (Fuel Shift)</strong> and enables <strong>السماح بفتح استثنائي (Allow Exceptional Open)</strong>.</li>
+  <li>Enter the operational justification in <strong>سبب الفتح الاستثنائي (Exceptional Open Reason)</strong>.</li>
+  <li>Assign the incoming crew to pumps via <strong>تكليف عامل بمضخة (Fuel Pump Assignment)</strong> immediately.</li>
+  <li>The outgoing supervisor must immediately complete counting cash drawers in <strong>صندوق النقد (Fuel Cash Box)</strong> and close the prior shift.</li>
+</ol>
+
+<h2 id="faq-cash-shortage">Q6: A cash shortage was discovered during attendant denomination breakdown. How is it documented and settled?<a class="h-anchor" href="#faq-cash-shortage" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>Resolution:</strong></p>
+<ol class="steps">
+  <li>Count every banknote and coin systematically in <strong>عد فئات النقد (Fuel Denomination Count)</strong> inside <strong>صندوق النقد (Fuel Cash Box)</strong>.</li>
+  <li>The shortage is auto-calculated in <strong>الفرق (عجز / زيادة) (Variance)</strong>.</li>
+  <li>If within tolerance, the box closes and posts to <strong>حساب الفروقات الافتراضي (Default Variance Account)</strong>.</li>
+  <li>If exceeding tolerance, the system generates <strong>استثناء تسوية الوقود (Fuel Reconciliation Exception)</strong>, transfers only actual counted cash to <strong>خزينة المحطة (Fuel Station Safe)</strong> via <strong>تحويل نقدي للخزينة (Cash Transfer)</strong>, and debits the shortage to employee payroll.</li>
+</ol>
+
+<h2 id="faq-midshift-calibration">Q7: Official weights & measures inspectors conduct pump calibration during an active shift. How do we record the test volume?<a class="h-anchor" href="#faq-midshift-calibration" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>Resolution:</strong></p>
+<ol class="steps">
+  <li>Record pump meter reading before test discharge.</li>
+  <li>Inspectors dispense test volume (e.g. 20 Litres) into certified metallic prover cans.</li>
+  <li>Open <strong>عملية معايرة المضخة (Fuel Calibration Event)</strong>, select pump, enter 20 Litres, and state "Official Calibration Inspection" in <strong>السبب (Reason)</strong>.</li>
+  <li>Set <strong>المعالجة المخزنية (Stock Treatment)</strong> to <code>Return to Tank</code> and empty the prover can back into the underground tank opening.</li>
+  <li>At shift close, <strong>تسوية المضخة (Fuel Pump Reconciliation)</strong> deducts the 20 Litres from total meter sales, exempting the attendant from cash liability.</li>
+</ol>
+
+<h2 id="faq-tank-water-detection">Q8: Water detection paste reveals water in a tanker compartment prior to discharge. What is the immediate procedure?<a class="h-anchor" href="#faq-tank-water-detection" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>Resolution:</strong></p>
+<ol class="steps">
+  <li><strong>Halt discharge immediately:</strong> Connecting hoses to the underground storage tank is strictly forbidden.</li>
+  <li>In <strong>توريد وقود (Fuel Delivery)</strong>, set <strong>نتيجة فحص عينة الجودة والماء (Sample Quality Result)</strong> to <code>Water Detected</code> or <code>Contaminated</code>.</li>
+  <li>Notify the petroleum supply terminal dispatcher to reject the tanker.</li>
+  <li>Attach a smartphone photograph of the discolored dipstick paste in <strong>Supplier Document Attachment</strong> as legal evidence of delivery rejection.</li>
+</ol>
+
+<h2 id="faq-convert-cash-to-tax-invoice">Q9: A cash customer requests a formal ZATCA Tax Invoice with corporate name and VAT number after paying cash. How do we convert the transaction?<a class="h-anchor" href="#faq-convert-cash-to-tax-invoice" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>Resolution:</strong></p>
+<ol class="steps">
+  <li>Locate the transaction in <strong>عملية تعبئة وقود (Fuel Dispense Event)</strong> using the cash receipt number or pump timestamp.</li>
+  <li>Click <span class="badge badge-primary">Create Sales Invoice</span>.</li>
+  <li>Change <strong>Customer</strong> from default retail cash customer to the corporate client registered in ERPNext.</li>
+  <li>The system validates company VAT registration number and address under <strong>سياسة ضرائب الوقود (Fuel Tax Policy)</strong>.</li>
+  <li>Submit the invoice to generate the certified standard ZATCA Phase 2 tax invoice with compliant QR code.</li>
+</ol>
+
+<h2 id="faq-correct-meter-reading">Q10: An attendant entered a mistyped meter reading and submitted it. How is it formally corrected?<a class="h-anchor" href="#faq-correct-meter-reading" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>Resolution:</strong></p>
+<ol class="steps">
+  <li>Open the faulty <strong>قراءة عداد المضخة (Fuel Meter Reading)</strong> record.</li>
+  <li>If meter correction is permitted in <strong>إعدادات تشغيل محطة الوقود (Fuel Operations Settings)</strong>, the supervisor adjusts <strong>قيمة القراءة (Reading Value)</strong> to the true counter value.</li>
+  <li>The supervisor records mandatory rationale in <strong>سبب التصحيح (Correction Reason)</strong> and attaches the meter display photo in <strong>صورة العداد (Photo)</strong>.</li>
+  <li>The Station Manager approves the correction in <strong>معتمد من (Approved By)</strong>, logging changes permanently in <strong>سجل تدقيق محطة الوقود (Fuel Audit Log)</strong>.</li>
+</ol>
+
+<h2 id="faq-reopen-shift">Q11: A shift was accidentally closed before all dispenses were logged. How do we safely reopen it?<a class="h-anchor" href="#faq-reopen-shift" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><strong>Resolution:</strong></p>
+<ol class="steps">
+  <li>An authorized Station or Operations Manager opens the closed <strong>وردية الوقود (Fuel Shift)</strong>.</li>
+  <li>Click <span class="badge badge-warning">Reopen Shift</span>.</li>
+  <li>Input detailed justification in <strong>سبب إعادة الفتح (Reopen Reason)</strong> and the remediation roadmap in <strong>Correction Plan</strong>.</li>
+  <li>Shift status switches to <code>Reopened</code>, unlocking connected <strong>صندوق النقد (Fuel Cash Box)</strong> drawers to record delayed dispenses before executing final audited closure.</li>
+</ol>

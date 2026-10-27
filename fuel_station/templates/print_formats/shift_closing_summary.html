@@ -1,0 +1,153 @@
+{%- from "fuel_station/templates/print_formats/base.html" import print_styles, is_arabic, dir -%}
+{{ print_styles() }}
+
+{%- set reconciliations = frappe.get_all("Fuel Pump Reconciliation", filters={"shift": doc.name}, fields=["pump", "item", "opening_reading", "closing_reading", "meter_quantity", "cash_quantity", "card_quantity", "credit_quantity", "internal_quantity", "variance_quantity", "variance_amount"]) -%}
+{%- set cash_boxes = frappe.get_all("Fuel Cash Box", filters={"shift": doc.name}, fields=["name", "cash_box_code", "assigned_employee", "opening_float", "cash_sales", "expected_cash", "counted_cash", "variance", "status"]) -%}
+
+<div class="fuel-print-container fuel-print-standard" dir="{{ dir() }}">
+	<div class="fuel-print-header">
+		<table class="fuel-header-table">
+			<tr>
+				<td>
+					<div class="fuel-brand-name">⛽ {{ doc.station or "Fuel Station" }}</div>
+					<div class="fuel-brand-sub">{{ _("Comprehensive Shift Closing & Reconciliation Audit") if is_arabic() else "Shift Closing & Reconciliation Audit" }}</div>
+				</td>
+				<td class="fuel-doc-title-box">
+					<div class="fuel-doc-title">{{ _("SHIFT CLOSING REPORT") if is_arabic() else "SHIFT CLOSING REPORT" }}</div>
+					<div><b>{{ doc.name }}</b></div>
+					<div style="margin-top: 4px;">
+						{% if doc.closing_status == "Closed" or doc.status == "Closed" %}
+						<span class="fuel-badge badge-success">{{ _("Closed & Audited") if is_arabic() else "Closed & Audited" }}</span>
+						{% elif doc.status == "Open" %}
+						<span class="fuel-badge badge-warning">{{ _("Open Shift") if is_arabic() else "Open Shift" }}</span>
+						{% else %}
+						<span class="fuel-badge badge-info">{{ doc.status or "Active" }}</span>
+						{% endif %}
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- Shift Metadata -->
+	<div class="fuel-meta-grid">
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Business Date") if is_arabic() else "Business Date" }}</div>
+			<div class="fuel-meta-val">{{ doc.business_date }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Shift Type / Code") if is_arabic() else "Shift Type" }}</div>
+			<div class="fuel-meta-val">{{ doc.shift_type or "-" }}</div>
+		</div>
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Shift Supervisor") if is_arabic() else "Supervisor" }}</div>
+			<div class="fuel-meta-val"><b>{{ doc.supervisor or "-" }}</b></div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Opening Float (Safe)") if is_arabic() else "Opening Float" }}</div>
+			<div class="fuel-meta-val">{{ fuel_money(doc.opening_cash_float) }}</div>
+		</div>
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Opened At") if is_arabic() else "Opened At" }}</div>
+			<div class="fuel-meta-val">{{ doc.opened_at or doc.actual_start_time or "-" }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Closed At") if is_arabic() else "Closed At" }}</div>
+			<div class="fuel-meta-val">{{ doc.closed_at or "-" }}</div>
+		</div>
+	</div>
+
+	<!-- Pump Meter & Reconciliation Section -->
+	<div style="font-weight: 800; font-size: 14px; margin-bottom: 8px; color: #1e293b;">
+		📊 {{ _("Pump Meters & Volume Reconciliation") if is_arabic() else "Pump Meters & Volume Reconciliation" }}
+	</div>
+	<table class="fuel-data-table">
+		<thead>
+			<tr>
+				<th>{{ _("Pump / Nozzle") if is_arabic() else "Pump" }}</th>
+				<th>{{ _("Fuel Item") if is_arabic() else "Item" }}</th>
+				<th class="text-center">{{ _("Start Meter") if is_arabic() else "Start Meter" }}</th>
+				<th class="text-center">{{ _("End Meter") if is_arabic() else "End Meter" }}</th>
+				<th class="text-center">{{ _("Metered (L)") if is_arabic() else "Metered (L)" }}</th>
+				<th class="text-center">{{ _("Cash (L)") if is_arabic() else "Cash (L)" }}</th>
+				<th class="text-center">{{ _("Card (L)") if is_arabic() else "Card (L)" }}</th>
+				<th class="text-center">{{ _("Credit (L)") if is_arabic() else "Credit (L)" }}</th>
+				<th class="text-center">{{ _("Variance (L)") if is_arabic() else "Variance (L)" }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% if reconciliations %}
+				{% for r in reconciliations %}
+				<tr>
+					<td><b>{{ r.pump }}</b></td>
+					<td>{{ r.item }}</td>
+					<td class="text-center">{{ "{:,.2f}".format(r.opening_reading or 0.0) }}</td>
+					<td class="text-center">{{ "{:,.2f}".format(r.closing_reading or 0.0) }}</td>
+					<td class="text-center" style="font-weight: 700; color: #ea580c;">{{ "{:,.2f}".format(r.meter_quantity or 0.0) }}</td>
+					<td class="text-center">{{ "{:,.2f}".format(r.cash_quantity or 0.0) }}</td>
+					<td class="text-center">{{ "{:,.2f}".format(r.card_quantity or 0.0) }}</td>
+					<td class="text-center">{{ "{:,.2f}".format(r.credit_quantity or 0.0) }}</td>
+					<td class="text-center" style="font-weight: 700; color: {{ '#16a34a' if (r.variance_quantity or 0) == 0 else '#dc2626' }};">
+						{{ "{:,.2f}".format(r.variance_quantity or 0.0) }}
+					</td>
+				</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td colspan="9" class="text-center" style="color: #6b7280;">{{ _("No pump reconciliations recorded for this shift.") if is_arabic() else "No pump reconciliations recorded." }}</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
+
+	<!-- Cash Boxes Reconciliation Section -->
+	<div style="font-weight: 800; font-size: 14px; margin-top: 15px; margin-bottom: 8px; color: #1e293b;">
+		💰 {{ _("Attendant Cash Boxes Reconciliation") if is_arabic() else "Attendant Cash Boxes Reconciliation" }}
+	</div>
+	<table class="fuel-data-table">
+		<thead>
+			<tr>
+				<th>{{ _("Cash Box Ref") if is_arabic() else "Cash Box" }}</th>
+				<th>{{ _("Attendant") if is_arabic() else "Attendant" }}</th>
+				<th class="text-center">{{ _("Opening Float") if is_arabic() else "Opening Float" }}</th>
+				<th class="text-center">{{ _("Cash Sales") if is_arabic() else "Cash Sales" }}</th>
+				<th class="text-center">{{ _("Expected Cash") if is_arabic() else "Expected Cash" }}</th>
+				<th class="text-center">{{ _("Counted Cash") if is_arabic() else "Counted Cash" }}</th>
+				<th class="text-center">{{ _("Variance (Over / Short)") if is_arabic() else "Variance" }}</th>
+				<th class="text-center">{{ _("Status") if is_arabic() else "Status" }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% if cash_boxes %}
+				{% for b in cash_boxes %}
+				<tr>
+					<td><b>{{ b.cash_box_code or b.name }}</b></td>
+					<td>{{ b.assigned_employee or "-" }}</td>
+					<td class="text-center">{{ fuel_money(b.opening_float) }}</td>
+					<td class="text-center">{{ fuel_money(b.cash_sales) }}</td>
+					<td class="text-center"><b>{{ fuel_money(b.expected_cash) }}</b></td>
+					<td class="text-center"><b>{{ fuel_money(b.counted_cash) }}</b></td>
+					<td class="text-center" style="font-weight: 800; color: {{ '#16a34a' if (b.variance or 0) == 0 else '#dc2626' }};">
+						{{ fuel_money(b.variance) }}
+					</td>
+					<td class="text-center"><span class="fuel-badge badge-{{ 'success' if b.status == 'Closed' else 'warning' }}">{{ b.status }}</span></td>
+				</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td colspan="8" class="text-center" style="color: #6b7280;">{{ _("No cash boxes recorded for this shift.") if is_arabic() else "No cash boxes recorded." }}</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
+
+	<!-- Signatures -->
+	<div class="fuel-sign-row">
+		<div class="fuel-sign-cell">
+			{{ _("Shift Supervisor Sign-off") if is_arabic() else "Supervisor Sign-off" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("Chief Station Accountant") if is_arabic() else "Chief Accountant" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("Station General Manager") if is_arabic() else "Station Manager" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+	</div>
+</div>

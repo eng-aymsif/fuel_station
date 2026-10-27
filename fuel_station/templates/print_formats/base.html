@@ -1,0 +1,271 @@
+{#-
+	نظام تصميم الطباعة الاحترافي لمحطة الوقود (Fuel Station Print Design System)
+	يدعم:
+	1. فواتير ومحاضر رسمية A4 / A5 (Tax Invoices, Shift Reports, Reconciliations, Contracts)
+	2. إيصالات نقاط البيع والمضخات الحرارية 80mm (Thermal POS Receipts & Vouchers)
+	3. اتجاهين RTL للعربية و LTR للإنجليزية
+	4. الباركود ورموز QR المتوافقة مع الفوترة الإلكترونية
+-#}
+
+{%- macro is_arabic() -%}{{ frappe.local.lang and frappe.local.lang.startswith("ar") }}{%- endmacro -%}
+{%- macro dir() -%}{{ "rtl" if is_arabic() else "ltr" }}{%- endmacro -%}
+
+{%- macro print_styles() -%}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+
+.fuel-print-container {
+	font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+	color: #111827;
+	line-height: 1.45;
+	font-size: 13px;
+	box-sizing: border-box;
+}
+
+/* ================== A4 / Standard Formats ================== */
+.fuel-print-standard {
+	padding: 24px;
+	background: #ffffff;
+}
+
+.fuel-print-header {
+	border-bottom: 2px solid #ea580c;
+	padding-bottom: 16px;
+	margin-bottom: 20px;
+}
+
+.fuel-header-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.fuel-header-table td {
+	vertical-align: middle;
+	padding: 0;
+}
+
+.fuel-brand-name {
+	font-size: 22px;
+	font-weight: 800;
+	color: #ea580c;
+	margin: 0 0 4px 0;
+}
+
+.fuel-brand-sub {
+	font-size: 12px;
+	color: #4b5563;
+	margin: 0;
+}
+
+.fuel-doc-title-box {
+	text-align: {{ "left" if is_arabic() else "right" }};
+}
+
+.fuel-doc-title {
+	font-size: 20px;
+	font-weight: 800;
+	color: #1f2937;
+	margin: 0 0 6px 0;
+	letter-spacing: -0.5px;
+}
+
+.fuel-badge {
+	display: inline-block;
+	padding: 3px 10px;
+	border-radius: 9999px;
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+.badge-success { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.badge-warning { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+.badge-danger  { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+.badge-info    { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+
+.fuel-meta-grid {
+	display: table;
+	width: 100%;
+	background: #f9fafb;
+	border: 1px solid #e5e7eb;
+	border-radius: 8px;
+	margin-bottom: 20px;
+	padding: 12px 16px;
+}
+
+.fuel-meta-col {
+	display: table-cell;
+	width: 33.33%;
+	vertical-align: top;
+	padding: 4px 8px;
+}
+
+.fuel-meta-label {
+	font-size: 11px;
+	color: #6b7280;
+	font-weight: 600;
+	margin-bottom: 2px;
+}
+
+.fuel-meta-val {
+	font-size: 13px;
+	font-weight: 700;
+	color: #111827;
+}
+
+.fuel-data-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	font-size: 12px;
+}
+
+.fuel-data-table th {
+	background: #f3f4f6;
+	color: #374151;
+	font-weight: 700;
+	padding: 10px 12px;
+	border: 1px solid #e5e7eb;
+	text-align: {{ "right" if is_arabic() else "left" }};
+}
+
+.fuel-data-table td {
+	padding: 9px 12px;
+	border: 1px solid #e5e7eb;
+	vertical-align: middle;
+}
+
+.fuel-data-table tr:nth-child(even) {
+	background: #fafafa;
+}
+
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+
+.fuel-totals-table {
+	width: 50%;
+	float: {{ "left" if is_arabic() else "right" }};
+	border-collapse: collapse;
+	margin-bottom: 24px;
+}
+
+.fuel-totals-table td {
+	padding: 6px 12px;
+	border-bottom: 1px solid #e5e7eb;
+}
+
+.fuel-grand-total {
+	font-size: 15px;
+	font-weight: 800;
+	background: #fff7ed;
+	color: #c2410c;
+	border-top: 2px solid #ea580c !important;
+	border-bottom: 2px solid #ea580c !important;
+}
+
+.fuel-sign-row {
+	clear: both;
+	display: table;
+	width: 100%;
+	padding-top: 40px;
+	border-top: 1px dashed #d1d5db;
+	margin-top: 30px;
+}
+
+.fuel-sign-cell {
+	display: table-cell;
+	width: 33.33%;
+	text-align: center;
+	vertical-align: top;
+	font-size: 12px;
+}
+
+.fuel-sign-line {
+	margin-top: 45px;
+	border-top: 1px solid #9ca3af;
+	width: 75%;
+	display: inline-block;
+}
+
+/* ================== 80mm POS Thermal Receipt ================== */
+.fuel-print-thermal {
+	width: 78mm;
+	max-width: 78mm;
+	margin: 0 auto;
+	padding: 8px 4px;
+	font-size: 12px;
+	color: #000;
+	background: #fff;
+	line-height: 1.35;
+}
+
+.fuel-thermal-head {
+	text-align: center;
+	padding-bottom: 8px;
+	border-bottom: 1px dashed #000;
+	margin-bottom: 8px;
+}
+
+.fuel-thermal-title {
+	font-size: 16px;
+	font-weight: 800;
+	margin: 2px 0;
+}
+
+.fuel-thermal-sub {
+	font-size: 11px;
+}
+
+.fuel-thermal-row {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 3px;
+	font-size: 11px;
+}
+
+.fuel-thermal-divider {
+	border-top: 1px dashed #000;
+	margin: 7px 0;
+}
+
+.fuel-thermal-divider-double {
+	border-top: 2px dashed #000;
+	margin: 8px 0;
+}
+
+.fuel-thermal-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 6px 0;
+	font-size: 11px;
+}
+
+.fuel-thermal-table th {
+	border-bottom: 1px solid #000;
+	padding: 4px 2px;
+	text-align: {{ "right" if is_arabic() else "left" }};
+}
+
+.fuel-thermal-table td {
+	padding: 4px 2px;
+}
+
+.fuel-thermal-total {
+	font-size: 14px;
+	font-weight: 800;
+	padding: 4px 0;
+}
+
+.fuel-thermal-qr {
+	text-align: center;
+	padding: 8px 0 4px 0;
+}
+
+.fuel-thermal-footer {
+	text-align: center;
+	font-size: 10px;
+	margin-top: 6px;
+	color: #333;
+}
+</style>
+{%- endmacro -%}

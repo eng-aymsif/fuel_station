@@ -1,0 +1,112 @@
+{%- from "fuel_station/templates/print_formats/base.html" import print_styles, is_arabic, dir -%}
+{{ print_styles() }}
+
+{%- set assignments = frappe.get_all("Fuel Pump Assignment", filters={"shift": doc.name}, fields=["name", "employee", "pump", "status", "start_time", "end_time", "opening_meter_reading", "closing_meter_reading"]) -%}
+
+<div class="fuel-print-container fuel-print-standard" dir="{{ dir() }}">
+	<div class="fuel-print-header">
+		<table class="fuel-header-table">
+			<tr>
+				<td>
+					<div class="fuel-brand-name">⛽ {{ doc.station or "Fuel Station" }}</div>
+					<div class="fuel-brand-sub">{{ _("Pump Attendant Handover & Roster Clearance Sheet") if is_arabic() else "Pump Attendant Handover & Roster Sheet" }}</div>
+				</td>
+				<td class="fuel-doc-title-box">
+					<div class="fuel-doc-title">{{ _("SHIFT HANDOVER SHEET") if is_arabic() else "SHIFT HANDOVER SHEET" }}</div>
+					<div><b>{{ doc.name }}</b></div>
+					<div style="margin-top: 4px;">
+						<span class="fuel-badge badge-info">{{ doc.shift_type or "Shift" }} - {{ doc.business_date }}</span>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- Shift Metadata -->
+	<div class="fuel-meta-grid">
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Business Date") if is_arabic() else "Date" }}</div>
+			<div class="fuel-meta-val">{{ doc.business_date }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Station") if is_arabic() else "Station" }}</div>
+			<div class="fuel-meta-val">{{ doc.station }}</div>
+		</div>
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Supervisor In-Charge") if is_arabic() else "Supervisor" }}</div>
+			<div class="fuel-meta-val">{{ doc.supervisor or "-" }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Opening Float Handed") if is_arabic() else "Opening Float" }}</div>
+			<div class="fuel-meta-val">{{ fuel_money(doc.opening_cash_float) }}</div>
+		</div>
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Planned / Start Time") if is_arabic() else "Start Time" }}</div>
+			<div class="fuel-meta-val">{{ doc.actual_start_time or doc.opened_at or "-" }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Closing / Release Time") if is_arabic() else "Release Time" }}</div>
+			<div class="fuel-meta-val">{{ doc.closed_at or "-" }}</div>
+		</div>
+	</div>
+
+	<!-- Attendants Assignment Table -->
+	<div style="font-weight: 800; font-size: 14px; margin-bottom: 8px; color: #1e293b;">
+		👥 {{ _("Attendant Pump Assignments & Clearances") if is_arabic() else "Attendant Pump Assignments" }}
+	</div>
+	<table class="fuel-data-table">
+		<thead>
+			<tr>
+				<th style="width: 5%;">#</th>
+				<th style="width: 25%;">{{ _("Attendant Employee") if is_arabic() else "Employee" }}</th>
+				<th style="width: 20%;">{{ _("Assigned Pump") if is_arabic() else "Assigned Pump" }}</th>
+				<th class="text-center" style="width: 15%;">{{ _("Start Time") if is_arabic() else "Start Time" }}</th>
+				<th class="text-center" style="width: 15%;">{{ _("Release Time") if is_arabic() else "Release Time" }}</th>
+				<th class="text-center" style="width: 20%;">{{ _("Handover Signature") if is_arabic() else "Signature" }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% if assignments %}
+				{% for a in assignments %}
+				<tr>
+					<td>{{ loop.index }}</td>
+					<td><b>{{ a.employee }}</b></td>
+					<td><b>{{ a.pump }}</b></td>
+					<td class="text-center">{{ a.start_time or "-" }}</td>
+					<td class="text-center">{{ a.end_time or "-" }}</td>
+					<td class="text-center" style="height: 35px; border-bottom: 1px dotted #999;"></td>
+				</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td colspan="6" class="text-center" style="color: #6b7280;">{{ _("No individual attendant assignment records found for this shift.") if is_arabic() else "No attendant assignments found." }}</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
+
+	<!-- Handover Checklist & Integrity Statement -->
+	<div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-top: 20px;">
+		<div style="font-weight: 700; margin-bottom: 6px;">{{ _("Shift Handover & Safety Clearance Declaration:") if is_arabic() else "Safety & Handover Declaration:" }}</div>
+		<table style="width: 100%; font-size: 12px; border-collapse: collapse;">
+			<tr>
+				<td style="padding: 4px 0;">[ &nbsp; ] {{ _("All pump mechanical and electronic totalizer readings verified.") if is_arabic() else "All pump readings verified." }}</td>
+				<td style="padding: 4px 0;">[ &nbsp; ] {{ _("All cash boxes counted, matched and transferred to Station Safe.") if is_arabic() else "All cash boxes counted and transferred." }}</td>
+			</tr>
+			<tr>
+				<td style="padding: 4px 0;">[ &nbsp; ] {{ _("Nozzle calibration and filter inspection performed.") if is_arabic() else "Nozzle calibration checked." }}</td>
+				<td style="padding: 4px 0;">[ &nbsp; ] {{ _("Fire safety equipment and forecourt cleanliness approved.") if is_arabic() else "Safety equipment approved." }}</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- Handover Signatures -->
+	<div class="fuel-sign-row">
+		<div class="fuel-sign-cell">
+			{{ _("Outgoing Shift Supervisor") if is_arabic() else "Outgoing Supervisor" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("Incoming Shift Supervisor") if is_arabic() else "Incoming Supervisor" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("Station Security / Safety Officer") if is_arabic() else "Safety Officer" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+	</div>
+</div>

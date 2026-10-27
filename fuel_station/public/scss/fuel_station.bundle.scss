@@ -1,0 +1,111 @@
+// أنماط واجهة desk الخاصة بـ Fuel Station (تُحمَّل عبر app_include_css).
+
+.fuel-guide-btn {
+	--fuel-grad-brand: linear-gradient(120deg, #d97706 0%, #ea580c 35%, #2563eb 70%, #059669 100%);
+	--fuel-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+	--fuel-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+	position: relative;
+	overflow: hidden;
+	isolation: isolate;
+	height: 30px;
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	padding-block: 0;
+	padding-inline: 4px 10px;
+	margin-inline-end: 8px;
+	border-radius: 9px;
+	font-size: var(--text-sm, 13px);
+	font-weight: 700;
+	line-height: 1;
+	white-space: nowrap;
+	color: #fff !important;
+	text-decoration: none !important;
+	background: var(--fuel-grad-brand);
+	background-size: 220% 100%;
+	animation: fuel-grad-shift 7s ease infinite;
+	box-shadow: 0 8px 18px -10px rgba(234, 88, 12, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+	transition: transform 0.35s var(--fuel-spring), box-shadow 0.3s;
+
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
+		transform: translateX(-110%);
+		transition: transform 0.8s var(--fuel-ease);
+	}
+
+	&:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 12px 22px -12px rgba(234, 88, 12, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+	}
+	&:hover::after {
+		transform: translateX(110%);
+	}
+	&:active {
+		transform: scale(0.96);
+	}
+	&:focus-visible {
+		outline: 2px solid #ea580c;
+		outline-offset: 2px;
+	}
+
+	.fuel-guide-svg {
+		display: block;
+	}
+}
+
+.fuel-guide-btn-icon {
+	display: grid;
+	place-items: center;
+	width: 22px;
+	height: 22px;
+	border-radius: 7px;
+	background: rgba(255, 255, 255, 0.2);
+}
+
+.fuel-guide-btn-arrow {
+	display: grid;
+	opacity: 0.9;
+	transition: translate 0.35s var(--fuel-spring);
+
+	.fuel-guide-btn:hover & {
+		translate: 3px 0;
+	}
+}
+
+[dir="rtl"] {
+	.fuel-guide-btn-arrow .fuel-guide-svg {
+		transform: scaleX(-1);
+	}
+	.fuel-guide-btn:hover .fuel-guide-btn-arrow {
+		translate: -3px 0;
+	}
+}
+
+[data-theme="dark"] .fuel-guide-btn {
+	box-shadow: 0 8px 18px -8px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+@keyframes fuel-grad-shift {
+	0%,
+	100% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fuel-guide-btn,
+	.fuel-guide-btn::after,
+	.fuel-guide-btn-arrow {
+		animation: none;
+		transition: none;
+	}
+}
+

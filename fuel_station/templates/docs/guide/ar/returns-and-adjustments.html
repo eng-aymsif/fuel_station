@@ -1,0 +1,66 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>المرتجعات والإشعارات والتسويات المحاسبية:</strong> نظراً للطبيعة الفيزيائية الحساسة للمشتقات البترولية وصعوبة استرجاع الوقود بعد ضخه في خزان المركبة لتجنب التلوث، يوفر النظام مسارات نظامية محكمة لمعالجة الأخطاء التشغيلية، وإصدار الإشعارات الدائنة، وتسوية العجز المالي دون كسر تسلسل القيود المحاسبية في <strong>ERPNext</strong>.</p>
+</blockquote>
+
+<h2 id="returns-principles">المبادئ الأساسية لمرتجعات مبيعات الوقود<a class="h-anchor" href="#returns-principles" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>تخضع معالجة مرتجعات الوقود لقواعد رقابية صارمة:</p>
+<ul>
+  <li><strong>منع الحذف النهائي:</strong> يمنع النظام منعاً باتاً حذف أي مستند ترحيل أو فاتورة مبيعات؛ بل تتم كافة المعالجات عبر إصدار مستندات تسوية عكسية (Contra Documents) وإشعارات دائنة معتمدة.</li>
+  <li><strong>فصل الأثر المالي عن المخزني:</strong> في كثير من الأحيان، يُعاد المبلغ للعميل لخطأ في الفوترة أو نوع الحساب دون استرجاع الوقود فعلياً؛ لذا يفصل النظام بين التسوية المالية في <strong>فاتورة المبيعات (Sales Invoice Return)</strong> وبين الحركة المخزنية في <strong>حركة المخزون (Stock Entry)</strong>.</li>
+</ul>
+
+<h2 id="workflow-credit-note">دورة إصدار الإشعار الدائن ومرتجع المبيعات (Sales Return Workflow)<a class="h-anchor" href="#workflow-credit-note" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>عند حدوث خطأ في تسجيل عملية تعبئة أو رغبة العميل في استرداد ماله قبل مغادرة المحطة:</p>
+<ol class="steps">
+  <li>تحديد مستند <strong>عملية تعبئة وقود (Fuel Dispense Event)</strong> المراد تصحيحه والضغط على زر الإلغاء/التسوية مع توثيق السبب الإلزامي في حقل <strong>سبب الإلغاء (Cancellation Reason)</strong> بواسطة المشرف.</li>
+  <li>إنشاء إشعار دائن رسمي في ERPNext بالضغط على زر <span class="badge badge-primary">Create Credit Note</span> في <strong>فاتورة المبيعات (Sales Invoice)</strong>.</li>
+  <li>يحدد النظام طريقة رد المبلغ حسب وسيلة الدفع الأصلية:
+    <ul>
+      <li><strong>إذا كان الدفع نقداً:</strong> يُسجل المبلغ المسترد في حقل <strong>المبالغ المرتجعة (Refunds)</strong> في مستند <strong>صندوق النقد (Fuel Cash Box)</strong> الخاص بالعامل ليتم خصمه من النقد المتوقع ويُطابق مع النقد الفعلي.</li>
+      <li><strong>إذا كان الدفع ببطاقة شبكة / POS:</strong> يتم إلغاء العملية عبر جهاز نقاط البيع البنكي (Reversal / Void) قبل الإقفال اليومي للجهاز.</li>
+      <li><strong>إذا كان عميل أسطول آجل:</strong> يُقيد الإشعار الدائن مباشرة في حساب العميل كدفعة عكسية ترفع من رصيده الائتماني المتاح في <strong>عقد عميل الوقود (Fuel Customer Contract)</strong>.</li>
+    </ul>
+  </li>
+  <li>يتم توثيق كافة تفاصيل التعديل وهوية المستخدم المعتمد آلياً في <strong>سجل تدقيق محطة الوقود (Fuel Audit Log)</strong>.</li>
+</ol>
+
+<h2 id="wrong-fuel-handling">معالجة ضخ نوع وقود خاطئ وتفريغ الخزان (Contaminated Fuel Recovery)<a class="h-anchor" href="#wrong-fuel-handling" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>في حال قام العامل بضخ وقود غير مخصص للمركبة (مثلاً: بنزين 91 لسيارة ديزل)، يتم تطبيق الخطوات التشغيلية والمخزنية التالية:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>الخطوة التشغيلية</th><th>المستند المستخدم في النظام</th><th>الأثر المحاسبي والمخزني المعتمد</th></tr></thead>
+<tbody>
+<tr>
+  <td>1. إيقاف تشغيل محرك المركبة وسحب الوقود الملوث فوراً بمضخة شفط يدوية.</td>
+  <td><strong>عملية معايرة المضخة (Fuel Calibration Event)</strong> أو <strong>حركة المخزون (Stock Entry)</strong></td>
+  <td>تحويل الوقود المسحوب إلى خزان التوالف والشوائب بمستند تحويل مخزني <span class="ui">Material Transfer</span> وليس للخزان الرئيسي منعاً لتلوث الشحنة.</td>
+</tr>
+<tr>
+  <td>2. إلغاء قيمة الفاتورة عن العميل.</td>
+  <td><strong>فاتورة المبيعات (Sales Invoice Return)</strong></td>
+  <td>إصدار إشعار دائن بقيمة الوقود المسحوب.</td>
+</tr>
+<tr>
+  <td>3. تزويد العميل بالوقود الصحيح مجاناً كتعويض.</td>
+  <td><strong>عملية تعبئة وقود (Fuel Dispense Event)</strong></td>
+  <td>تسجيل حركة تعبئة جديدة محملة على حساب مصروف تعويضات أخطاء التشغيل في مركز تكلفة المحطة.</td>
+</tr>
+<tr>
+  <td>4. إثبات التالف البترولي الناتج عن الخلط.</td>
+  <td><strong>تسوية مخزون الخزان (Fuel Tank Reconciliation)</strong></td>
+  <td>تسجيل عجز مخزني معتمد في حساب <strong>Default Calibration/Waste Expense Account</strong> بموافقة مدير المحطة.</td>
+</tr>
+</tbody>
+</table></div>
+
+<h2 id="cash-variance-settlement">تسوية عجز وزيادة النقدية بين الصندوق والخزينة<a class="h-anchor" href="#cash-variance-settlement" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>عند ظهور فارق مالي في <strong>صندوق النقد (Fuel Cash Box)</strong> أو <strong>خزينة المحطة (Fuel Station Safe)</strong> بنهاية الوردية، يطبق النظام السياسات المالية التالية:</p>
+<ul>
+  <li><strong>العجز ضمن حد التسامح المالي (Within Tolerance):</strong> إذا كان العجز أقل من مبلغ التسامح المحدد في <strong>إعدادات تشغيل محطة الوقود (Fuel Operations Settings)</strong> (مثلاً: 10 ريال)، يتم ترحيل الفارق تلقائياً إلى حساب <strong>حساب الفروقات الافتراضي (Default Variance Account)</strong> كقيد تسوية عادي دون تعطيل إقفال الوردية.</li>
+  <li><strong>العجز المتجاوز لحد التسامح (Over Tolerance):</strong> يتولد مستند <strong>استثناء تسوية الوقود (Fuel Reconciliation Exception)</strong> بمستوى خطورة متوسط أو حرج؛ ويخير مدير المحطة بين:
+    <ol>
+      <li><strong>التحميل على العامل:</strong> إنشاء قيد يومية أو قيد سلفة موظف (Employee Advance / Deductions) لخصم مبلغ العجز من راتب عامل المضخة المتسبب.</li>
+      <li><strong>التحميل على مصروفات الشركة:</strong> اعتماد شطب المبلغ واعتباره خسارة تشغيلية بموافقة مدير العمليات.</li>
+    </ol>
+  </li>
+  <li><strong>حالة الزيادة النقدية (Cash Overage):</strong> يُقيد أي فائض نقدي غير مبرر في الصندوق لصالح حساب إيرادات أخرى متنوعة للشركة (Other Operating Income) ولا يجوز للعامل أو المشرف أخذ الفائض النقدي تحت أي ظرف.</li>
+</ul>

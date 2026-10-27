@@ -1,0 +1,101 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>المبيعات والفوترة والضرائب والشبكة:</strong> يطبق النظام معايير الفوترة الإلكترونية (ZATCA) بدقة متناهية، مع دعم الأسعار الشاملة لضريبة القيمة المضافة 15%، وخيارات الفوترة الفورية أو التجميعية، ومطابقة مبيعات أجهزة نقاط البيع (POS) مع كشوفات الحسابات البنكية وعمولات الشبكة.</p>
+</blockquote>
+
+<h2 id="invoicing-concepts">استراتيجيات الفوترة والضرائب في محطات الوقود<a class="h-anchor" href="#invoicing-concepts" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>تتم إدارة المبيعات والضرائب عبر خمسة مستندات تشغيلية مترابطة:</p>
+<ol class="steps">
+  <li>تجميع مئات التعبئات في فاتورة موحدة لكل وردية أو مضخة عبر <strong>دفعة فواتير المضخة (Fuel Pump Invoice Batch)</strong>.</li>
+  <li>ربط حركات التعبئة الميدانية بالدفعة عبر الجدول الفرعي <strong>حدث دفعة فواتير المضخة (Fuel Pump Invoice Batch Event)</strong>.</li>
+  <li>ضبط قوالب القيمة المضافة والأسعار الشاملة في <strong>سياسة ضرائب الوقود (Fuel Tax Policy)</strong>.</li>
+  <li>تهيئة حسابات وسيط الشبكة وعمولات البنوك عبر <strong>إعدادات مزود البطاقات (Fuel Card Provider Settings)</strong>.</li>
+  <li>مطابقة إيصالات مدى والبطاقات مع كشف الحساب البنكي عبر <strong>تسوية البطاقات البنكية (Card Settlement)</strong>.</li>
+</ol>
+
+<h2 id="invoice-batch-doctype">1. دفعة فواتير المضخة (Fuel Pump Invoice Batch)<a class="h-anchor" href="#invoice-batch-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>دفعة فواتير المضخة (Fuel Pump Invoice Batch)</strong> يحل معضلة تضخم قاعدة البيانات بفواتير المبيعات الفردية النقدية للجمهور؛ حيث يجمع حركات المضخة في فاتورة مبيعات قياسية موحدة في ERPNext:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link (إلزامي)</td><td>محطة الوقود المصدرة للدفعة.</td></tr>
+<tr><td><strong>تاريخ العمل</strong></td><td><strong>Business Date</strong></td><td><code>business_date</code></td><td>Date (إلزامي)</td><td>التاريخ المحاسبي للمبيعات.</td></tr>
+<tr><td><strong>الوردية</strong></td><td><strong>Shift</strong></td><td><code>shift</code></td><td>Link</td><td>الوردية التي تمت فيها التعبئات.</td></tr>
+<tr><td><strong>المضخة</strong></td><td><strong>Pump</strong></td><td><code>pump</code></td><td>Link</td><td>المضخة المحددة المجمعة فواتيرها.</td></tr>
+<tr><td><strong>صنف الوقود</strong></td><td><strong>Fuel Item</strong></td><td><code>item</code></td><td>Link (إلزامي)</td><td>صنف الوقود المباع في الدفعة (مثال: بنزين 91).</td></tr>
+<tr><td><strong>نوع الفاتورة</strong></td><td><strong>Invoice Type</strong></td><td><code>invoice_type</code></td><td>Select</td><td><code>Cash Batch</code> (مبيعات نقدية مجمعة)، <code>Card Batch</code> (مبيعات بطاقات)، <code>Customer Fleet Batch</code> (فاتورة أسطول).</td></tr>
+<tr><td><strong>العميل</strong></td><td><strong>Customer</strong></td><td><code>customer</code></td><td>Link</td><td>العميل المحدد (عميل نقدي افتراضي أو شركة أسطول).</td></tr>
+<tr><td><strong>طريقة الدفع</strong></td><td><strong>Payment Method</strong></td><td><code>payment_method</code></td><td>Select</td><td>طريقة السداد (نقداً، بطاقة شبكة، آجل).</td></tr>
+<tr><td><strong>كمية الفاتورة</strong></td><td><strong>Invoice Quantity</strong></td><td><code>invoice_quantity</code></td><td>Float (إلزامي)</td><td>إجمالي اللترات المفوترة في هذه الدفعة.</td></tr>
+<tr><td><strong>سعر اللتر</strong></td><td><strong>Unit Rate</strong></td><td><code>rate</code></td><td>Currency</td><td>سعر بيع اللتر المطبق.</td></tr>
+<tr><td><strong>مبلغ الفاتورة</strong></td><td><strong>Invoice Amount</strong></td><td><code>invoice_amount</code></td><td>Currency</td><td>إجمالي القيمة المالية للدفعة شاملة الضريبة.</td></tr>
+<tr><td><strong>قالب الضرائب والرسوم</strong></td><td><strong>Tax Template</strong></td><td><code>tax_template</code></td><td>Link</td><td>قالب ضريبة القيمة المضافة القياسي المعتمد (15%).</td></tr>
+<tr><td><strong>فاتورة المبيعات</strong></td><td><strong>Sales Invoice</strong></td><td><code>sales_invoice</code></td><td>Link</td><td>مستند فاتورة مبيعات ERPNext المتولد آلياً مع قيد اليومية وحركة المخزون.</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code> (مسودة دفعة), <code>Invoiced</code> (تم إنشاء وترحيل الفاتورة), <code>Cancelled</code>.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="invoice-batch-event-doctype">2. حدث دفعة فواتير المضخة (Fuel Pump Invoice Batch Event)<a class="h-anchor" href="#invoice-batch-event-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>جدول تفصيلي فرعي داخل <strong>دفعة فواتير المضخة (Fuel Pump Invoice Batch)</strong> يربط كل حركة تعبئة فردية بالدفعة لضمان التدقيق العكسي:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>عملية تعبئة وقود</strong></td><td><strong>Fuel Dispense Event</strong></td><td><code>fuel_dispense_event</code></td><td>Link (إلزامي)</td><td>الرقم المرجعي لحركة التعبئة الميدانية المنفذة على المضخة.</td></tr>
+<tr><td><strong>الكمية (لتر)</strong></td><td><strong>Quantity</strong></td><td><code>quantity</code></td><td>Float</td><td>عدد اللترات المصروفة في تلك الحركة.</td></tr>
+<tr><td><strong>السعر (لتر)</strong></td><td><strong>Rate</strong></td><td><code>rate</code></td><td>Currency</td><td>سعر اللتر وقت العملية.</td></tr>
+<tr><td><strong>المبلغ</strong></td><td><strong>Amount</strong></td><td><code>amount</code></td><td>Currency</td><td>إجمالي قيمة الحركة.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="fuel-tax-policy-doctype">3. سياسة ضرائب الوقود (Fuel Tax Policy)<a class="h-anchor" href="#fuel-tax-policy-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>سياسة ضرائب الوقود (Fuel Tax Policy)</strong> يضبط الامتثال الضريبي وفق متطلبات هيئة الزكاة والضريبة والجمارك (ZATCA):</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>اسم السياسة</strong></td><td><strong>Policy Name</strong></td><td><code>policy_name</code></td><td>Data (إلزامي)</td><td>اسم سياسة الضريبة (مثال: سياسة ضريبة القيمة المضافة القياسية 15%).</td></tr>
+<tr><td><strong>الشركة</strong></td><td><strong>Company</strong></td><td><code>company</code></td><td>Link (إلزامي)</td><td>الشركة الخاضعة لهذه السياسة الضريبية.</td></tr>
+<tr><td><strong>قالب ضريبة المبيعات</strong></td><td><strong>Sales Taxes and Charges Template</strong></td><td><code>sales_tax_template</code></td><td>Link</td><td>قالب احتساب ضريبة القيمة المضافة للمبيعات في ERPNext.</td></tr>
+<tr><td><strong>قالب ضريبة المشتريات</strong></td><td><strong>Purchase Taxes and Charges Template</strong></td><td><code>purchase_tax_template</code></td><td>Link</td><td>قالب استرداد ضريبة القيمة المضافة لمشتريات شحنات الوقود.</td></tr>
+<tr><td><strong>نمط ضريبة سعر البيع</strong></td><td><strong>Selling Price Tax Mode</strong></td><td><code>selling_price_tax_mode</code></td><td>Select</td><td><code>Tax Inclusive</code> (السعر شامل الضريبة)، أو <code>Tax Exclusive</code> (الضريبة تضاف فوق السعر).</td></tr>
+<tr><td><strong>اشتراط الرقم الضريبي للعميل</strong></td><td><strong>Require Customer Tax ID</strong></td><td><code>require_customer_tax_id</code></td><td>Check</td><td>إلزام إدخال الرقم الضريبي للشركات لإصدار فاتورة ضريبية قياسية B2B.</td></tr>
+<tr><td><strong>نشط</strong></td><td><strong>Active</strong></td><td><code>active</code></td><td>Check</td><td>تفعيل سريان السياسة الضريبية.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="card-provider-settings-doctype">4. إعدادات مزود البطاقات (Fuel Card Provider Settings)<a class="h-anchor" href="#card-provider-settings-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>إعدادات مزود البطاقات (Fuel Card Provider Settings)</strong> يحدد المعالجة المحاسبية لمبيعات الشبكة وأجهزة نقاط البيع البنكية:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>اسم مزود الخدمة</strong></td><td><strong>Card Provider Name</strong></td><td><code>provider</code></td><td>Data (إلزامي)</td><td>اسم الشبكة أو البنك المشغل لأجهزة نقاط البيع (مدى Mada, Visa, Mastercard, مصرف الراجحي).</td></tr>
+<tr><td><strong>الشركة</strong></td><td><strong>Company</strong></td><td><code>company</code></td><td>Link</td><td>الشركة التابع لها الحسابات.</td></tr>
+<tr><td><strong>حساب وسيط البطاقات</strong></td><td><strong>Card Clearing Account</strong></td><td><code>clearing_account</code></td><td>Link (إلزامي)</td><td>حساب الأصول المتداولة المؤقت المعلق به مبيعات الشبكة حتى ورود كشف البنك.</td></tr>
+<tr><td><strong>الحساب البنكي للتسوية</strong></td><td><strong>Bank Settlement Account</strong></td><td><code>settlement_account</code></td><td>Link (إلزامي)</td><td>الحساب الجاري الرئيسي للشركة في البنك المودع به المبالغ.</td></tr>
+<tr><td><strong>حساب عمولة مزود الخدمة</strong></td><td><strong>Provider Fee Account</strong></td><td><code>fee_account</code></td><td>Link</td><td>حساب مصروفات العمولات البنكية (Bank MDR Charges Expense).</td></tr>
+<tr><td><strong>نسبة العمولة الافتراضية %</strong></td><td><strong>Default Fee Percentage (%)</strong></td><td><code>fee_percentage</code></td><td>Float</td><td>نسبة العمولة المقتطعة من البنك (مثال: 0.8% مع سقف أعلى).</td></tr>
+<tr><td><strong>أيام التسوية المتوقعة</strong></td><td><strong>Settlement Days</strong></td><td><code>settlement_days</code></td><td>Int</td><td>المدة المعتادة لإيداع مبالغ الشبكة في البنك (T+1 أو T+2).</td></tr>
+<tr><td><strong>نشط</strong></td><td><strong>Active</strong></td><td><code>active</code></td><td>Check</td><td>تفعيل المزود.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="card-settlement-doctype">5. تسوية البطاقات البنكية (Card Settlement)<a class="h-anchor" href="#card-settlement-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>تسوية البطاقات البنكية (Card Settlement)</strong> يطابق الإيصالات المسجلة على أجهزة الشبكة في المحطة مع المبالغ المودعة فعلياً في الحساب البنكي، مع إثبات عمولة الشبكة آلياً بقيد يومية:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link (إلزامي)</td><td>المحطة التابع لها أجهزة الشبكة.</td></tr>
+<tr><td><strong>تاريخ العمل</strong></td><td><strong>Business Date</strong></td><td><code>business_date</code></td><td>Date (إلزامي)</td><td>تاريخ العمليات المسواة.</td></tr>
+<tr><td><strong>مزود البطاقة البنكية</strong></td><td><strong>Card Provider</strong></td><td><code>provider</code></td><td>Link (إلزامي)</td><td>مزود الخدمة البنكي المعتمد.</td></tr>
+<tr><td><strong>مبيعات البطاقات في المحطة</strong></td><td><strong>Station Card Transactions Amount</strong></td><td><code>station_card_amount</code></td><td>Currency</td><td>إجمالي مبيعات البطاقات المسجلة بالنظام من حركات التعبئة.</td></tr>
+<tr><td><strong>إجمالي تقرير جهاز الشبكة</strong></td><td><strong>POS Terminal Report Amount</strong></td><td><code>terminal_report_amount</code></td><td>Currency</td><td>إجمالي تقرير الموازنة اليومي المطبوع من جهاز نقاط البيع (Z-Report).</td></tr>
+<tr><td><strong>عمولة الشبكة البنكية</strong></td><td><strong>Provider Fee Amount</strong></td><td><code>provider_fee_amount</code></td><td>Currency</td><td>عمولة البنك المخصومة (MDR Fee).</td></tr>
+<tr><td><strong>المبلغ المودع بالبنك</strong></td><td><strong>Amount Transferred To Bank</strong></td><td><code>bank_transferred_amount</code></td><td>Currency</td><td>صافي النقد المحول فعلياً للحساب البنكي للشركة.</td></tr>
+<tr><td><strong>مبلغ الفارق</strong></td><td><strong>Difference Amount</strong></td><td><code>difference_amount</code></td><td>Currency</td><td>فارق التسوية (إن وجد) الناتج عن عمليات ملغاة أو متأخرة.</td></tr>
+<tr><td><strong>قيد تسوية اليومية</strong></td><td><strong>Settlement Journal Entry</strong></td><td><code>journal_entry</code></td><td>Link</td><td>قيد اليومية المتولد آلياً في ERPNext لتسوية الوسيط وإثبات العمولة.</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code> (مسودة تسوية), <code>Reconciled</code> (مطابق ومسوى), <code>Discrepancy</code> (يوجد فارق قيد المتابعة).</td></tr>
+</tbody>
+</table></div>

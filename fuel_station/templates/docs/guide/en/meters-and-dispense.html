@@ -1,0 +1,83 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>Meters & Dispense Operations:</strong> Dispenser meters represent the physical reality of petroleum movements. The system reconciles physical meter counter deltas against operational sales events, ensuring zero unbilled fuel loss.</p>
+</blockquote>
+
+<h2 id="dispense-overview">Operational Workflow of Fuel Dispensing<a class="h-anchor" href="#dispense-overview" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>Fuel dispensing relies on three foundational DocTypes:</p>
+<ol class="steps">
+  <li>Configure nozzles, connected tanks, and pulse meters in <strong>مضخة الوقود (Fuel Pump)</strong>.</li>
+  <li>Record verified opening and closing meter counters in <strong>قراءة عداد المضخة (Fuel Meter Reading)</strong>.</li>
+  <li>Log every single vehicle or customer fill transaction in <strong>عملية تعبئة وقود (Fuel Dispense Event)</strong>.</li>
+</ol>
+
+<h2 id="fuel-pump-doctype">1. Dispenser Unit: مضخة الوقود (Fuel Pump)<a class="h-anchor" href="#fuel-pump-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link (Mandatory)</td><td>Station where the dispenser is installed.</td></tr>
+<tr><td><strong>رقم المضخة (Pump Number)</strong></td><td><code>pump_number</code></td><td>Data (Mandatory)</td><td>Unique pump identifier (e.g. P-01, Nozzle 3).</td></tr>
+<tr><td><strong>خزان الوقود (Fuel Tank)</strong></td><td><code>tank</code></td><td>Link</td><td>Underground storage tank feeding this dispenser.</td></tr>
+<tr><td><strong>صنف الوقود (Fuel Item)</strong></td><td><code>item</code></td><td>Link</td><td>Standard ERPNext fuel item (Gasoline 91, 95, Diesel).</td></tr>
+<tr><td><strong>مصدر قراءة العداد (Meter Source)</strong></td><td><code>meter_source</code></td><td>Select</td><td><code>Manual</code> or <code>Electronic / ATG / IoT</code> automated feed.</td></tr>
+<tr><td><strong>قراءة العداد الحالية (Current Meter Reading)</strong></td><td><code>current_meter_reading</code></td><td>Float</td><td>Latest verified cumulative totalizer reading.</td></tr>
+<tr><td><strong>نوع العداد (Meter Type)</strong></td><td><code>meter_type</code></td><td>Select</td><td><code>Electronic</code> or <code>Mechanical</code> rotating roller.</td></tr>
+<tr><td><strong>المستودع (Warehouse)</strong></td><td><code>warehouse</code></td><td>Link</td><td>ERPNext warehouse mapped to the tank.</td></tr>
+<tr><td><strong>وحدة القياس (UOM)</strong></td><td><code>uom</code></td><td>Link</td><td>Dispense unit of measurement (Litre).</td></tr>
+<tr><td><strong>يتطلب وردية مفتوحة (Requires Shift)</strong></td><td><code>requires_shift</code></td><td>Check</td><td>Blocks dispensing unless an active shift is open.</td></tr>
+<tr><td><strong>نشط (Active)</strong></td><td><code>active</code></td><td>Check</td><td>Enables or disables dispenser for shift assignment.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="meter-reading-doctype">2. Meter Counter: قراءة عداد المضخة (Fuel Meter Reading)<a class="h-anchor" href="#meter-reading-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link (Mandatory)</td><td>Station branch.</td></tr>
+<tr><td><strong>تاريخ العمل (Business Date)</strong></td><td><code>business_date</code></td><td>Date</td><td>Operational accounting date.</td></tr>
+<tr><td><strong>الوردية (Shift)</strong></td><td><code>shift</code></td><td>Link</td><td>Shift under which reading was taken.</td></tr>
+<tr><td><strong>المضخة (Pump)</strong></td><td><code>pump</code></td><td>Link (Mandatory)</td><td>Dispenser pump counter.</td></tr>
+<tr><td><strong>نوع القراءة (Reading Type)</strong></td><td><code>reading_type</code></td><td>Select (Mandatory)</td><td><code>Opening</code>, <code>Closing</code>, <code>Mid-Shift</code>, <code>Calibration</code>.</td></tr>
+<tr><td><strong>القراءة السابقة (Previous Reading)</strong></td><td><code>previous_reading</code></td><td>Float</td><td>Last approved reading (immutable, auto-fetched).</td></tr>
+<tr><td><strong>قيمة القراءة (Reading Value)</strong></td><td><code>reading_value</code></td><td>Float (Mandatory)</td><td>Actual counter totalizer figure displayed on dispenser.</td></tr>
+<tr><td><strong>كمية العداد (فرق القراءة) (Meter Quantity)</strong></td><td><code>meter_quantity</code></td><td>Float</td><td>Auto-calculated: Reading Value - Previous Reading.</td></tr>
+<tr><td><strong>الموظف / العامل (Employee)</strong></td><td><code>employee</code></td><td>Link</td><td>Worker who logged the reading.</td></tr>
+<tr><td><strong>صورة العداد (Photo)</strong></td><td><code>photo</code></td><td>Attach Image</td><td>Smartphone photograph of the meter display for verification.</td></tr>
+<tr><td><strong>هل تم تصفير العداد؟ (Is Meter Reset / Rollover)</strong></td><td><code>is_meter_reset</code></td><td>Check</td><td>Checked when totalizer exceeds max value (e.g. 999,999) and rolls over.</td></tr>
+<tr><td><strong>سبب التصحيح (Correction Reason)</strong></td><td><code>correction_reason</code></td><td>Small Text</td><td>Audit explanation if an error was officially corrected.</td></tr>
+<tr><td><strong>معتمد من (Approved By)</strong></td><td><code>approved_by</code></td><td>Link</td><td>Supervisor validating the reading.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="dispense-event-doctype">3. Dispense Transaction: عملية تعبئة وقود (Fuel Dispense Event)<a class="h-anchor" href="#dispense-event-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link (Mandatory)</td><td>Station location.</td></tr>
+<tr><td><strong>المضخة (Pump)</strong></td><td><code>pump</code></td><td>Link (Mandatory)</td><td>Dispenser nozzle used.</td></tr>
+<tr><td><strong>صنف الوقود (Fuel Item)</strong></td><td><code>item</code></td><td>Link (Mandatory)</td><td>Fuel product (Gasoline 91, 95, Diesel).</td></tr>
+<tr><td><strong>طريقة الدفع (Payment Method)</strong></td><td><code>payment_method</code></td><td>Select</td><td><code>Cash</code>, <code>Card</code> (Mada/Visa POS), <code>Credit Customer</code> (Fleet), <code>Fuel Card / Coupon</code>, <code>Internal Issue</code>.</td></tr>
+<tr><td><strong>الكمية (لتر) (Quantity (Liters))</strong></td><td><code>quantity</code></td><td>Float (Mandatory)</td><td>Volume dispensed in litres.</td></tr>
+<tr><td><strong>سعر اللتر (Unit Rate)</strong></td><td><code>rate</code></td><td>Currency (Mandatory)</td><td>Unit rate per litre from official price list.</td></tr>
+<tr><td><strong>المبلغ الصافي الخاضع للضريبة (Net Amount)</strong></td><td><code>amount</code></td><td>Currency</td><td>Net price before VAT.</td></tr>
+<tr><td><strong>السعر شامل الضريبة (Prices Include Tax)</strong></td><td><code>prices_include_tax</code></td><td>Check</td><td>Confirms rate includes 15% VAT.</td></tr>
+<tr><td><strong>مبلغ الضريبة (Tax Amount)</strong></td><td><code>tax_amount</code></td><td>Currency</td><td>Standard VAT amount.</td></tr>
+<tr><td><strong>الإجمالي الكلي (Grand Total)</strong></td><td><code>grand_total</code></td><td>Currency</td><td>Total amount billed to customer.</td></tr>
+<tr><td><strong>العميل (Customer)</strong></td><td><code>customer</code></td><td>Link</td><td>Corporate client or default retail cash customer.</td></tr>
+<tr><td><strong>المركبة (Vehicle)</strong></td><td><code>vehicle</code></td><td>Link</td><td>Registered fleet vehicle.</td></tr>
+<tr><td><strong>رقم لوحة المركبة (Vehicle Plate Number)</strong></td><td><code>vehicle_plate_number</code></td><td>Data</td><td>Vehicle plate number.</td></tr>
+<tr><td><strong>السائق (Driver)</strong></td><td><code>driver</code></td><td>Link</td><td>Authorized driver.</td></tr>
+<tr><td><strong>قراءة عداد المركبة (Vehicle Odometer Reading)</strong></td><td><code>odometer_reading</code></td><td>Float</td><td>Vehicle mileage for fuel economy tracking.</td></tr>
+<tr><td><strong>رقم المرجع / الإيصال (Payment Reference)</strong></td><td><code>payment_reference</code></td><td>Data</td><td>Bank POS approval code / RRN.</td></tr>
+<tr><td><strong>أمر صرف الوقود (Fuel Issue Order)</strong></td><td><code>issue_order</code></td><td>Link</td><td>Internal issue order reference.</td></tr>
+<tr><td><strong>فاتورة المبيعات (Sales Invoice)</strong></td><td><code>invoice</code></td><td>Link</td><td>Associated ERPNext Sales Invoice.</td></tr>
+<tr><td><strong>حركة المخزون (Stock Entry)</strong></td><td><code>stock_document</code></td><td>Link</td><td>Associated ERPNext Stock Entry.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="cash-residual-logic">Cash Inference Formula<a class="h-anchor" href="#cash-residual-logic" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>When high station throughput prevents attendants from manually recording every cash customer in real time, the system computes inferred cash sales using meter residuals:</p>
+<div class="callout tip">
+  <p><strong>Meter Residual Inference:</strong></p>
+  <code>Inferred Cash Liters = Meter Reading Delta - (Card Liters + Fleet Liters + Internal Issue Liters + Calibration Liters)</code><br><br>
+  <code>Expected Cash Amount = Inferred Cash Liters × Tax-Inclusive Rate</code>
+</div>

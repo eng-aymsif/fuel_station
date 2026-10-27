@@ -1,0 +1,76 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>Customers, Fleets & Credit Limits:</strong> The platform delivers an advanced risk management ecosystem for corporate and credit fleets, combining real-time true credit exposure calculations to eliminate default risk with fine-grained vehicle and fuel restrictions.</p>
+</blockquote>
+
+<h2 id="fleet-overview">Corporate Fleet & Credit Operations Overview<a class="h-anchor" href="#fleet-overview" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>Fleet services rely on three core records:</p>
+<ol class="steps">
+  <li>Register fleet vehicles, approved fuel items, and tank volumes in <strong>مركبة العميل (Customer Vehicle)</strong>.</li>
+  <li>Document authorized drivers and contact credentials in <strong>سائق العميل (Customer Driver)</strong>.</li>
+  <li>Define legal credit limits, pricing, and billing periods in <strong>عقد عميل الوقود (Fuel Customer Contract)</strong>.</li>
+</ol>
+
+<h2 id="customer-vehicle-doctype">1. Fleet Vehicle: مركبة العميل (Customer Vehicle)<a class="h-anchor" href="#customer-vehicle-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>العميل (Customer)</strong></td><td><code>customer</code></td><td>Link</td><td>Corporate client owning this vehicle in ERPNext.</td></tr>
+<tr><td><strong>رقم اللوحة (Plate Number)</strong></td><td><code>plate_number</code></td><td>Data (Mandatory)</td><td>Official license plate (e.g. ABC 1234).</td></tr>
+<tr><td><strong>رمز المركبة (Vehicle Code)</strong></td><td><code>vehicle_code</code></td><td>Data</td><td>Internal fleet code assigned by the client.</td></tr>
+<tr><td><strong>نوع المركبة (Vehicle Type)</strong></td><td><code>vehicle_type</code></td><td>Data</td><td>Vehicle category (Sedan, Heavy Truck, Bus, Generator).</td></tr>
+<tr><td><strong>صنف / نوع الوقود (Fuel Type / Item)</strong></td><td><code>fuel_type</code></td><td>Link</td><td>Strictly approved fuel item (prevents dispensing wrong grade).</td></tr>
+<tr><td><strong>سعة خزان المركبة (لتر) (Fuel Tank Capacity (Liters))</strong></td><td><code>fuel_tank_capacity</code></td><td>Float</td><td>Maximum fuel tank volume (blocks overfills beyond tank size).</td></tr>
+<tr><td><strong>إلزامية تسجيل عداد المسافة (Odometer Required)</strong></td><td><code>odometer_required</code></td><td>Check</td><td>Enforces entering current mileage before dispensing.</td></tr>
+<tr><td><strong>قراءة العداد الحالية (Current Odometer Reading)</strong></td><td><code>odometer_reading</code></td><td>Float</td><td>Latest recorded odometer reading.</td></tr>
+<tr><td><strong>معدل الاستهلاك (لتر/100كم) (Average Consumption (L/100km))</strong></td><td><code>average_consumption</code></td><td>Float</td><td>Standard fuel consumption rating to detect theft or leakage.</td></tr>
+<tr><td><strong>الجهة المالكة (Owner Type)</strong></td><td><code>owner_type</code></td><td>Select</td><td><code>Customer Fleet</code> or <code>Company Asset</code> (internal vehicle).</td></tr>
+<tr><td><strong>نشط (Active)</strong></td><td><code>active</code></td><td>Check</td><td>Active status; deactivated vehicles cannot be refueled.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="customer-driver-doctype">2. Fleet Driver: سائق العميل (Customer Driver)<a class="h-anchor" href="#customer-driver-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>العميل (Customer)</strong></td><td><code>customer</code></td><td>Link (Mandatory)</td><td>Employer corporate client.</td></tr>
+<tr><td><strong>اسم السائق (Driver Name)</strong></td><td><code>driver_name</code></td><td>Data (Mandatory)</td><td>Full driver name.</td></tr>
+<tr><td><strong>رمز السائق (Driver Code)</strong></td><td><code>driver_code</code></td><td>Data</td><td>Corporate employee badge ID.</td></tr>
+<tr><td><strong>رقم الهوية أو الإقامة (National ID or Reference)</strong></td><td><code>national_id_or_reference</code></td><td>Data</td><td>Official ID or residency permit.</td></tr>
+<tr><td><strong>رقم رخصة القيادة (License Number)</strong></td><td><code>license_number</code></td><td>Data</td><td>Driving license number.</td></tr>
+<tr><td><strong>تاريخ انتهاء الرخصة (License Expiry Date)</strong></td><td><code>license_expiry</code></td><td>Date</td><td>License expiration date for compliance checks.</td></tr>
+<tr><td><strong>الهاتف (Phone)</strong></td><td><code>phone</code></td><td>Data</td><td>Driver mobile phone for dispatch and OTP verification.</td></tr>
+<tr><td><strong>نشط (Active)</strong></td><td><code>active</code></td><td>Check</td><td>Active driver status.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="customer-contract-doctype">3. Corporate Contract: عقد عميل الوقود (Fuel Customer Contract)<a class="h-anchor" href="#customer-contract-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>العميل (Customer)</strong></td><td><code>customer</code></td><td>Link (Mandatory)</td><td>Corporate client account.</td></tr>
+<tr><td><strong>رقم العقد (Contract Number)</strong></td><td><code>contract_number</code></td><td>Data (Mandatory)</td><td>Unique contract identifier.</td></tr>
+<tr><td><strong>الحالة (Status)</strong></td><td><code>status</code></td><td>Select</td><td><code>Active</code>, <code>Suspended</code>, <code>Expired</code>, <code>Terminated</code>.</td></tr>
+<tr><td><strong>تاريخ البدء (Start Date)</strong></td><td><code>start_date</code></td><td>Date (Mandatory)</td><td>Contract effective start date.</td></tr>
+<tr><td><strong>تاريخ الانتهاء (End Date)</strong></td><td><code>end_date</code></td><td>Date (Mandatory)</td><td>Contract expiration date.</td></tr>
+<tr><td><strong>سقف الائتمان المعتمد (Contract Credit Limit)</strong></td><td><code>credit_limit</code></td><td>Currency</td><td>Maximum allowable credit exposure (e.g. 50,000 SAR).</td></tr>
+<tr><td><strong>الحد اليومي للوقود (Daily Fuel Limit)</strong></td><td><code>daily_limit</code></td><td>Float</td><td>Maximum volume or amount permissible per calendar day.</td></tr>
+<tr><td><strong>الحد الشهري للوقود (Monthly Fuel Limit)</strong></td><td><code>monthly_limit</code></td><td>Float</td><td>Maximum monthly allowance.</td></tr>
+<tr><td><strong>سياسة تجاوز سقف الائتمان (Credit Over-Limit Policy)</strong></td><td><code>credit_control_policy</code></td><td>Select</td><td><code>Block Immediately</code> or <code>Require Manager Override</code>.</td></tr>
+<tr><td><strong>قائمة الأسعار (Price List)</strong></td><td><code>price_list</code></td><td>Link</td><td>Agreed commercial selling price list.</td></tr>
+<tr><td><strong>نسبة الخصم التعاقدي % (Contract Discount (%))</strong></td><td><code>discount_percentage</code></td><td>Float</td><td>Percentage discount applied to gross invoice.</td></tr>
+<tr><td><strong>مبلغ الخصم باللتر (Contract Discount Amount per Liter)</strong></td><td><code>discount_amount</code></td><td>Currency</td><td>Fixed currency rebate per dispensed litre.</td></tr>
+<tr><td><strong>تكرار الفوترة (Invoice Frequency)</strong></td><td><code>invoice_frequency</code></td><td>Select</td><td><code>Daily</code>, <code>Weekly</code>, <code>Bi-Weekly</code>, <code>Monthly</code>.</td></tr>
+<tr><td><strong>قالب شروط الدفع (Payment Terms Template)</strong></td><td><code>payment_terms</code></td><td>Link</td><td>Payment maturity terms (e.g. Net 30 Days).</td></tr>
+<tr><td><strong>الأصناف المسموحة (Allowed Items)</strong></td><td><code>allowed_items</code></td><td>Small Text</td><td>Comma-separated list of permitted fuel items.</td></tr>
+<tr><td><strong>المحطات المسموحة (Allowed Stations)</strong></td><td><code>allowed_stations</code></td><td>Small Text</td><td>Comma-separated list of authorized station branches.</td></tr>
+<tr><td><strong>المركبات المسموحة (Allowed Vehicles)</strong></td><td><code>allowed_vehicles</code></td><td>Small Text</td><td>Authorized vehicle plate numbers under this contract.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="credit-check-algorithm">True Credit Exposure Health Check<a class="h-anchor" href="#credit-check-algorithm" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>Unlike conventional systems that only inspect ledger aging reports, the engine dynamically checks live operational exposure prior to releasing nozzle fuel:</p>
+<div class="callout tip">
+  <p><strong>Live Credit Health Formula:</strong></p>
+  <code>Available Credit Balance = Approved Credit Limit - [Outstanding Posted Sales Invoices + Unbilled Real-time Dispense Events - Unallocated Customer Receipts]</code><br><br>
+  <strong>Automatic Policy:</strong> If Current Dispense Estimate > Available Credit ➔ <strong>Dispenser immediately halts authorization</strong>.
+</div>

@@ -1,0 +1,94 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>الخزانات والتوريدات والمخزون والمعايرة:</strong> تمثل الخزانات الأرضية مستودعات الوقود الفعلية في المحطة. يربط النظام بين كميات بوالص الشحن الواردة من شركات البترول وقراءات مسطرة القياس (Dipstick) ومجسات القياس الآلي (ATG)، مع توليد قيود الاستلام المخزني القياسية في <strong>ERPNext</strong>.</p>
+</blockquote>
+
+<h2 id="tanks-overview">إدارة الخزانات والمشتريات المخزنية<a class="h-anchor" href="#tanks-overview" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>ترتكز دورة المخزون والتوريدات البترولية على أربعة مستندات رئيسية:</p>
+<ol class="steps">
+  <li>تعريف الخزانات الأرضية وربطها بمستودعات ERPNext في <strong>خزان الوقود (Fuel Tank)</strong>.</li>
+  <li>توثيق استلام شحنات صهاريج الوقود وفحص الجودة في <strong>توريد وقود (Fuel Delivery)</strong>.</li>
+  <li>تسجيل لترات فحص ومعايرة المضخات واستبعادها من المبيعات في <strong>عملية معايرة المضخة (Fuel Calibration Event)</strong>.</li>
+  <li>مطابقة رصيد المستودع الدفتري مع المقياس الفعلي في <strong>تسوية مخزون الخزان (Fuel Tank Reconciliation)</strong>.</li>
+</ol>
+
+<h2 id="fuel-tank-doctype">1. خزان الوقود (Fuel Tank)<a class="h-anchor" href="#fuel-tank-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>خزان الوقود (Fuel Tank)</strong> يمثل المستودع الفعلي تحت الأرض لكل منتج بترولي:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link (إلزامي)</td><td>المحطة التي يوجد بها الخزان الأرضي.</td></tr>
+<tr><td><strong>رقم الخزان</strong></td><td><strong>Tank Number</strong></td><td><code>tank_number</code></td><td>Data (إلزامي)</td><td>الرقم المميز للخزان (مثال: T-01، خزان بنزين 91 شمالي).</td></tr>
+<tr><td><strong>صنف الوقود</strong></td><td><strong>Fuel Item</strong></td><td><code>item</code></td><td>Link (إلزامي)</td><td>صنف الوقود المخزن حصراً في هذا الخزان (بنزين 91، 95، ديزل).</td></tr>
+<tr><td><strong>المستودع</strong></td><td><strong>Warehouse</strong></td><td><code>warehouse</code></td><td>Link (إلزامي)</td><td>مستودع ERPNext القياسي المطابق لهذا الخزان في دفتر الأستاذ المخزني.</td></tr>
+<tr><td><strong>السعة (لتر)</strong></td><td><strong>Capacity (Liters)</strong></td><td><code>capacity</code></td><td>Float (إلزامي)</td><td>السعة الهندسية الكلية للخزان (مثال: 50,000 لتر).</td></tr>
+<tr><td><strong>الحد الأدنى لمستوى الوقود (لتر)</strong></td><td><strong>Minimum Level (Liters)</strong></td><td><code>minimum_level</code></td><td>Float</td><td>مستوى الوقود الحرج (Dead Stock) لمنع سحب الشوائب من قاع الخزان.</td></tr>
+<tr><td><strong>نقطة إعادة الطلب (لتر)</strong></td><td><strong>Reorder Level (Liters)</strong></td><td><code>reorder_level</code></td><td>Float</td><td>مستوى المخزون الذي يتطلب طلب شحنة توريد جديدة من شركة البترول.</td></tr>
+<tr><td><strong>نقطة التنبيه والإنذار</strong></td><td><strong>Alert Point (Liters)</strong></td><td><code>alert_point</code></td><td>Float</td><td>مستوى التحذير العاجل لقرب نفاد الوقود في المحطة.</td></tr>
+<tr><td><strong>نشط</strong></td><td><strong>Active</strong></td><td><code>active</code></td><td>Check</td><td>حالة عمل الخزان (إيقافه يوقف المضخات المتصلة به).</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="fuel-delivery-doctype">2. توريد وقود (Fuel Delivery)<a class="h-anchor" href="#fuel-delivery-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>توريد وقود (Fuel Delivery)</strong> يوثق وصول شاحنة صهريج الوقود وتفريغها، ويربط الكميات المقاسة بسند استلام المشتريات الرسمي:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link (إلزامي)</td><td>محطة الاستلام.</td></tr>
+<tr><td><strong>خزان الوقود</strong></td><td><strong>Fuel Tank</strong></td><td><code>tank</code></td><td>Link (إلزامي)</td><td>الخزان الذي تم تفريغ الشحنة بداخله.</td></tr>
+<tr><td><strong>المورد</strong></td><td><strong>Supplier</strong></td><td><code>supplier</code></td><td>Link (إلزامي)</td><td>شركة توريد الوقود (مثل: أرامكو السعودية Aramco، شركة توزيع بترولية).</td></tr>
+<tr><td><strong>تاريخ التوريد</strong></td><td><strong>Delivery Date</strong></td><td><code>delivery_date</code></td><td>Date (إلزامي)</td><td>تاريخ وصول وتفريغ الشحنة.</td></tr>
+<tr><td><strong>رقم الشاحنة / الصهريج</strong></td><td><strong>Truck Number</strong></td><td><code>truck_number</code></td><td>Data</td><td>رقم لوحة شاحنة النقل للتتبع الأمني.</td></tr>
+<tr><td><strong>رقم مستند المورد / بوليصة الشحن</strong></td><td><strong>Supplier Document Number</strong></td><td><code>supplier_document_no</code></td><td>Data</td><td>رقم فاتورة أو بوليصة شحن المورد (Bill of Lading).</td></tr>
+<tr><td><strong>الكمية حسب المستند (لتر)</strong></td><td><strong>Document Quantity (Liters)</strong></td><td><code>document_quantity</code></td><td>Float (إلزامي)</td><td>الكمية المفوترة من المورد عند درجة الحرارة المعيارية 15°م.</td></tr>
+<tr><td><strong>الكمية الفعلية المستلمة (لتر)</strong></td><td><strong>Actual Received Quantity (Liters)</strong></td><td><code>received_quantity</code></td><td>Float (إلزامي)</td><td>الكمية المقاسة فعلياً في خزان المحطة بعد التفريغ.</td></tr>
+<tr><td><strong>فرق كمية التوريد (لتر)</strong></td><td><strong>Delivery Variance Quantity</strong></td><td><code>variance_quantity</code></td><td>Float</td><td>محسوبة آلياً: (الكمية المستلمة - الكمية حسب المستند).</td></tr>
+<tr><td><strong>الكمية المسموح بالتسامح فيها</strong></td><td><strong>Allowed Tolerance Quantity</strong></td><td><code>allowed_tolerance_quantity</code></td><td>Float</td><td>حد العجز المقبول طبيعياً بسبب التبخر أو النقل (مثلاً: 0.2%).</td></tr>
+<tr><td><strong>قراءة الخزان قبل التفريغ</strong></td><td><strong>Tank Reading Before</strong></td><td><code>tank_reading_before</code></td><td>Float</td><td>ارتفاع وقود الخزان بالمسطرة/المجس قبل فتح صمامات الصهريج.</td></tr>
+<tr><td><strong>قراءة الخزان بعد التفريغ</strong></td><td><strong>Tank Reading After</strong></td><td><code>tank_reading_after</code></td><td>Float</td><td>ارتفاع وقود الخزان بعد انتهاء التفريغ واستقرار الوقود.</td></tr>
+<tr><td><strong>درجة الحرارة (°م)</strong></td><td><strong>Temperature (°C)</strong></td><td><code>temperature</code></td><td>Float</td><td>درجة حرارة الشحنة لتطبيق معادلة تصحيح الكثافة الحجمية.</td></tr>
+<tr><td><strong>الكثافة المقاسة</strong></td><td><strong>Density</strong></td><td><code>density</code></td><td>Float</td><td>كثافة المنتج البترولي بالهيدروميتر للتأكد من عدم الغش التجاري.</td></tr>
+<tr><td><strong>نتيجة فحص عينة الجودة والماء</strong></td><td><strong>Sample Quality Result</strong></td><td><code>sample_result</code></td><td>Select</td><td><code>Passed</code> (سليم خالٍ من الماء)، <code>Water Detected</code> (اكتشاف ماء)، <code>Contaminated</code>.</td></tr>
+<tr><td><strong>سند استلام المشتريات</strong></td><td><strong>Purchase Receipt</strong></td><td><code>purchase_receipt</code></td><td>Link</td><td>سند استلام بضاعة ERPNext المتولد آلياً لزيادة رصيد المستودع.</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code>, <code>Received</code>, <code>Discrepancy Approved</code>.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="calibration-event-doctype">3. عملية معايرة المضخة (Fuel Calibration Event)<a class="h-anchor" href="#calibration-event-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>عملية معايرة المضخة (Fuel Calibration Event)</strong> يوثق اختبار دقة عدادات المضخات بمكاييل المعايرة المعتمدة (مثل مكيال 20 لتراً)، ويفصل هذه اللترات عن المبيعات:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link (إلزامي)</td><td>محطة الوقود.</td></tr>
+<tr><td><strong>المضخة</strong></td><td><strong>Pump</strong></td><td><code>pump</code></td><td>Link (إلزامي)</td><td>المضخة الخاضعة للفحص والمعايرة.</td></tr>
+<tr><td><strong>صنف الوقود</strong></td><td><strong>Fuel Item</strong></td><td><code>item</code></td><td>Link (إلزامي)</td><td>صنف الوقود المعاير.</td></tr>
+<tr><td><strong>القراءة السابقة</strong></td><td><strong>Previous Reading</strong></td><td><code>previous_reading</code></td><td>Float (إلزامي)</td><td>قراءة عداد المضخة قبل بدء ضخ مكيال المعايرة.</td></tr>
+<tr><td><strong>قراءة العداد الحالية</strong></td><td><strong>Current Reading</strong></td><td><code>current_reading</code></td><td>Float (إلزامي)</td><td>قراءة عداد المضخة بعد ضخ كمية المعايرة.</td></tr>
+<tr><td><strong>كمية المعايرة (لتر)</strong></td><td><strong>Quantity (Liters)</strong></td><td><code>quantity</code></td><td>Float</td><td>حجم الوقود المستخدم في الفحص (مثال: 20 لتر).</td></tr>
+<tr><td><strong>السبب</strong></td><td><strong>Reason</strong></td><td><code>reason</code></td><td>Small Text (إلزامي)</td><td>سبب المعايرة (فحص دوري لوزارة التجارة، صيانة مضخة، شكوى عميل).</td></tr>
+<tr><td><strong>المعالجة المخزنية</strong></td><td><strong>Stock Treatment</strong></td><td><code>stock_treatment</code></td><td>Select</td><td><code>Return to Tank</code> (إعادة الوقود للخزان فوراً)، أو <code>Waste Expense</code> (اعتبارها تالفاً ومصروف هدر).</td></tr>
+<tr><td><strong>حساب مصروف الهدر</strong></td><td><strong>Waste / Calibration Expense Account</strong></td><td><code>waste_account</code></td><td>Link</td><td>حساب المصروف المحمل بالقيمة في حال عدم استرجاع الوقود للخزان.</td></tr>
+<tr><td><strong>حركة المخزون</strong></td><td><strong>Stock Entry</strong></td><td><code>stock_entry</code></td><td>Link</td><td>سند القيد المخزني في ERPNext لتوثيق حركة الوقود.</td></tr>
+<tr><td><strong>نتيجة المعايرة</strong></td><td><strong>Calibration Result</strong></td><td><code>calibration_result</code></td><td>Select</td><td><code>Accurate</code> (مطابق للمعايير القياسية), <code>Adjusted</code> (تم ضبط النبضات), <code>Failed</code>.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="tank-reconciliation-doctype">4. تسوية مخزون الخزان (Fuel Tank Reconciliation)<a class="h-anchor" href="#tank-reconciliation-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>تسوية مخزون الخزان (Fuel Tank Reconciliation)</strong> يطابق الرصيد المحاسبي في دفتر الأستاذ المخزني (Stock Ledger) مع القياس الميداني الفعلي للخزان لمعالجة فروقات التبخر أو التسريب:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link (إلزامي)</td><td>المحطة الخاضعة للجرد.</td></tr>
+<tr><td><strong>خزان الوقود</strong></td><td><strong>Fuel Tank</strong></td><td><code>tank</code></td><td>Link (إلزامي)</td><td>الخزان الذي تم أخذ مقاسه.</td></tr>
+<tr><td><strong>تاريخ العمل</strong></td><td><strong>Business Date</strong></td><td><code>business_date</code></td><td>Date (إلزامي)</td><td>تاريخ التسوية والجرد.</td></tr>
+<tr><td><strong>المستودع</strong></td><td><strong>Warehouse</strong></td><td><code>warehouse</code></td><td>Link</td><td>مستودع الخزان في ERPNext.</td></tr>
+<tr><td><strong>الكمية الدفترية في المخزن</strong></td><td><strong>Book Stock Quantity (Stock Ledger)</strong></td><td><code>book_quantity</code></td><td>Float</td><td>الرصيد النظامي الحالي في دفتر المخزون.</td></tr>
+<tr><td><strong>الكمية الفعلية المقاسة بالمسطرة/المجس</strong></td><td><strong>Physical Dip Reading Quantity</strong></td><td><code>physical_dip_quantity</code></td><td>Float (إلزامي)</td><td>الكمية المادية الفعلية الموجودة داخل الخزان باللتر.</td></tr>
+<tr><td><strong>فرق الكمية (لتر)</strong></td><td><strong>Variance Quantity</strong></td><td><code>variance_quantity</code></td><td>Float</td><td>محسوبة آلياً: (الكمية الفعلية - الكمية الدفترية).</td></tr>
+<tr><td><strong>تسوية المخزون القياسية</strong></td><td><strong>Stock Reconciliation</strong></td><td><code>stock_reconciliation</code></td><td>Link</td><td>مستند Stock Reconciliation في ERPNext لتعديل رصيد المستودع محاسبياً.</td></tr>
+<tr><td><strong>الحالة</strong></td><td><strong>Status</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code>, <code>Reconciled</code>, <code>Discrepancy Approved</code>.</td></tr>
+</tbody>
+</table></div>

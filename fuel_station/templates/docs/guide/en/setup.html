@@ -1,0 +1,114 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>Setup & Operational Settings:</strong> This section forms the operational and financial foundation of the fuel station network, defining invoicing triggers, stock ledger policies, tolerance thresholds, and linking stations to the <strong>ERPNext</strong> Chart of Accounts.</p>
+</blockquote>
+
+<h2 id="setup-overview">System Setup Overview<a class="h-anchor" href="#setup-overview" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>Before launching pump operations, three foundational documents must be configured:</p>
+<ol class="steps">
+  <li>Register stations and branches in <strong>محطة الوقود (Fuel Station)</strong> and map them to companies and cost centers.</li>
+  <li>Define operating rules, shift timings, cash inference, and tolerances in <strong>إعدادات تشغيل محطة الوقود (Fuel Operations Settings)</strong>.</li>
+  <li>Restrict employee access per station or pump using <strong>قاعدة نطاق الصلاحيات التشغيلية (Fuel Operations Scope Rule)</strong>.</li>
+</ol>
+
+<h2 id="fuel-station-doctype">1. Fuel Station Master Record: محطة الوقود (Fuel Station)<a class="h-anchor" href="#fuel-station-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>The <strong>محطة الوقود (Fuel Station)</strong> document represents a physical station branch, linking operations to corporate accounting:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Operational Description</th></tr></thead>
+<tbody>
+<tr><td><strong>اسم المحطة (Station Name)</strong></td><td><code>station_name</code></td><td>Data (Mandatory)</td><td>Commercial name of the station (e.g., Airport Road Station).</td></tr>
+<tr><td><strong>رمز المحطة (Station Code)</strong></td><td><code>station_code</code></td><td>Data</td><td>Unique short code (e.g., ST-01, JED-NORTH).</td></tr>
+<tr><td><strong>الشركة (Company)</strong></td><td><code>company</code></td><td>Link (Mandatory)</td><td>Parent ERPNext Company ensuring unified GL posting.</td></tr>
+<tr><td><strong>الفرع (Branch)</strong></td><td><code>branch</code></td><td>Data</td><td>Administrative branch or regional territory.</td></tr>
+<tr><td><strong>مركز التكلفة الافتراضي (Default Cost Center)</strong></td><td><code>default_cost_center</code></td><td>Link</td><td>Cost center where station revenues and expenses are recognized.</td></tr>
+<tr><td><strong>قائمة الأسعار الافتراضية (Default Selling Price List)</strong></td><td><code>default_price_list</code></td><td>Link</td><td>Standard price list for petrol and diesel at this station.</td></tr>
+<tr><td><strong>نشط (Active)</strong></td><td><code>active</code></td><td>Check</td><td>Enables or suspends shift transactions at this location.</td></tr>
+<tr><td><strong>العميل النقدي الافتراضي (Default Cash Customer)</strong></td><td><code>default_cash_customer</code></td><td>Link</td><td>ERPNext customer used for rapid retail cash sales.</td></tr>
+<tr><td><strong>حساب الصندوق الافتراضي (Default Cash Account)</strong></td><td><code>default_cash_account</code></td><td>Link</td><td>Current asset account for station pump cash drawers.</td></tr>
+<tr><td><strong>حساب وسيط البطاقات (Default Card Clearing Account)</strong></td><td><code>default_card_clearing_account</code></td><td>Link</td><td>Clearing account for bank card POS transactions.</td></tr>
+<tr><td><strong>حساب الإيراد الافتراضي (Default Income Account)</strong></td><td><code>default_income_account</code></td><td>Link</td><td>P&L account for retail fuel sales revenue.</td></tr>
+<tr><td><strong>حساب مصروف الاستهلاك الداخلي (Default Internal Consumption Expense Account)</strong></td><td><code>default_expense_account</code></td><td>Link</td><td>Expense account charged for internal company vehicle consumption.</td></tr>
+<tr><td><strong>حساب هدر ومعايرة الوقود (Default Calibration/Waste Expense Account)</strong></td><td><code>default_waste_account</code></td><td>Link</td><td>Expense account for pump calibration errors and unrecoverable loss.</td></tr>
+<tr><td><strong>حساب الفروقات الافتراضي (Default Variance Account)</strong></td><td><code>default_variance_account</code></td><td>Link</td><td>Account for approved cash shortages, overages, and meter variances.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="fuel-operations-settings">2. Operational Configuration: إعدادات تشغيل محطة الوقود (Fuel Operations Settings)<a class="h-anchor" href="#fuel-operations-settings" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>The single document <strong>إعدادات تشغيل محطة الوقود (Fuel Operations Settings)</strong> governs operational behaviors across all branches:</p>
+
+<h3 id="operating-modes">A. Operating Modes & Stock Posting Policies</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Options & Operational Impact</th></tr></thead>
+<tbody>
+<tr><td><strong>منشئ الفاتورة (Invoice Creator Mode)</strong></td><td><code>Attendant</code>, <code>Supervisor</code>, <code>Cashier</code>, <code>Accountant</code>, <code>Automatic</code>. Defines the role authorized to generate sales invoices.</td></tr>
+<tr><td><strong>معتمد الفاتورة (Invoice Submitter Mode)</strong></td><td><code>Supervisor</code>, <code>Cashier</code>, <code>Accountant</code>, <code>Automatic</code> (submits invoice immediately upon generation).</td></tr>
+<tr><td><strong>توقيت إنشاء الفاتورة (Invoice Timing)</strong></td><td><code>Per Dispense</code> (real-time invoice per vehicle), <code>Per Shift</code> (consolidated batch invoice per shift), <code>Per Pump</code>, <code>Manual</code>.</td></tr>
+<tr><td><strong>توقيت تسجيل حركة التعبئة (Transaction Capture Timing)</strong></td><td><code>Realtime</code> (captured live from meter or attendant UI), <code>Post-Shift</code> (entered at shift close).</td></tr>
+<tr><td><strong>توقيت ترحيل المخزون (Stock Posting Timing)</strong></td><td><code>On Dispense</code> (instant stock deduction), <code>On Invoice Submit</code>, <code>On Shift Close</code> (bulk stock deduction).</td></tr>
+</tbody>
+</table></div>
+
+<h3 id="grouping-config">B. Invoice Grouping Configuration</h3>
+<ul>
+  <li><strong>تجميع حسب المحطة (Group By Station)</strong>: Combines events from the same station into one batch invoice.</li>
+  <li><strong>تجميع حسب المضخة (Group By Pump)</strong>: Issues distinct invoices per dispenser pump.</li>
+  <li><strong>تجميع حسب الوردية (Group By Shift)</strong>: Groups all sales of the shift together.</li>
+  <li><strong>تجميع حسب عامل المضخة (Group By Attendant)</strong>: Isolates sales per worker for custody auditing.</li>
+  <li><strong>تجميع حسب الصنف (Group By Item)</strong>: Separates Gasoline 91, 95, and Diesel invoices.</li>
+  <li><strong>تجميع حسب السعر (Group By Rate)</strong>: Splits transactions if price revisions occurred mid-shift.</li>
+  <li><strong>تجميع حسب طريقة الدفع (Group By Payment Method)</strong>: Separates Cash, Card, and Credit sales.</li>
+  <li><strong>تجميع حسب العميل (Group By Customer)</strong>: Aggregates fleet transactions per corporate client.</li>
+  <li><strong>تجميع حسب مركز التكلفة (Group By Cost Center)</strong>: Preserves exact departmental cost accounting.</li>
+</ul>
+
+<h3 id="attendant-and-meter-controls">C. Meter, Cash Inference & Tolerance Controls</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Type</th><th>Control & Audit Purpose</th></tr></thead>
+<tbody>
+<tr><td><strong>مصدر قراءة العداد (Meter Source)</strong></td><td>Select</td><td><code>Manual</code> (attendant input) or <code>Electronic / ATG / IoT</code> (automated dispenser controller feed).</td></tr>
+<tr><td><strong>إلزامية القراءة الافتتاحية (Require Opening Reading)</strong></td><td>Check</td><td>Blocks shift opening and dispensing until opening meter reading is verified.</td></tr>
+<tr><td><strong>إلزامية القراءة الختامية (Require Closing Reading)</strong></td><td>Check</td><td>Enforces closing meter entry before shift reconciliation.</td></tr>
+<tr><td><strong>السماح بتعديل العداد (Allow Meter Correction)</strong></td><td>Check</td><td>Allows authorized supervisors to fix mistyped meter readings.</td></tr>
+<tr><td><strong>تعديل العداد يتطلب موافقة (Meter Correction Requires Approval)</strong></td><td>Check</td><td>Requires Station Manager approval and logs event in <strong>سجل تدقيق محطة الوقود (Fuel Audit Log)</strong>.</td></tr>
+<tr><td><strong>كمية تسامح فرق العداد (Allowed Variance Liters)</strong></td><td>Float</td><td>Maximum acceptable liter discrepancy between meter difference and dispense events (e.g., 2.0 L).</td></tr>
+<tr><td><strong>نسبة تسامح فرق العداد (Allowed Variance Percent)</strong></td><td>Float</td><td>Acceptable discrepancy percentage (e.g., 0.1%).</td></tr>
+<tr><td><strong>نمط استنتاج النقد (Cash Inference Mode)</strong></td><td>Select</td><td><code>Meter Residual</code>: Cash = Meter Delta - (Card + Fleet + Issues). <code>Transaction-Based</code>: Cash = Sum of Cash Dispenses.</td></tr>
+<tr><td><strong>سياسة الكمية غير المصنفة (Unclassified Quantity Policy)</strong></td><td>Select</td><td><code>Treat as Cash</code> or <code>Block Close</code> (mandates classifying every liter before closing shift).</td></tr>
+<tr><td><strong>سياسة كمية النقد السالبة (Negative Cash Quantity Policy)</strong></td><td>Select</td><td><code>Block Close</code> or <code>Create Exception</code> if card/credit sales exceed meter reading delta.</td></tr>
+</tbody>
+</table></div>
+
+<h3 id="shift-and-safe-controls">D. Shifts, Cash Boxes & Safe Regulations</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Operational Rule</th></tr></thead>
+<tbody>
+<tr><td><strong>تفعيل نظام الورديات (Shift Mode Enabled)</strong></td><td>Activates formal structured shift periods across the station.</td></tr>
+<tr><td><strong>فتح الوردية يتطلب مشرف (Shift Opening Requires Supervisor)</strong></td><td>Requires a user with <strong>مشرف الوردية (Shift Supervisor)</strong> role to launch a shift.</td></tr>
+<tr><td><strong>إغلاق الوردية يتطلب مشرف (Shift Closing Requires Supervisor)</strong></td><td>Prohibits attendants from closing shifts autonomously.</td></tr>
+<tr><td><strong>التسليم يتطلب قراءة عداد (Handover Requires Meter Reading)</strong></td><td>Requires meter reading verification on <strong>تسليم واستلام المضخة (Pump Handover)</strong>.</td></tr>
+<tr><td><strong>التسليم يتطلب جرد نقد (Handover Requires Cash Count)</strong></td><td>Mandates counting cash custody during attendant transitions.</td></tr>
+<tr><td><strong>إلزامية صندوق النقد (Cash Box Required)</strong></td><td>Enforces individual <strong>صندوق النقد (Fuel Cash Box)</strong> per worker to isolate cash shortages.</td></tr>
+<tr><td><strong>إلزامية خزينة المحطة (Safe Required)</strong></td><td>Requires transferring field cash to <strong>خزينة المحطة (Fuel Station Safe)</strong> prior to closing.</td></tr>
+<tr><td><strong>عد النقد بالفئات (Cash Count By Denominations)</strong></td><td>Enforces filling <strong>عد فئات النقد (Fuel Denomination Count)</strong> for all banknotes and coins.</td></tr>
+<tr><td><strong>تأكيد المستلم للتحويل النقدي (Cash Transfer Requires Receiver Confirmation)</strong></td><td>Requires two-party digital confirmation on <strong>تحويل نقدي للخزينة (Cash Transfer)</strong>.</td></tr>
+<tr><td><strong>مبلغ تسامح عجز النقد (Cash Variance Tolerance Amount)</strong></td><td>Monetary threshold for auto-posting cash variances (e.g., 10 SAR).</td></tr>
+<tr><td><strong>السماح بإعادة فتح وردية مغلقة (Allow Reopen Closed Shift)</strong></td><td>Restricted override for Station and Operations Managers to resolve audit disputes.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="scope-rules-doctype">3. Station Permissions: قاعدة نطاق الصلاحيات التشغيلية (Fuel Operations Scope Rule)<a class="h-anchor" href="#scope-rules-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>The <strong>قاعدة نطاق الصلاحيات التشغيلية (Fuel Operations Scope Rule)</strong> restricts employees to designated stations and pumps:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>الشركة (Company)</strong></td><td><code>company</code></td><td>Link</td><td>Company to which this scope rule applies.</td></tr>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link</td><td>Specific station allowed for the assigned user/role.</td></tr>
+<tr><td><strong>المضخة (Pump)</strong></td><td><code>pump</code></td><td>Link</td><td>Optional limitation to a designated dispenser pump.</td></tr>
+<tr><td><strong>العميل (Customer)</strong></td><td><code>customer</code></td><td>Link</td><td>Restricts scope to a dedicated corporate client.</td></tr>
+<tr><td><strong>نوع العملية (Operation Type)</strong></td><td><code>operation_type</code></td><td>Select</td><td>Permitted operation (Dispense, Shift Close, Handover, Calibration).</td></tr>
+<tr><td><strong>الدور (Role)</strong></td><td><code>role</code></td><td>Link</td><td>Station user role governed by this restriction.</td></tr>
+<tr><td><strong>نوع النطاق (Scope Type)</strong></td><td><code>scope_type</code></td><td>Select (Mandatory)</td><td>Station Scope or Company Scope.</td></tr>
+<tr><td><strong>نشط (Active)</strong></td><td><code>active</code></td><td>Check</td><td>Enables or disables this security rule.</td></tr>
+</tbody>
+</table></div>

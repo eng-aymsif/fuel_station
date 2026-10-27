@@ -1,0 +1,250 @@
+.fuel-pos-wrapper {
+	padding: 16px 20px;
+	font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+	background: #f1f5f9;
+	min-height: calc(100vh - 120px);
+	color: #0f172a;
+}
+
+.fuel-pos-layout {
+	display: grid;
+	grid-template-columns: 1fr 380px;
+	gap: 20px;
+}
+
+@media (max-width: 900px) {
+	.fuel-pos-layout {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Left Section: Selections */
+.fuel-pos-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 18px 20px;
+	margin-bottom: 16px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.fuel-pos-title {
+	font-size: 14px;
+	font-weight: 700;
+	color: #334155;
+	margin-bottom: 12px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+/* Pumps Grid in POS */
+.fuel-pos-pumps {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+	gap: 12px;
+}
+
+.pos-pump-btn {
+	background: #f8fafc;
+	border: 2px solid #e2e8f0;
+	border-radius: 10px;
+	padding: 12px;
+	cursor: pointer;
+	text-align: right;
+	transition: all 0.15s ease;
+}
+
+.pos-pump-btn:hover {
+	border-color: #fdba74;
+	background: #fff7ed;
+}
+
+.pos-pump-btn.active {
+	border-color: #ea580c;
+	background: #fff7ed;
+	box-shadow: 0 0 0 1px #ea580c;
+}
+
+.pos-pump-label {
+	font-size: 14px;
+	font-weight: 800;
+	color: #0f172a;
+}
+
+.pos-pump-grade {
+	font-size: 11px;
+	font-weight: 700;
+	color: #c2410c;
+	margin-top: 2px;
+}
+
+.pos-pump-meter {
+	font-size: 11px;
+	color: #64748b;
+	margin-top: 4px;
+	font-family: monospace;
+}
+
+/* Presets */
+.fuel-preset-buttons {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 8px;
+	margin-bottom: 14px;
+}
+
+.pos-preset-btn {
+	background: #ffffff;
+	border: 2px solid #cbd5e1;
+	border-radius: 8px;
+	padding: 10px 0;
+	font-size: 14px;
+	font-weight: 800;
+	color: #1e293b;
+	cursor: pointer;
+	text-align: center;
+	transition: all 0.15s ease;
+}
+
+.pos-preset-btn:hover {
+	border-color: #ea580c;
+	color: #ea580c;
+}
+
+.pos-preset-btn.active {
+	background: #ea580c;
+	border-color: #ea580c;
+	color: #ffffff;
+}
+
+/* Custom inputs */
+.fuel-pos-inputs {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+}
+
+.pos-field label {
+	display: block;
+	font-size: 12px;
+	font-weight: 700;
+	color: #475569;
+	margin-bottom: 4px;
+}
+
+.pos-input {
+	width: 100%;
+	padding: 10px 14px;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	font-size: 15px;
+	font-weight: 700;
+	color: #0f172a;
+	outline: none;
+	background: #ffffff;
+	box-sizing: border-box;
+}
+
+.pos-input:focus {
+	border-color: #ea580c;
+	box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.15);
+}
+
+/* Right Section: Ticket Summary */
+.fuel-pos-summary {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	position: sticky;
+	top: 20px;
+}
+
+.fuel-summary-title {
+	font-size: 16px;
+	font-weight: 800;
+	color: #0f172a;
+	padding-bottom: 12px;
+	border-bottom: 1px dashed #cbd5e1;
+	margin-bottom: 14px;
+}
+
+.fuel-summary-row {
+	display: flex;
+	justify-content: space-between;
+	font-size: 13px;
+	margin-bottom: 8px;
+	color: #475569;
+}
+
+.fuel-summary-row b {
+	color: #0f172a;
+}
+
+.fuel-summary-total {
+	font-size: 26px;
+	font-weight: 900;
+	color: #ea580c;
+	margin: 16px 0;
+	padding: 12px;
+	background: #fff7ed;
+	border-radius: 8px;
+	text-align: center;
+	border: 1px solid #fdba74;
+}
+
+.pos-pay-methods {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 8px;
+	margin-bottom: 16px;
+}
+
+.pos-pay-btn {
+	background: #f8fafc;
+	border: 2px solid #e2e8f0;
+	border-radius: 8px;
+	padding: 8px 4px;
+	font-size: 12px;
+	font-weight: 700;
+	cursor: pointer;
+	text-align: center;
+	color: #334155;
+	transition: all 0.15s ease;
+}
+
+.pos-pay-btn:hover {
+	border-color: #ea580c;
+}
+
+.pos-pay-btn.active {
+	background: #0f172a;
+	border-color: #0f172a;
+	color: #ffffff;
+}
+
+.pos-btn-submit {
+	width: 100%;
+	background: #16a34a;
+	color: #ffffff;
+	border: none;
+	border-radius: 8px;
+	padding: 14px;
+	font-size: 16px;
+	font-weight: 800;
+	cursor: pointer;
+	box-shadow: 0 2px 4px rgba(22, 163, 74, 0.3);
+	transition: background 0.15s ease;
+}
+
+.pos-btn-submit:hover {
+	background: #15803d;
+}
+
+.pos-btn-submit:disabled {
+	background: #94a3b8;
+	cursor: not-allowed;
+	box-shadow: none;
+}

@@ -1,0 +1,115 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>التهيئة والإعدادات التشغيلية:</strong> تشكل هذه الشاشات العمود الفقري لنظام محطة الوقود، حيث يتم تحديد سلوكيات الفوترة، وسياسات ترحيل المخزون، وحدود التسامح المالي، وربط المحطات بالدليل المحاسبي ومراكز التكلفة في <strong>ERPNext</strong>.</p>
+</blockquote>
+
+<h2 id="setup-overview">نظرة عامة على التهيئة الأساسية<a class="h-anchor" href="#setup-overview" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>قبل بدء العمليات الميدانية وضخ الوقود، يجب ضبط ثلاثة مستندات رئيسية:</p>
+<ol class="steps">
+  <li>تعريف المحطات وفروعها في مستند <strong>محطة الوقود (Fuel Station)</strong> وربطها بالشركة ومراكز التكلفة.</li>
+  <li>ضبط القواعد العامة للفوترة والرقابة النقدية والمخزنية في شاشة <strong>إعدادات تشغيل محطة الوقود (Fuel Operations Settings)</strong>.</li>
+  <li>تحديد صلاحيات المشرفين والمستخدمين على مستوى كل محطة عبر <strong>قاعدة نطاق الصلاحيات التشغيلية (Fuel Operations Scope Rule)</strong>.</li>
+</ol>
+
+<h2 id="fuel-station-doctype">1. بطاقة محطة الوقود (Fuel Station)<a class="h-anchor" href="#fuel-station-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>مستند <strong>محطة الوقود (Fuel Station)</strong> يمثل الفرع الجغرافي والتشغيلي للمحطة. يحدد هذا المستند الهوية المحاسبية والمخزنية للمحطة، ويحتوي على الحقول التالية:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف والشرح التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>اسم المحطة</strong></td><td><strong>Station Name</strong></td><td><code>station_name</code></td><td>Data (إلزامي)</td><td>الاسم التجاري للمحطة (مثال: محطة طريق المطار، محطة النخيل).</td></tr>
+<tr><td><strong>رمز المحطة</strong></td><td><strong>Station Code</strong></td><td><code>station_code</code></td><td>Data</td><td>كود فريد ومختصر للمحطة (مثال: ST-01، JED-NORTH).</td></tr>
+<tr><td><strong>الشركة</strong></td><td><strong>Company</strong></td><td><code>company</code></td><td>Link (إلزامي)</td><td>الشركة التابع لها الفرع في ERPNext لضمان تكامل القيود.</td></tr>
+<tr><td><strong>الفرع</strong></td><td><strong>Branch</strong></td><td><code>branch</code></td><td>Data</td><td>الفرع الإداري أو المنطقة التابعة للشركة.</td></tr>
+<tr><td><strong>مركز التكلفة الافتراضي</strong></td><td><strong>Default Cost Center</strong></td><td><code>default_cost_center</code></td><td>Link</td><td>مركز التكلفة المحاسبي الذي تُسجل عليه إيرادات ومصروفات المحطة.</td></tr>
+<tr><td><strong>قائمة الأسعار الافتراضية</strong></td><td><strong>Default Selling Price List</strong></td><td><code>default_price_list</code></td><td>Link</td><td>قائمة أسعار البيع المعيارية المعتمدة للمشتقات البترولية في هذه المحطة.</td></tr>
+<tr><td><strong>نشط</strong></td><td><strong>Active</strong></td><td><code>active</code></td><td>Check</td><td>تفعيل أو إيقاف استقبال العمليات والورديات في هذه المحطة.</td></tr>
+<tr><td><strong>العميل النقدي الافتراضي</strong></td><td><strong>Default Cash Customer</strong></td><td><code>default_cash_customer</code></td><td>Link</td><td>العميل المعرف في ERPNext لإصدار فواتير البيع النقدي السريع للجمهور.</td></tr>
+<tr><td><strong>حساب الصندوق الافتراضي</strong></td><td><strong>Default Cash Account</strong></td><td><code>default_cash_account</code></td><td>Link</td><td>حساب الأصول المتداولة في الدليل المحاسبي الخاص بنقدية صناديق المحطة.</td></tr>
+<tr><td><strong>حساب وسيط البطاقات</strong></td><td><strong>Default Card Clearing Account</strong></td><td><code>default_card_clearing_account</code></td><td>Link</td><td>حساب وسيط تسوية مبيعات الشبكة وأجهزة نقاط البيع (POS Clearing).</td></tr>
+<tr><td><strong>حساب الإيراد الافتراضي</strong></td><td><strong>Default Income Account</strong></td><td><code>default_income_account</code></td><td>Link</td><td>حساب إيرادات مبيعات الوقود في قائمة الدخل.</td></tr>
+<tr><td><strong>حساب مصروف الاستهلاك الداخلي</strong></td><td><strong>Default Internal Consumption Expense Account</strong></td><td><code>default_expense_account</code></td><td>Link</td><td>حساب المصروف المحاسبي المحمل بتكلفة الوقود المصروف لسيارات ومعدات الشركة.</td></tr>
+<tr><td><strong>حساب هدر ومعايرة الوقود</strong></td><td><strong>Default Calibration/Waste Expense Account</strong></td><td><code>default_waste_account</code></td><td>Link</td><td>حساب مصروفات فروقات الفحص والمعايرة وفواقد التبخر غير المستردة.</td></tr>
+<tr><td><strong>حساب الفروقات الافتراضي</strong></td><td><strong>Default Variance Account</strong></td><td><code>default_variance_account</code></td><td>Link</td><td>حساب معالجة عجز وزيادة النقدية والعدادات المعتمد في قيود التسوية.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="fuel-operations-settings">2. إعدادات تشغيل محطة الوقود (Fuel Operations Settings)<a class="h-anchor" href="#fuel-operations-settings" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>تُعد شاشة <strong>إعدادات تشغيل محطة الوقود (Fuel Operations Settings)</strong> لوحة التحكم المركزية للسياسات التشغيلية والمالية لكافة محطات الشركة. تنقسم الإعدادات إلى مجموعات تفصيلية كالتالي:</p>
+
+<h3 id="operating-modes">أ. أنماط التشغيل والفوترة وترحيل المخزون (General Operating Modes)</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>الخيارات والشرح التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>منشئ الفاتورة</strong></td><td><strong>Invoice Creator Mode</strong></td><td><code>Attendant</code> (عامل)، <code>Supervisor</code> (مشرف)، <code>Cashier</code> (كاشير)، <code>Accountant</code> (محاسب)، <code>Automatic</code> (تلقائي). يحدد الدور المخول بتوليد الفواتير.</td></tr>
+<tr><td><strong>معتمد الفاتورة</strong></td><td><strong>Invoice Submitter Mode</strong></td><td><code>Supervisor</code> (مشرف)، <code>Cashier</code> (كاشير)، <code>Accountant</code> (محاسب)، <code>Automatic</code> (ترحيل تلقائي فور الإنشاء).</td></tr>
+<tr><td><strong>توقيت إنشاء الفاتورة</strong></td><td><strong>Invoice Timing</strong></td><td><code>Per Dispense</code> (فاتورة فورية لكل تعبئة)، <code>Per Shift</code> (فاتورة مجمعة لكل وردية)، <code>Per Pump</code> (فاتورة لكل مضخة)، <code>Manual</code> (يدوي).</td></tr>
+<tr><td><strong>توقيت تسجيل حركة التعبئة</strong></td><td><strong>Transaction Capture Timing</strong></td><td><code>Realtime</code> (تسجيل فوري مع العداد الرقمي/عامل المضخة)، <code>Post-Shift</code> (تسجيل لاحق عند إغلاق الوردية).</td></tr>
+<tr><td><strong>توقيت ترحيل المخزون</strong></td><td><strong>Stock Posting Timing</strong></td><td><code>On Dispense</code> (خصم مباشر مع كل حركة تعبئة)، <code>On Invoice Submit</code> (خصم مع ترحيل الفاتورة)، <code>On Shift Close</code> (خصم مجمع عند تسوية الوردية).</td></tr>
+</tbody>
+</table></div>
+
+<h3 id="grouping-config">ب. تهيئة تجميع الفواتير (Invoice Grouping Configuration)</h3>
+<p>عند اختيار الفوترة التجميعية لتجنب إنشاء آلاف الفواتير الفردية، يتيح النظام التحكم بمفاتيح التجميع:</p>
+<ul>
+  <li><strong>تجميع حسب المحطة (Group By Station)</strong>: دمج حركات المحطة الواحدة في دفعة فواتير مشتركة.</li>
+  <li><strong>تجميع حسب المضخة (Group By Pump)</strong>: إصدار فاتورة مستقلة لكل مضخة على حدة.</li>
+  <li><strong>تجميع حسب الوردية (Group By Shift)</strong>: حصر مبيعات كل وردية تشغيلية في فاتورة واحدة.</li>
+  <li><strong>تجميع حسب عامل المضخة (Group By Attendant)</strong>: تخصيص فاتورة لكل عامل لضبط عهدته.</li>
+  <li><strong>تجميع حسب الصنف (Group By Item)</strong>: فصل فواتير بنزين 91 عن بنزين 95 وعن الديزل.</li>
+  <li><strong>تجميع حسب السعر (Group By Rate)</strong>: عزل المبيعات التي تمت بأسعار مختلفة.</li>
+  <li><strong>تجميع حسب طريقة الدفع (Group By Payment Method)</strong>: فصل مبيعات النقد عن البطاقات والآجل.</li>
+  <li><strong>تجميع حسب العميل (Group By Customer)</strong>: تجميع مسحوبات عملاء الأساطيل كل عميل في فاتورته الخاصة.</li>
+  <li><strong>تجميع حسب مركز التكلفة (Group By Cost Center)</strong>: توجيه القيود بدقة وفق مراكز التكلفة.</li>
+</ul>
+
+<h3 id="attendant-and-meter-controls">ج. ضوابط العدادات والفروقات واستنتاج النقدية (Meter & Cash Inference Controls)</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>النوع (Type)</th><th>الشرح والهدف الرقابي</th></tr></thead>
+<tbody>
+<tr><td><strong>مصدر قراءة العداد</strong></td><td><strong>Meter Source</strong></td><td>Select</td><td><code>Manual</code> (إدخال يدوي من المشرف/العامل)، أو <code>Electronic / ATG / IoT</code> (قراءة آلية من وحدة التحكم).</td></tr>
+<tr><td><strong>إلزامية القراءة الافتتاحية</strong></td><td><strong>Require Opening Reading</strong></td><td>Check</td><td>منع بدء الضخ أو تسليم المضخة دون تسجيل قراءة العداد الافتتاحية واعتمادها.</td></tr>
+<tr><td><strong>إلزامية القراءة الختامية</strong></td><td><strong>Require Closing Reading</strong></td><td>Check</td><td>منع إغلاق الوردية أو تسليم المضخة دون قراءة عداد ختامية موثقة.</td></tr>
+<tr><td><strong>السماح بتعديل العداد</strong></td><td><strong>Allow Meter Correction</strong></td><td>Check</td><td>تمكين المشرف المخول من تصحيح قراءة خاطئة أُدخلت سهواً.</td></tr>
+<tr><td><strong>تعديل العداد يتطلب موافقة</strong></td><td><strong>Meter Correction Requires Approval</strong></td><td>Check</td><td>إلزامية اعتماد مدير المحطة لأي تصحيح في قراءات العدادات مع توثيق السبب في <strong>سجل تدقيق محطة الوقود (Fuel Audit Log)</strong>.</td></tr>
+<tr><td><strong>كمية تسامح فرق العداد</strong></td><td><strong>Allowed Variance Liters</strong></td><td>Float</td><td>الحد الأقصى المسموح به لفارق اللترات بين العداد ومجموع التعبئات (مثلاً: 2 لتر).</td></tr>
+<tr><td><strong>نسبة تسامح فرق العداد</strong></td><td><strong>Allowed Variance Percent</strong></td><td>Float</td><td>النسبة المئوية المقبولة للفارق (مثلاً: 0.1%).</td></tr>
+<tr><td><strong>نمط استنتاج النقد</strong></td><td><strong>Cash Inference Mode</strong></td><td>Select</td><td><code>Meter Residual</code>: احتساب النقد كباقي طرح مبيعات البطاقات والآجل من فرق العداد. أو <code>Transaction-Based</code>: الاعتماد على حركات النقد الفعلية المسجلة.</td></tr>
+<tr><td><strong>سياسة الكمية غير المصنفة</strong></td><td><strong>Unclassified Quantity Policy</strong></td><td>Select</td><td><code>Treat as Cash</code> (اعتبارها نقدية)، أو <code>Block Close</code> (منع إغلاق الوردية حتى تصنيف كامل الكمية).</td></tr>
+<tr><td><strong>سياسة كمية النقد السالبة</strong></td><td><strong>Negative Cash Quantity Policy</strong></td><td>Select</td><td><code>Block Close</code> (منع الإغلاق في حال تجاوزت التعبئات الإلكترونية قراءة العداد)، أو <code>Create Exception</code> (توليد استثناء تسوية للتحقيق).</td></tr>
+</tbody>
+</table></div>
+
+<h3 id="shift-and-safe-controls">د. ضوابط الورديات والصناديق والخزائن (Shift & Cash Box Controls)</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>الوصف والشرح التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>تفعيل نظام الورديات</strong></td><td><strong>Shift Mode Enabled</strong></td><td>تفعيل دورات العمل التشغيلية المنظمة (صباحية، مسائية، ليلية).</td></tr>
+<tr><td><strong>فتح الوردية يتطلب مشرف</strong></td><td><strong>Shift Opening Requires Supervisor</strong></td><td>اشتراط تسجيل دخول مستخدم يحمل دور <strong>مشرف الوردية (Shift Supervisor)</strong> لفتح أي وردية جديدة.</td></tr>
+<tr><td><strong>إغلاق الوردية يتطلب مشرف</strong></td><td><strong>Shift Closing Requires Supervisor</strong></td><td>منع إغلاق الوردية ومطابقة الحسابات بدون إشراف واعتماد المشرف المسؤول.</td></tr>
+<tr><td><strong>التسليم يتطلب قراءة عداد</strong></td><td><strong>Handover Requires Meter Reading</strong></td><td>إلزام توثيق قراءة العداد عند انتقال المضخة من عامل لآخر عبر <strong>تسليم واستلام المضخة (Pump Handover)</strong>.</td></tr>
+<tr><td><strong>التسليم يتطلب جرد نقد</strong></td><td><strong>Handover Requires Cash Count</strong></td><td>إلزام تفقيط وجرد النقدية المسلمة بين العمال ميدانياً.</td></tr>
+<tr><td><strong>إلزامية صندوق النقد</strong></td><td><strong>Cash Box Required</strong></td><td>ربط كل عامل بصندوق نقد مستقل <strong>صندوق النقد (Fuel Cash Box)</strong> لمنع اختلاط أموال العمال.</td></tr>
+<tr><td><strong>إلزامية خزينة المحطة</strong></td><td><strong>Safe Required</strong></td><td>إلزامية إيداع المبالغ المحصلة في <strong>خزينة المحطة (Fuel Station Safe)</strong> قبل إقفال الصندوق.</td></tr>
+<tr><td><strong>عد النقد بالفئات</strong></td><td><strong>Cash Count By Denominations</strong></td><td>إلزامية تعبئة جدول <strong>عد فئات النقد (Fuel Denomination Count)</strong> لجميع الفئات (500، 200، 100، 50، 20، 10، 5، والعملات المعدنية).</td></tr>
+<tr><td><strong>تأكيد المستلم للتحويل النقدي</strong></td><td><strong>Cash Transfer Requires Receiver Confirmation</strong></td><td>اشتراط موافقة أمين الخزينة إلكترونياً على استلام المبلغ في مستند <strong>تحويل نقدي للخزينة (Cash Transfer)</strong>.</td></tr>
+<tr><td><strong>مبلغ تسامح عجز النقد</strong></td><td><strong>Cash Variance Tolerance Amount</strong></td><td>الحد المالي الأقصى المسموح بترحيل العجز أو الزيادة آلياً ضمنه (مثال: 10 ريال).</td></tr>
+<tr><td><strong>السماح بإعادة فتح وردية مغلقة</strong></td><td><strong>Allow Reopen Closed Shift</strong></td><td>خاصية استثنائية محصورة بمدير المحطة ومدير العمليات لإعادة التدقيق عند اكتشاف أخطاء حرجة.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="scope-rules-doctype">3. قاعدة نطاق الصلاحيات التشغيلية (Fuel Operations Scope Rule)<a class="h-anchor" href="#scope-rules-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>يستخدم مستند <strong>قاعدة نطاق الصلاحيات التشغيلية (Fuel Operations Scope Rule)</strong> لحصر وصول المستخدمين والمشرفين إلى المحطات والمضخات المكلفين بها فقط، ومنع تداخل العمليات بين الفروع. يشمل الحقول التالية:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>اسم الحقل بالعربية (Arabic Label)</th><th>اسم الحقل بالإنجليزية (English Label)</th><th>اسم الحقل البرمجي (Fieldname)</th><th>النوع (Type)</th><th>الوصف التشغيلي</th></tr></thead>
+<tbody>
+<tr><td><strong>الشركة</strong></td><td><strong>Company</strong></td><td><code>company</code></td><td>Link</td><td>الشركة التابع لها نطاق الصلاحية.</td></tr>
+<tr><td><strong>المحطة</strong></td><td><strong>Station</strong></td><td><code>station</code></td><td>Link</td><td>المحطة المحددة التي يُسمح للمستخدم بالعمل ضمنها.</td></tr>
+<tr><td><strong>المضخة</strong></td><td><strong>Pump</strong></td><td><code>pump</code></td><td>Link</td><td>تخصيص اختياري لمضخة معينة دون غيرها.</td></tr>
+<tr><td><strong>العميل</strong></td><td><strong>Customer</strong></td><td><code>customer</code></td><td>Link</td><td>حصر التعامل مع عميل معين (في عقود الأساطيل الخاصة).</td></tr>
+<tr><td><strong>نوع العملية</strong></td><td><strong>Operation Type</strong></td><td><code>operation_type</code></td><td>Select</td><td>نوع الإجراء المسموح (تعبئة، إقفال وردية، تسليم نقد، معايرة).</td></tr>
+<tr><td><strong>الدور</strong></td><td><strong>Role</strong></td><td><code>role</code></td><td>Link</td><td>الدور الوظيفي الخاضع لهذه القاعدة.</td></tr>
+<tr><td><strong>نوع النطاق</strong></td><td><strong>Scope Type</strong></td><td><code>scope_type</code></td><td>Select (إلزامي)</td><td>نطاق المحطة (Station Scope) أو نطاق الشركة بالكامل (Company Scope).</td></tr>
+<tr><td><strong>نشط</strong></td><td><strong>Active</strong></td><td><code>active</code></td><td>Check</td><td>سريان وتفعيل هذه القاعدة الأمنية.</td></tr>
+</tbody>
+</table></div>

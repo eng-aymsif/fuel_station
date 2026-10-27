@@ -1,0 +1,130 @@
+{%- from "fuel_station/templates/print_formats/base.html" import print_styles, is_arabic, dir -%}
+{{ print_styles() }}
+
+<div class="fuel-print-container fuel-print-standard" dir="{{ dir() }}">
+	<div class="fuel-print-header">
+		<table class="fuel-header-table">
+			<tr>
+				<td>
+					<div class="fuel-brand-name">⛽ {{ doc.company or "Company Fuel Management" }}</div>
+					<div class="fuel-brand-sub">{{ _("Internal Fuel Dispense Authorization Voucher") if is_arabic() else "Internal Fuel Dispense Authorization" }}</div>
+				</td>
+				<td class="fuel-doc-title-box">
+					<div class="fuel-doc-title">{{ _("FUEL ISSUE ORDER") if is_arabic() else "FUEL ISSUE ORDER" }}</div>
+					<div><b>{{ doc.name }}</b></div>
+					<div style="margin-top: 4px;">
+						{% if doc.approval_status == "Approved" or doc.docstatus == 1 %}
+						<span class="fuel-badge badge-success">{{ _("Approved") if is_arabic() else "Approved" }}</span>
+						{% elif doc.approval_status == "Pending" %}
+						<span class="fuel-badge badge-warning">{{ _("Pending Approval") if is_arabic() else "Pending" }}</span>
+						{% else %}
+						<span class="fuel-badge badge-danger">{{ _(doc.approval_status or "Cancelled") if is_arabic() else (doc.approval_status or "Cancelled") }}</span>
+						{% endif %}
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- Meta Grid -->
+	<div class="fuel-meta-grid">
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Issuing Department") if is_arabic() else "Department" }}</div>
+			<div class="fuel-meta-val">{{ doc.requesting_department or "-" }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Requester / Employee") if is_arabic() else "Requester" }}</div>
+			<div class="fuel-meta-val">{{ doc.employee or doc.requester or "-" }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Treatment / Purpose") if is_arabic() else "Treatment Type" }}</div>
+			<div class="fuel-meta-val"><b>{{ doc.treatment_type or _("Internal Expense") if is_arabic() else "Internal Expense" }}</b></div>
+		</div>
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Authorized Station") if is_arabic() else "Authorized Station" }}</div>
+			<div class="fuel-meta-val">{{ doc.station or _("All Company Stations") if is_arabic() else "All Company Stations" }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Target Vehicle & Plate") if is_arabic() else "Target Vehicle" }}</div>
+			<div class="fuel-meta-val">{{ doc.plate_number or doc.vehicle or _("Any Authorized Fleet") if is_arabic() else "Any Authorized Fleet" }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Fuel Item / Grade") if is_arabic() else "Fuel Item" }}</div>
+			<div class="fuel-meta-val"><b>{{ doc.item }}</b></div>
+		</div>
+		<div class="fuel-meta-col">
+			<div class="fuel-meta-label">{{ _("Validity Period") if is_arabic() else "Validity Period" }}</div>
+			<div class="fuel-meta-val">{{ doc.valid_from or "-" }} ➔ {{ doc.valid_until or _("Open") if is_arabic() else "Open" }}</div>
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Cost Center / Project") if is_arabic() else "Cost Center" }}</div>
+			<div class="fuel-meta-val">{{ doc.cost_center or "-" }} {% if doc.project %}({{ doc.project }}){% endif %}</div>
+			{% if doc.is_emergency %}
+			<div class="fuel-meta-label" style="margin-top: 4px;">{{ _("Emergency Order") if is_arabic() else "Emergency" }}</div>
+			<div class="fuel-meta-val"><span class="fuel-badge badge-danger">{{ _("Emergency Dispense") if is_arabic() else "Emergency Dispense" }}</span></div>
+			{% endif %}
+		</div>
+	</div>
+
+	<!-- Quota & Limits Table -->
+	<table class="fuel-data-table">
+		<thead>
+			<tr>
+				<th>{{ _("Parameter / Control") if is_arabic() else "Parameter" }}</th>
+				<th class="text-center">{{ _("Authorized Limit") if is_arabic() else "Authorized Limit" }}</th>
+				<th class="text-center">{{ _("Consumed / Used") if is_arabic() else "Consumed / Used" }}</th>
+				<th class="text-center">{{ _("Remaining Quota") if is_arabic() else "Remaining Quota" }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><b>{{ _("Quantity Quota (Liters)") if is_arabic() else "Quantity Quota (Liters)" }}</b></td>
+				<td class="text-center"><b>{{ "{:,.2f}".format(doc.quantity_limit or 0.0) }} L</b></td>
+				<td class="text-center">{{ "{:,.2f}".format(doc.used_quantity or 0.0) }} L</td>
+				<td class="text-center" style="font-weight: 800; color: #16a34a;">
+					{{ "{:,.2f}".format(doc.remaining_quantity or (doc.quantity_limit - (doc.used_quantity or 0))) }} L
+				</td>
+			</tr>
+			{% if doc.amount_limit %}
+			<tr>
+				<td><b>{{ _("Monetary Cap (Currency)") if is_arabic() else "Monetary Cap" }}</b></td>
+				<td class="text-center">{{ fuel_money(doc.amount_limit) }}</td>
+				<td class="text-center">-</td>
+				<td class="text-center">-</td>
+			</tr>
+			{% endif %}
+			<tr>
+				<td><b>{{ _("Max Uses / Transactions") if is_arabic() else "Max Uses" }}</b></td>
+				<td class="text-center">{{ doc.max_uses or 1 }} {{ _("times") if is_arabic() else "times" }}</td>
+				<td class="text-center">{{ doc.used_count or 0 }} {{ _("times") if is_arabic() else "times" }}</td>
+				<td class="text-center" style="font-weight: 800;">{{ (doc.max_uses or 1) - (doc.used_count or 0) }} {{ _("remaining") if is_arabic() else "remaining" }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- Barcode / QR & Terms -->
+	<div style="display: table; width: 100%; margin-top: 15px;">
+		<div style="display: table-cell; width: 35%; vertical-align: top; text-align: center;">
+			<div style="padding: 10px; border: 1px solid #e5e7eb; border-radius: 8px; display: inline-block; background: #fff;">
+				{{ fuel_qr_code(doc.print_token or doc.name) }}
+				<div style="font-size: 10px; color: #6b7280; margin-top: 4px;">{{ _("Scan at Pump Terminal") if is_arabic() else "Scan at Pump Terminal" }}</div>
+			</div>
+		</div>
+		<div style="display: table-cell; width: 65%; vertical-align: top; padding-right: 15px;">
+			<div style="background: #fefce8; border: 1px solid #fef08a; padding: 12px; border-radius: 8px; font-size: 11px; line-height: 1.6; color: #854d0e;">
+				<b>{{ _("Usage Instructions:") if is_arabic() else "Usage Instructions:" }}</b>
+				<ul style="margin: 4px 0 0 16px; padding: 0;">
+					<li>{{ _("This voucher must be presented to the pump attendant prior to fueling.") if is_arabic() else "This voucher must be presented prior to fueling." }}</li>
+					<li>{{ _("Dispense is strictly restricted to the authorized vehicle plate and fuel grade.") if is_arabic() else "Dispense is strictly restricted to authorized vehicle and fuel grade." }}</li>
+					<li>{{ _("The QR code is automatically locked once the remaining quota is reached.") if is_arabic() else "QR is automatically locked once quota is reached." }}</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<!-- Signatures -->
+	<div class="fuel-sign-row">
+		<div class="fuel-sign-cell">
+			{{ _("Requester Signature") if is_arabic() else "Requester Signature" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("Department Head / Approver") if is_arabic() else "Approver" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+		<div class="fuel-sign-cell">
+			{{ _("Station Attendant Seal") if is_arabic() else "Attendant Seal" }}
+			<div class="fuel-sign-line"></div>
+		</div>
+	</div>
+</div>

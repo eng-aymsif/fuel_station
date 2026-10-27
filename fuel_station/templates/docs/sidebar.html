@@ -1,0 +1,25 @@
+{%- from "fuel_station/templates/docs/macros.html" import tt, icon -%}
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+	<nav class="side-nav">
+		<a class="side-link{% if page == 'overview' %} active{% endif %}" href="{{ site.base }}" style="--c: #ea580c; --c2: #d97706"
+			{% if page == "overview" %}aria-current="page"{% endif %}>
+			<span class="side-icon">{{ icon("home", 16) }}</span>
+			<span class="side-text">{{ tt(ui.overview) }}</span>
+		</a>
+		<p class="side-title">{{ tt(ui.guides) }}</p>
+		{%- for item in docs_nav %}
+		<a class="side-link{% if page == item.slug %} active{% endif %}" href="{{ site.base }}/{{ item.slug }}"
+			style="--c: {{ item.color }}; --c2: {{ item.color2 }}; --i: {{ loop.index }}"
+			{% if page == item.slug %}aria-current="page"{% endif %}>
+			<span class="side-icon">{{ icon(item.icon, 16) }}</span>
+			<span class="side-text">{{ tt(item.title) }}</span>
+			<span class="side-num">{{ "%02d" | format(loop.index) }}</span>
+		</a>
+		{%- endfor %}
+	</nav>
+	<div class="side-card">
+		<span class="side-card-icon">{{ icon("sparkles", 16) }}</span>
+		<p>{{ tt(ui.search_tip) }}</p>
+	</div>
+</aside>
+

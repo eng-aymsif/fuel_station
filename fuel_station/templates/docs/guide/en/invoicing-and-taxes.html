@@ -1,0 +1,91 @@
+<blockquote class="callout tip"><span class="callout-badge" aria-hidden="true"></span>
+  <p><strong>Sales, Invoicing, Taxes & POS Settlements:</strong> The platform complies with ZATCA Phase 2 E-Invoicing requirements, supporting tax-inclusive fuel rates (15% VAT), flexible real-time or consolidated batch billing, and multi-bank POS card reconciliations.</p>
+</blockquote>
+
+<h2 id="invoicing-concepts">Invoicing Strategies & Tax Compliance<a class="h-anchor" href="#invoicing-concepts" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>Billing operations operate through five interrelated DocTypes:</p>
+<ol class="steps">
+  <li>Aggregate hundreds of dispenser events into a consolidated sales invoice via <strong>دفعة فواتير المضخة (Fuel Pump Invoice Batch)</strong>.</li>
+  <li>Trace individual dispenses in the child table <strong>حدث دفعة فواتير المضخة (Fuel Pump Invoice Batch Event)</strong>.</li>
+  <li>Enforce VAT regulations and inclusive pricing in <strong>سياسة ضرائب الوقود (Fuel Tax Policy)</strong>.</li>
+  <li>Configure bank MDR fee accounts and settlement delays in <strong>إعدادات مزود البطاقات (Fuel Card Provider Settings)</strong>.</li>
+  <li>Reconcile electronic card POS slips with bank deposits via <strong>تسوية البطاقات البنكية (Card Settlement)</strong>.</li>
+</ol>
+
+<h2 id="invoice-batch-doctype">1. Batch Invoicing: دفعة فواتير المضخة (Fuel Pump Invoice Batch)<a class="h-anchor" href="#invoice-batch-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>The <strong>دفعة فواتير المضخة (Fuel Pump Invoice Batch)</strong> prevents database bloat by grouping retail pump transactions into a single ERPNext Sales Invoice:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link (Mandatory)</td><td>Billing station branch.</td></tr>
+<tr><td><strong>تاريخ العمل (Business Date)</strong></td><td><code>business_date</code></td><td>Date (Mandatory)</td><td>Posting date for sales recognition.</td></tr>
+<tr><td><strong>الوردية (Shift)</strong></td><td><code>shift</code></td><td>Link</td><td>Operating shift.</td></tr>
+<tr><td><strong>المضخة (Pump)</strong></td><td><code>pump</code></td><td>Link</td><td>Dispenser pump nozzle.</td></tr>
+<tr><td><strong>صنف الوقود (Fuel Item)</strong></td><td><code>item</code></td><td>Link (Mandatory)</td><td>Fuel item billed (e.g. Gasoline 91).</td></tr>
+<tr><td><strong>نوع الفاتورة (Invoice Type)</strong></td><td><code>invoice_type</code></td><td>Select</td><td><code>Cash Batch</code>, <code>Card Batch</code>, <code>Customer Fleet Batch</code>.</td></tr>
+<tr><td><strong>العميل (Customer)</strong></td><td><code>customer</code></td><td>Link</td><td>Billed customer (retail cash customer or corporate client).</td></tr>
+<tr><td><strong>كمية الفاتورة (Invoice Quantity)</strong></td><td><code>invoice_quantity</code></td><td>Float (Mandatory)</td><td>Total volume in litres included in this batch.</td></tr>
+<tr><td><strong>سعر اللتر (Unit Rate)</strong></td><td><code>rate</code></td><td>Currency</td><td>Applied selling price per litre.</td></tr>
+<tr><td><strong>مبلغ الفاتورة (Invoice Amount)</strong></td><td><code>invoice_amount</code></td><td>Currency</td><td>Total gross monetary value of the invoice.</td></tr>
+<tr><td><strong>قالب الضرائب والرسوم (Tax Template)</strong></td><td><code>tax_template</code></td><td>Link</td><td>Standard 15% VAT sales tax template.</td></tr>
+<tr><td><strong>فاتورة المبيعات (Sales Invoice)</strong></td><td><code>sales_invoice</code></td><td>Link</td><td>Generated standard ERPNext Sales Invoice reference.</td></tr>
+<tr><td><strong>الحالة (Status)</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code>, <code>Invoiced</code>, <code>Cancelled</code>.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="invoice-batch-event-doctype">2. Batch Events: حدث دفعة فواتير المضخة (Fuel Pump Invoice Batch Event)<a class="h-anchor" href="#invoice-batch-event-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>عملية تعبئة وقود (Fuel Dispense Event)</strong></td><td><code>fuel_dispense_event</code></td><td>Link (Mandatory)</td><td>Underlying physical dispense event record.</td></tr>
+<tr><td><strong>الكمية (لتر) (Quantity)</strong></td><td><code>quantity</code></td><td>Float</td><td>Volume in litres.</td></tr>
+<tr><td><strong>السعر (لتر) (Rate)</strong></td><td><code>rate</code></td><td>Currency</td><td>Rate per litre.</td></tr>
+<tr><td><strong>المبلغ (Amount)</strong></td><td><code>amount</code></td><td>Currency</td><td>Total transaction sum.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="fuel-tax-policy-doctype">3. Tax Governance: سياسة ضرائب الوقود (Fuel Tax Policy)<a class="h-anchor" href="#fuel-tax-policy-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>اسم السياسة (Policy Name)</strong></td><td><code>policy_name</code></td><td>Data (Mandatory)</td><td>Policy name (e.g. Standard 15% VAT Policy).</td></tr>
+<tr><td><strong>الشركة (Company)</strong></td><td><code>company</code></td><td>Link (Mandatory)</td><td>Company entity.</td></tr>
+<tr><td><strong>قالب ضريبة المبيعات (Sales Taxes and Charges Template)</strong></td><td><code>sales_tax_template</code></td><td>Link</td><td>ERPNext sales tax template for output VAT.</td></tr>
+<tr><td><strong>قالب ضريبة المشتريات (Purchase Taxes and Charges Template)</strong></td><td><code>purchase_tax_template</code></td><td>Link</td><td>ERPNext purchase tax template for input VAT recovery.</td></tr>
+<tr><td><strong>نمط ضريبة سعر البيع (Selling Price Tax Mode)</strong></td><td><code>selling_price_tax_mode</code></td><td>Select</td><td><code>Tax Inclusive</code> (pump price contains VAT) or <code>Tax Exclusive</code>.</td></tr>
+<tr><td><strong>اشتراط الرقم الضريبي للعميل (Require Customer Tax ID)</strong></td><td><code>require_customer_tax_id</code></td><td>Check</td><td>Enforces corporate VAT registration number for B2B invoices.</td></tr>
+<tr><td><strong>نشط (Active)</strong></td><td><code>active</code></td><td>Check</td><td>Policy active toggle.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="card-provider-settings-doctype">4. POS Acquirers: إعدادات مزود البطاقات (Fuel Card Provider Settings)<a class="h-anchor" href="#card-provider-settings-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>اسم مزود الخدمة (Card Provider Name)</strong></td><td><code>provider</code></td><td>Data (Mandatory)</td><td>Acquiring bank or network (Mada, Visa, Mastercard, Al Rajhi).</td></tr>
+<tr><td><strong>حساب وسيط البطاقات (Card Clearing Account)</strong></td><td><code>clearing_account</code></td><td>Link (Mandatory)</td><td>Transitory asset account holding unreconciled card batches.</td></tr>
+<tr><td><strong>الحساب البنكي للتسوية (Bank Settlement Account)</strong></td><td><code>settlement_account</code></td><td>Link (Mandatory)</td><td>Company operating bank account receiving net deposits.</td></tr>
+<tr><td><strong>حساب عمولة مزود الخدمة (Provider Fee Account)</strong></td><td><code>fee_account</code></td><td>Link</td><td>Expense account debited for acquiring MDR merchant fees.</td></tr>
+<tr><td><strong>نسبة العمولة الافتراضية % (Default Fee Percentage (%))</strong></td><td><code>fee_percentage</code></td><td>Float</td><td>Bank MDR fee rate percentage.</td></tr>
+<tr><td><strong>أيام التسوية المتوقعة (Settlement Days)</strong></td><td><code>settlement_days</code></td><td>Int</td><td>Expected clearing delay (e.g. T+1 day).</td></tr>
+<tr><td><strong>نشط (Active)</strong></td><td><code>active</code></td><td>Check</td><td>Provider active status.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="card-settlement-doctype">5. Bank Card Reconciliations: تسوية البطاقات البنكية (Card Settlement)<a class="h-anchor" href="#card-settlement-doctype" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Field Label (العربية / English)</th><th>Fieldname</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>المحطة (Station)</strong></td><td><code>station</code></td><td>Link (Mandatory)</td><td>Station location.</td></tr>
+<tr><td><strong>تاريخ العمل (Business Date)</strong></td><td><code>business_date</code></td><td>Date (Mandatory)</td><td>Reconciled transaction date.</td></tr>
+<tr><td><strong>مزود البطاقة البنكية (Card Provider)</strong></td><td><code>provider</code></td><td>Link (Mandatory)</td><td>Bank POS provider.</td></tr>
+<tr><td><strong>مبيعات البطاقات في المحطة (Station Card Transactions Amount)</strong></td><td><code>station_card_amount</code></td><td>Currency</td><td>Gross card sales sum captured by fuel station system.</td></tr>
+<tr><td><strong>إجمالي تقرير جهاز الشبكة (POS Terminal Report Amount)</strong></td><td><code>terminal_report_amount</code></td><td>Currency</td><td>Daily Z-report balance printed from the physical POS device.</td></tr>
+<tr><td><strong>عمولة الشبكة البنكية (Provider Fee Amount)</strong></td><td><code>provider_fee_amount</code></td><td>Currency</td><td>Bank acquiring fees debited.</td></tr>
+<tr><td><strong>المبلغ المودع بالبنك (Amount Transferred To Bank)</strong></td><td><code>bank_transferred_amount</code></td><td>Currency</td><td>Net deposit credited to company bank account.</td></tr>
+<tr><td><strong>مبلغ الفارق (Difference Amount)</strong></td><td><code>difference_amount</code></td><td>Currency</td><td>Discrepancy variance if any.</td></tr>
+<tr><td><strong>قيد تسوية اليومية (Settlement Journal Entry)</strong></td><td><code>journal_entry</code></td><td>Link</td><td>Generated ERPNext Journal Entry clearing POS transit account.</td></tr>
+<tr><td><strong>الحالة (Status)</strong></td><td><code>status</code></td><td>Select</td><td><code>Draft</code>, <code>Reconciled</code>, <code>Discrepancy</code>.</td></tr>
+</tbody>
+</table></div>

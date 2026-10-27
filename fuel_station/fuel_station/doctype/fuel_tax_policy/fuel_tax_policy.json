@@ -1,0 +1,238 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "policy_name",
+  "company",
+  "active",
+  "column_break_1",
+  "section_break_other",
+  "tax_category",
+  "invoice_type",
+  "sales_tax_template",
+  "purchase_tax_template",
+  "item_tax_template",
+  "selling_price_tax_mode",
+  "require_customer_tax_id",
+  "require_customer_address",
+  "exemption_reason",
+  "effective_from",
+  "effective_to"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Tax Policy Configuration"
+  },
+  {
+   "fieldname": "policy_name",
+   "label": "Policy Name",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "company",
+   "label": "Company",
+   "fieldtype": "Link",
+   "options": "Company",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "active",
+   "label": "Active",
+   "fieldtype": "Check",
+   "default": "1",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "tax_category",
+   "label": "Tax Category",
+   "fieldtype": "Link",
+   "options": "Tax Category"
+  },
+  {
+   "fieldname": "invoice_type",
+   "label": "Invoice Type",
+   "fieldtype": "Select",
+   "options": "B2C Simplified\nB2B Standard Tax Invoice\nCredit Note\nDebit Note\nSales Return\nPrepayment",
+   "default": "B2C Simplified",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sales_tax_template",
+   "label": "Sales Taxes and Charges Template",
+   "fieldtype": "Link",
+   "options": "Sales Taxes and Charges Template",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "purchase_tax_template",
+   "label": "Purchase Taxes and Charges Template",
+   "fieldtype": "Link",
+   "options": "Purchase Taxes and Charges Template"
+  },
+  {
+   "fieldname": "item_tax_template",
+   "label": "Item Tax Template",
+   "fieldtype": "Link",
+   "options": "Item Tax Template"
+  },
+  {
+   "fieldname": "selling_price_tax_mode",
+   "label": "Selling Price Tax Mode",
+   "fieldtype": "Select",
+   "options": "TAX_EXCLUSIVE\nTAX_INCLUSIVE",
+   "default": "TAX_EXCLUSIVE"
+  },
+  {
+   "fieldname": "require_customer_tax_id",
+   "label": "Require Customer Tax ID",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "require_customer_address",
+   "label": "Require Customer Address",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "exemption_reason",
+   "label": "Exemption Reason",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "effective_from",
+   "label": "Effective From",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "effective_to",
+   "label": "Effective To",
+   "fieldtype": "Date"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "issingle": 0,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Fuel Tax Policy",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "System Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Station Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Shift Supervisor",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Cashier",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1
+  },
+  {
+   "role": "Inventory Officer",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Attendant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "print": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "field:policy_name",
+ "naming_rule": "By fieldname"
+}

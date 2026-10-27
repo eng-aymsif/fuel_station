@@ -1,0 +1,379 @@
+{
+ "actions": [],
+ "creation": "2026-10-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "station",
+  "company",
+  "treatment_type",
+  "requester",
+  "requesting_department",
+  "approval_status",
+  "column_break_1",
+  "customer",
+  "employee",
+  "vehicle",
+  "plate_number",
+  "item",
+  "section_break_2",
+  "quantity_limit",
+  "amount_limit",
+  "max_uses",
+  "column_break_2",
+  "valid_from",
+  "valid_until",
+  "used_quantity",
+  "remaining_quantity",
+  "used_count",
+  "section_break_3",
+  "expense_account",
+  "cost_center",
+  "project",
+  "column_break_3",
+  "print_token",
+  "qr_code",
+  "section_break_other",
+  "naming_series",
+  "contract",
+  "is_emergency",
+  "approved_by",
+  "stock_entry",
+  "cancellation_reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Order Information"
+  },
+  {
+   "fieldname": "station",
+   "label": "Station",
+   "fieldtype": "Link",
+   "options": "Fuel Station"
+  },
+  {
+   "fieldname": "company",
+   "label": "Company",
+   "fieldtype": "Link",
+   "options": "Company"
+  },
+  {
+   "fieldname": "treatment_type",
+   "label": "Treatment Type",
+   "fieldtype": "Select",
+   "options": "Internal\nCredit\nCash\nContract",
+   "default": "Internal",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "requester",
+   "label": "Requester",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "requesting_department",
+   "label": "Requesting Department",
+   "fieldtype": "Link",
+   "options": "Department",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "approval_status",
+   "label": "Approval Status",
+   "fieldtype": "Select",
+   "options": "Draft\nPending Approval\nApproved\nPartially Used\nFully Used\nExpired\nCancelled\nRejected",
+   "default": "Draft",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "employee",
+   "label": "Employee / Driver",
+   "fieldtype": "Link",
+   "options": "Employee",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "vehicle",
+   "label": "Vehicle",
+   "fieldtype": "Link",
+   "options": "Customer Vehicle"
+  },
+  {
+   "fieldname": "plate_number",
+   "label": "Plate Number",
+   "fieldtype": "Data",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "item",
+   "label": "Fuel Item",
+   "fieldtype": "Link",
+   "options": "Item",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Limits & Balances"
+  },
+  {
+   "fieldname": "quantity_limit",
+   "label": "Quantity Limit (Liters)",
+   "fieldtype": "Float",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount_limit",
+   "label": "Amount Limit",
+   "fieldtype": "Currency",
+   "default": "0"
+  },
+  {
+   "fieldname": "max_uses",
+   "label": "Max Allowed Uses",
+   "fieldtype": "Int",
+   "default": "1"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "valid_from",
+   "label": "Valid From",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "valid_until",
+   "label": "Valid Until",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "used_quantity",
+   "label": "Used Quantity",
+   "fieldtype": "Float",
+   "default": "0",
+   "read_only": 1
+  },
+  {
+   "fieldname": "remaining_quantity",
+   "label": "Remaining Quantity",
+   "fieldtype": "Float",
+   "default": "0",
+   "read_only": 1
+  },
+  {
+   "fieldname": "used_count",
+   "label": "Used Count",
+   "fieldtype": "Int",
+   "default": "0",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break",
+   "label": "Accounting & Verification"
+  },
+  {
+   "fieldname": "expense_account",
+   "label": "Expense Account",
+   "fieldtype": "Link",
+   "options": "Account"
+  },
+  {
+   "fieldname": "cost_center",
+   "label": "Cost Center",
+   "fieldtype": "Link",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "project",
+   "label": "Project",
+   "fieldtype": "Link",
+   "options": "Project"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "print_token",
+   "label": "Print Token",
+   "fieldtype": "Data",
+   "read_only": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "qr_code",
+   "label": "QR Code Token",
+   "fieldtype": "Data",
+   "read_only": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "section_break_other",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "FIO-.YYYY.-.#####",
+   "default": "FIO-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "contract",
+   "label": "Contract",
+   "fieldtype": "Link",
+   "options": "Fuel Customer Contract"
+  },
+  {
+   "fieldname": "is_emergency",
+   "label": "Is Emergency Issue",
+   "fieldtype": "Check",
+   "default": "0"
+  },
+  {
+   "fieldname": "approved_by",
+   "label": "Approved By",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "stock_entry",
+   "label": "Stock Entry",
+   "fieldtype": "Link",
+   "options": "Stock Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cancellation_reason",
+   "label": "Cancellation / Rejection Reason",
+   "fieldtype": "Small Text"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "issingle": 0,
+ "links": [],
+ "modified": "2026-10-26 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuel Station",
+ "name": "Fuel Issue Order",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "System Administrator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Station Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Shift Supervisor",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Cashier",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1
+  },
+  {
+   "role": "Inventory Officer",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "Fuel Attendant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "print": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field"
+}
